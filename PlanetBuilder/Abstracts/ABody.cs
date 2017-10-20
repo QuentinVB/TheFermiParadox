@@ -12,9 +12,11 @@ namespace PlanetBuilder.Abstracts
         private double _mass;
         public double Mass { get => _mass; set => _mass = value; }
 
-        protected ABody(string name, double mass, World wolrd) : base(name, wolrd)
+        protected ABody(string name, double mass, World world) : base(name, world)
         {
             _mass = mass;
         }
+
+       
     }
 }

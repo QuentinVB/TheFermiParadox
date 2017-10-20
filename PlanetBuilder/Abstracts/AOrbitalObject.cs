@@ -65,9 +65,10 @@ namespace PlanetBuilder.Abstracts
         /// period aroud the orbital focus (in seconds)
         /// </summary>
         public TimeSpan OrbitalPeriod { get => _orbitalPeriod; set => _orbitalPeriod = value; }
+       
 
 
-        public Vector3 Position { get { throw new NotImplementedException(); } }
+        public Vector3 Position { get { return new Vector3(); } }
         
 
         [XmlIgnore]

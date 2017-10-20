@@ -47,6 +47,8 @@
     <Compile Include="Interfaces\IBody.cs" />
     <Compile Include="Helpers\Angle.cs" />
     <Compile Include="Helpers\Polar3.cs" />
+    <Compile Include="Interfaces\IPlanetaryFeature.cs" />
+    <Compile Include="PlanetaryModifer.cs" />
     <Compile Include="World.cs" />
     <Compile Include="OrbitalSystem.cs" />
     <Compile Include="Helpers\Vector3.cs" />

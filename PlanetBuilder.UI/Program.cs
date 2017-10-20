@@ -14,7 +14,7 @@ namespace PlanetBuilder.UI
             Console.WriteLine("definig world");
             World world = new World();
             Console.WriteLine("creating a planet");
-            Planet planet1 = new Planet(5.9736e24, "b612", world, 6378000);
+            Planet planet1 = new Planet(5.9736e24, "b612", world, 6378000,new PlanetaryModifer());
             Console.WriteLine("saving a planet");
 
             planet1.Save(BuilderSettings.Default.PlanetSave);

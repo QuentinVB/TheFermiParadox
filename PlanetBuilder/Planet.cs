@@ -15,23 +15,17 @@ namespace PlanetBuilder
         private double _albedo;
         private TimeSpan _rotationPeriod;
         //private ChemicalComposition _chemicalComposition;
-        private PlanetaryCategory _planetaryCategory;
+        private PlanetaryModifer _planetaryModifer;
 
 
         /*
-         * périmètre
-         * superficie
-         * volume
-         * masse volumique
-         * gravité en surface
-         * vitesse de libération
          * rotation speed
          * atmosphère ?
          */
         //list of all parameters of a planet
         public Planet():base("default",0,null)
         { }
-        public Planet(double mass,string name,World world, double radius):base(name,mass, world)
+        public Planet(double mass,string name,World world, double radius,PlanetaryModifer planetaryModifer):base(name,mass, world)
         {
             _radius = radius;
         }
@@ -41,7 +35,15 @@ namespace PlanetBuilder
         public double Radius { get => _radius; set => _radius = value; }
         public double Albedo { get => _albedo; set => _albedo = value; }
         public TimeSpan RotationPeriod { get => _rotationPeriod; set => _rotationPeriod = value; }
-        public PlanetaryCategory PlanetaryCategory { get => _planetaryCategory; set => _planetaryCategory = value; }
+        public PlanetaryModifer PlanetaryModifer { get => _planetaryModifer; set => _planetaryModifer = value; }
+        public double Circumference { get => _radius * Math.PI * 2; }
+        public double Surface { get => _radius* _radius * Math.PI * 4; }
+        public double Volume { get => (_radius* _radius * Math.PI * 4)/3; }
+        /// <summary>
+        /// Speed to escape the gravity well (in m.s-1)
+        /// </summary>
+        public double EscapeVelocity { get => Math.Sqrt((2 * World.G * Mass) / Radius); }
+
 
         public override string ToString()
         {
