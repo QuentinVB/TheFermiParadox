@@ -23,7 +23,7 @@ namespace PlanetBuilder.Abstracts
 
         protected AOrbitalObject(string name, World world) : base(name)
         {
-            this._world = world;
+            this._world = (world == null) ? this._world = new World() : world;
         }
 
         /// <summary>

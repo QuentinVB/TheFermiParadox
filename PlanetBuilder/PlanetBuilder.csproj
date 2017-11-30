@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExtendedXmlSerializer, Version=1.5.0.0, Culture=neutral, PublicKeyToken=0311609c42bdb381, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExtendedXmlSerializer.1.5.0\lib\net45\ExtendedXmlSerializer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,12 +46,14 @@
     <Compile Include="Abstracts\ABody.cs" />
     <Compile Include="Abstracts\AOrbitalObject.cs" />
     <Compile Include="Abstracts\AXMLSerializable.cs" />
+    <Compile Include="Abstracts\PlanetaryFeature.cs" />
     <Compile Include="Interfaces\IOrbitalObject.cs" />
     <Compile Include="Interfaces\IBody.cs" />
     <Compile Include="Helpers\Angle.cs" />
     <Compile Include="Helpers\Polar3.cs" />
     <Compile Include="Interfaces\IPlanetaryFeature.cs" />
-    <Compile Include="PlanetaryModifer.cs" />
+    <Compile Include="planetaryFeatures\Atmosphere.cs" />
+    <Compile Include="PlanetaryComponentsContainer.cs" />
     <Compile Include="World.cs" />
     <Compile Include="OrbitalSystem.cs" />
     <Compile Include="Helpers\Vector3.cs" />
@@ -63,6 +68,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
     <None Include="user.config" />
     <None Include="BuilderSettings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>

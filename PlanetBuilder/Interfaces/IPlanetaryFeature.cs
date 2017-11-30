@@ -5,7 +5,8 @@ namespace PlanetBuilder.Interfaces
 {
     public interface IPlanetaryFeature
     {
-        string Name { get; set; }
+        string Name { get;  }
+        string Description { get;  }
         List<String> Incompatibility { get; }
     }
 }

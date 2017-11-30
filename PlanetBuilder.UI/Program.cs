@@ -14,16 +14,18 @@ namespace PlanetBuilder.UI
             Console.WriteLine("definig world");
             World world = new World();
             Console.WriteLine("creating a planet");
-            Planet planet1 = new Planet(5.9736e24, "b612", world, 6378000,new PlanetaryModifer());
-            Console.WriteLine("saving a planet");
+            Planet planet1 = new Planet(5.9736e24, "b612", world, 6378000);
+            planet1.PlanetaryComponents.Add("atmosphere");
+            //Console.WriteLine("saving a planet");
 
-            planet1.Save(BuilderSettings.Default.PlanetSave);
-            string path = BuilderSettings.Default.PlanetSave + "b612" + ".xml";
-            Console.WriteLine(" planet saved");
+            //planet1.Save(BuilderSettings.Default.PlanetSave);
+            //string path = BuilderSettings.Default.PlanetSave + "b612" + ".xml";
+            //Console.WriteLine(" planet saved");
 
-            Console.WriteLine(" retrieve from file :");
-            Planet planet2 = (Planet)Planet.FromFile(path);
-            Console.WriteLine(planet2);
+            //Console.WriteLine(" retrieve from file :");
+            //Planet planet2 = (Planet)Planet.FromFile(path);
+            //Console.WriteLine(planet2);
+            Console.WriteLine(planet1);
             Console.ReadKey();
         }
     }

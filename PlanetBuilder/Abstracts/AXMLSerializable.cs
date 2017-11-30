@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 
 namespace PlanetBuilder.Abstracts
 {
+    //https://github.com/wojtpl2/ExtendedXmlSerializer
     public abstract class AXMLSerializable<T>
     {
         protected string _name;
@@ -30,69 +31,69 @@ namespace PlanetBuilder.Abstracts
             set { _uuid = value; }
         }
 
-        /// <summary>
-        /// Generates a T object from a T xml file
-        /// </summary>
-        /// <param name="path">File containing the T</param>
-        /// <returns></returns>
-        public static T FromFile(string path)
-        {
-            T body;
-            XmlSerializer x = new XmlSerializer(typeof(T));
+        ///// <summary>
+        ///// Generates a T object from a T xml file
+        ///// </summary>
+        ///// <param name="path">File containing the T</param>
+        ///// <returns></returns>
+        //public static T FromFile(string path)
+        //{
+        //    T body;
+        //    XmlSerializer x = new XmlSerializer(typeof(T));
 
-            using (StreamReader reader = new StreamReader(path))
-                body = (T)x.Deserialize(reader);
+        //    using (StreamReader reader = new StreamReader(path))
+        //        body = (T)x.Deserialize(reader);
 
-            return body;
-        }
+        //    return body;
+        //}
 
-        /// <summary>
-        /// Saves the serializable object under its name in xml
-        /// </summary>
-        /// <param name="path">Saves the serializable object under its name in xml</param>
-        public void Save(string path)
-        {
-            XmlDocument xmlDocument = new XmlDocument();
-            // M$ oddity, System.IO.FileNotFoundException is apparently a normal behaviour for runtime Assembly generation
-            System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(this.GetType());
-            using (StreamWriter stream = new StreamWriter(path + this.Name + ".xml"))
-                x.Serialize(stream, this);
-        }
+        ///// <summary>
+        ///// Saves the serializable object under its name in xml
+        ///// </summary>
+        ///// <param name="path">Saves the serializable object under its name in xml</param>
+        //public void Save(string path)
+        //{
+        //    XmlDocument xmlDocument = new XmlDocument();
+        //    // M$ oddity, System.IO.FileNotFoundException is apparently a normal behaviour for runtime Assembly generation
+        //    System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(this.GetType());
+        //    using (StreamWriter stream = new StreamWriter(path + this.Name + ".xml"))
+        //        x.Serialize(stream, this);
+        //}
 
-        /// <summary>
-        /// Deletes the file associated to this serializable object
-        /// </summary>
-        /// <returns></returns>
-        public bool DeleteFile(string path)
-        {
-            string filepath = path + this.Name + ".xml";
+        ///// <summary>
+        ///// Deletes the file associated to this serializable object
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool DeleteFile(string path)
+        //{
+        //    string filepath = path + this.Name + ".xml";
 
-            if (!File.Exists(filepath))
-            {
-                FileInfo[] files = null;
-                DirectoryInfo dir = null;
+        //    if (!File.Exists(filepath))
+        //    {
+        //        FileInfo[] files = null;
+        //        DirectoryInfo dir = null;
 
-                dir = new DirectoryInfo(path);
-                files = dir.GetFiles("*.*");
-                XmlSerializer x = new XmlSerializer(this.GetType());
-                foreach (FileInfo fi in files)
-                {
-                    using (StreamReader reader = new StreamReader(fi.FullName))
-                    {
-                        AXMLSerializable<T> temp = (AXMLSerializable<T>)x.Deserialize(reader);
-                        if (temp.Name == this.Name)
-                        {
-                            reader.Close();
-                            File.Delete(fi.FullName);
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-            File.Delete(filepath);
-            return true;
-        }
+        //        dir = new DirectoryInfo(path);
+        //        files = dir.GetFiles("*.*");
+        //        XmlSerializer x = new XmlSerializer(this.GetType());
+        //        foreach (FileInfo fi in files)
+        //        {
+        //            using (StreamReader reader = new StreamReader(fi.FullName))
+        //            {
+        //                AXMLSerializable<T> temp = (AXMLSerializable<T>)x.Deserialize(reader);
+        //                if (temp.Name == this.Name)
+        //                {
+        //                    reader.Close();
+        //                    File.Delete(fi.FullName);
+        //                    return true;
+        //                }
+        //            }
+        //        }
+        //        return false;
+        //    }
+        //    File.Delete(filepath);
+        //    return true;
+        //}
         protected AXMLSerializable(string name)
         {
             _name = name;
