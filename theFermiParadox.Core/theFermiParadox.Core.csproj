@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6DEAA57B-06AB-4088-9E0B-2B8C177D8BD2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>theFermiParadox.Core</RootNamespace>
+    <AssemblyName>theFermiParadox.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstracts\ABody.cs" />
+    <Compile Include="Abstracts\APhysicalObject.cs" />
+    <Compile Include="Abstracts\IOrbit.cs" />
+    <Compile Include="Models\BasicStar.cs" />
+    <Compile Include="Models\StarGeneration.cs" />
+    <Compile Include="Utilities\EmptyOrbit.cs" />
+    <Compile Include="Utilities\BarycenterOrbit.cs" />
+    <Compile Include="Utilities\Orbit.cs" />
+    <Compile Include="StellarObjects\BlackHole.cs" />
+    <Compile Include="StellarObjects\NeutronStar.cs" />
+    <Compile Include="StellarSystem.cs" />
+    <Compile Include="Utilities\Angle.cs" />
+    <Compile Include="Models\BasicStarSource.cs" />
+    <Compile Include="Utilities\BasicColor.cs" />
+    <Compile Include="Models\dwarfSource.cs" />
+    <Compile Include="StellarObjects\GazCloud.cs" />
+    <Compile Include="Utilities\PhysicHelpers.cs" />
+    <Compile Include="Utilities\Polar3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StellarObjects\Star.cs" />
+    <Compile Include="StellarFactory.cs" />
+    <Compile Include="Models\systemAgeSource.cs" />
+    <Compile Include="SystemFactory.cs" />
+    <Compile Include="Utilities\Vector3.cs" />
+    <Compile Include="Utilities\WeightedRandomBag.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SystemObjects\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\theFermiParadox.DAL\theFermiParadox.DAL.csproj">
+      <Project>{0995f4c0-9603-4aee-81df-7f8d7d848813}</Project>
+      <Name>theFermiParadox.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
