@@ -12,7 +12,14 @@ namespace theFermiParadox.ManualTests
         static void Main(string[] args)
         {
             Console.WriteLine("Loading...");
-            Star star = new Star();
+
+            StellarFactory stellarFactory = new StellarFactory();
+
+            StellarSystem system = new StellarSystem();
+
+            Random randSource = new Random();
+
+            Star star = stellarFactory.GenerateStar(system, randSource.Next(0,100));
             Console.WriteLine(star);
             /*
             StellarFactory stellarFactory = new StellarFactory();

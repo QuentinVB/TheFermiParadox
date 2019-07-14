@@ -18,22 +18,22 @@ namespace theFermiParadox.Core.Abstracts
         {
             _name = name;
             _stellarSystem = stellarSystem;
-            _uuid = new Guid();
+            _uuid = Guid.NewGuid();
         }
-        [XmlElement("Uuid")]
+
         public Guid Uuid => _uuid;
 
-        [XmlElement("Name")]
         public string Name => _name;
 
-        [XmlElement("Denomination")]
         public abstract string Denomination { get; }
 
-        [XmlElement("IsVirtual")]
         public bool IsVirtual { get; set; }
 
-        [XmlElement("Position")]
         public Vector3 Position { get; set; }
+
+        public IOrbit ParentOrbit { get; set; }
+
+        public List<IOrbit> ChildOrbit { get; set; }
         
         //ROTATION
 

@@ -29,10 +29,10 @@ namespace theFermiParadox.Core
 
         public Vector3 Barycenter { get; }
 
-        public float Mass
+        public double Mass
         {
             get {
-                float sum = 0;
+                double sum = 0;
                 foreach (ABody body in _bodies)
                 {
                     if (body is APhysicalObject @object) sum += @object.Mass;
@@ -42,6 +42,7 @@ namespace theFermiParadox.Core
         }
 
         public List<IOrbit> Orbits { get => _orbits; set => _orbits = value; }
+
         public APhysicalObject PhysicalObjectRoot { get => _PhysicalObjectRoot; private set => _PhysicalObjectRoot = value; }
 
         //list of stellar object associated with orbital parameters

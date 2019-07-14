@@ -11,7 +11,7 @@ namespace theFermiParadox.Core
 {
     public class StellarFactory
     {
-        Random randomSource = new Random();
+        Random randomSource;
 
         readonly List<StarGeneration> _starGeneration;
         readonly List<BasicStar> _basicStar;
@@ -25,9 +25,39 @@ namespace theFermiParadox.Core
             _basicStar = Loader<BasicStar>.LoadTable("basicStar.csv");
             _systemAgeSource = Loader<StarAge>.LoadTable("systemAge.csv");
             _whitedwarfs = Loader<DwarfStar>.LoadTable("whitedwarf.csv");
-            _browndwarfs = Loader<DwarfStar>.LoadTable("browndwarf.csv");     
+            _browndwarfs = Loader<DwarfStar>.LoadTable("browndwarf.csv");
+
+            randomSource = new Random();
         }
 
+        public APhysicalObject GenerateStellarObject(StellarSystem stellar)
+        {
+            //define star class
+            return GenerateStellarObject(stellar, randomSource.Next(1, 100));
+        }
+        public APhysicalObject GenerateStellarObject(StellarSystem stellarSystem, int stellarGenerationRand)
+        {
+            if (stellarGenerationRand < 100)
+            {
+                //throw new NotImplementedException(); 
+                GenerateStar(stellarSystem,stellarGenerationRand);
+            }
+            else
+            //Could be B-class stars, giants, neutron stars,protostars or other rare stellar objects
+            {
+                GazCloud gazCloud = new GazCloud()
+                {
+                    Mass = 4f,
+                };
+
+                return gazCloud;
+            }
+            return new GazCloud();
+
+        }
+
+
+        /*
 
         public List<APhysicalObject> GenerateStellarCollection(StellarSystem stellarSystem)
         {
@@ -44,106 +74,109 @@ namespace theFermiParadox.Core
             {
                 stellarList.Add(GenerateStellarObject(stellarSystem));
             }
-            stellarList.Sort(delegate (APhysicalObject x, APhysicalObject y)
+            stellarList.Sort((x, y)=>
             {
                 return x.Mass.CompareTo(y.Mass);
             });
             stellarList.Reverse();
             return stellarList;
         }
-
-
-        public APhysicalObject GenerateStellarObject(StellarSystem stellar)
-        {
-            //define star class
-            return GenerateStellarObject(stellar,randomSource.Next(1, 100));
-        }
-        public APhysicalObject GenerateStellarObject(StellarSystem stellarSystem,int stellarGenerationRand)
-        {
-            if(stellarGenerationRand <100)
-            {
-                throw new NotImplementedException(); //GenerateStar(stellarSystem,stellarGenerationRand);
-            }
-            else
-            //Could be B-class stars, giants, neutron stars,protostars or other rare stellar objects
-            {
-                GazCloud gazCloud = new GazCloud()
-                {
-                    Mass = 4f,
-                };
-
-                return gazCloud;
-                //starClass = "Special";
-            }
-            //return new GazCloud();
-
-        }
-
-        /*
+        */
+ 
         public Star GenerateStar(StellarSystem stellarSystem, int starGenerationRand)
         {
-
-
             //star generation
+            Star star;
+
             string starClass = "";
-            string sizeCode = "";
+            int sizeCode = 0;
+
+            int giantSize = randomSource.Next(1, 10) >= 7 ? 4 : 5;
+
             //manque O et B classes : case 0
             if (starGenerationRand == 1)
-            { starClass = "A"; sizeCode = randomSource.Next(1, 10) >= 7 ? "IV" : "V"; }
+            {
+                starClass = "A";
+                sizeCode = giantSize;
+            }
             if (2 <= starGenerationRand && starGenerationRand <= 4)
-            { starClass = "F"; sizeCode = randomSource.Next(1, 10) >= 7 ? "IV" : "V"; }
+            {
+                starClass = "F";
+                sizeCode = giantSize;
+            }
             if (5 <= starGenerationRand && starGenerationRand <= 12)
-            { starClass = "G"; sizeCode = randomSource.Next(1, 10) >= 7 ? "IV" : "V"; }
+            {
+                starClass = "G";
+                sizeCode = giantSize;
+            }
             if (13 <= starGenerationRand && starGenerationRand <= 26)
-            { starClass = "K"; sizeCode = "V"; }
-            if (27 <= starGenerationRand && starGenerationRand <= 36)
-            { starClass = "D"; sizeCode = "VII"; } //white dwarf, D for Degenerate
+            {
+                starClass = "K";
+                sizeCode = 5;
+            }
+            if (27 <= starGenerationRand && starGenerationRand <= 36)//white dwarf, D for Degenerate
+            {
+                starClass = "D";
+                sizeCode = 7;
+            } 
             if (37 <= starGenerationRand && starGenerationRand <= 85)
-            { starClass = "M"; sizeCode = "V"; }
-            if (86 <= starGenerationRand && starGenerationRand <= 98)
-            { starClass = "L"; }//brown dwarf LTY
+            {
+                starClass = "M";
+                sizeCode = 5;
+            }
+            if (86 <= starGenerationRand && starGenerationRand <= 98)//brown dwarf LTY
+            {
+                starClass = "L";
+            }
             if (starGenerationRand == 99)//Giants
             {
                 int giantRand = randomSource.Next(1, 10);
-                if (giantRand == 1) { starClass = "F"; sizeCode = "III"; }
-                if (giantRand == 2) { starClass = "G"; sizeCode = "III"; }
-                if (3 <= giantRand && giantRand <= 7) { starClass = "F"; sizeCode = "III"; }
-                if (giantRand > 8) { starClass = "K"; sizeCode = "IV"; }
+                if (giantRand == 1) { starClass = "F"; sizeCode = 3; }
+                if (giantRand == 2) { starClass = "G"; sizeCode = 3; }
+                if (3 <= giantRand && giantRand <= 7) { starClass = "F"; sizeCode = 3; }
+                if (giantRand > 8) { starClass = "K"; sizeCode = 4; }
             }
             
             //define spectralClass
-            int spectralClass = (starClass == "K" && sizeCode == "IV") ? 0 : randomSource.Next(0, 9);
-
-            //match from the table
-            Star star = _starSource.Stars.Find(x => x.StarClass == starClass && x.SizeCode == sizeCode && x.SpectralClass == spectralClass);
+            int spectralClass = (starClass == "K" && sizeCode == 4) ? 0 : randomSource.Next(0, 9);
 
             //White/Brown Dwarf case
             int dwarfGenerationRand = randomSource.Next(1, 10);
             if (starClass == "D" || starClass == "L")
             {
-                star = new Star(stellarSystem, new EmptyOrbit())
+                star = new Star("unnamed", stellarSystem)
                 {
                     StarClass = starClass,
-                    SizeCode = "-",
+                    SizeCode = 0,
                     SpectralClass = spectralClass
                 };
             }
-            /*
-            if (star == null)
+            else
             {
-                star = new Star
+                //match from the table
+                BasicStar basicStar = _basicStar.Find(
+                    x => x.StarType == starClass
+                    && x.SizeCode == sizeCode
+                    && x.Random == spectralClass
+                    );
+                star = new Star("unnamed", stellarSystem)
                 {
                     StarClass = starClass,
-                    Radius = 1,
-                    SurfaceTemperature = 0
+                    SizeCode = sizeCode,
+                    SpectralClass = spectralClass,
+                    Luminosity = basicStar.Luminosity,
+                    SurfaceTemperature = basicStar.SurfaceTemperature,
+                    Radius = basicStar.Radius,
+                    Mass = basicStar.Mass,
                 };
             }
 
+           
             //Flares Star M3 to M9  1D10*50% periodicaly
             //TODO
 
             //subGiant randomisation
-            if (sizeCode == "IV")
+            if (sizeCode == 4)
             {
                 int subGiantRand = randomSource.Next(1, 10);
                 float rate = 0;
@@ -168,21 +201,21 @@ namespace theFermiParadox.Core
             int ageRandom = randomSource.Next(1, 10);
 
             //from table
-            StarAge starAge = _systemAgeSource.StarAges
+            StarAge starAge = _systemAgeSource
                 .FindAll(x => 
                             x.StarClass == starClass 
                             && x.SpectralClassMin <= star.SpectralClass 
                             && star.SpectralClass <= x.SpectralClassMax)
-                .Find(x=> x.random == ageRandom);
+                .Find(x=> x.Random == ageRandom);
 
             star.Age = starAge.Age;
             star.LifeSpan = starAge.LifeSpan;
 
             //giant case & subgiant case
-            if (sizeCode == "IV" || sizeCode == "III")
+            if (sizeCode == 4 || sizeCode == 3)
             {
                 star.Age = 10*star.Mass/star.Luminosity;
-                star.Age += star.Age * ((sizeCode == "IV")? 0.1f : 0.2f);
+                star.Age += star.Age * ((sizeCode == 4)? 0.1f : 0.2f);
                 star.LifeSpan = star.Age ;
             }
            
@@ -192,27 +225,27 @@ namespace theFermiParadox.Core
                 star.LifeSpan =  float.MaxValue ;
                 DwarfStar dwarfData = 
                     (starClass == "D")?
-                    _whitedwarfsources.DwarfStars.Find(x => x.Random == dwarfGenerationRand)
-                    : _browndwarfsources.DwarfStars.Find(x => x.Random == dwarfGenerationRand);
+                    _whitedwarfs.Find(x => x.Random == dwarfGenerationRand)
+                    : _browndwarfs.Find(x => x.Random == dwarfGenerationRand);
 
                 star.Mass = dwarfData.Mass;
                 star.Radius = dwarfData.Radius;
                 dwarfGenerationRand = PhysicHelpers.Clamp(dwarfGenerationRand + starAge.TemperatureRollModifier, 1,10);
                 dwarfData =
                     (starClass == "D") ?
-                    _whitedwarfsources.DwarfStars.Find(x => x.Random == dwarfGenerationRand)
-                    : _browndwarfsources.DwarfStars.Find(x => x.Random == dwarfGenerationRand);
+                    _whitedwarfs.Find(x => x.Random == dwarfGenerationRand)
+                    : _browndwarfs.Find(x => x.Random == dwarfGenerationRand);
 
                 star.SurfaceTemperature = dwarfData.Temperature;
 
-                star.Luminosity = (float)Math.Pow(star.Radius, 2) * (float)Math.Pow(star.SurfaceTemperature, 4) / 5800 * 5800 * 5800 * 5800;
+                star.Luminosity = Math.Pow(star.Radius, 2) * Math.Pow(star.SurfaceTemperature, 4) / Math.Pow(5800,4);
             }
 
             star.Luminosity += star.Luminosity * starAge.LuminosityModifier;
 
-            return star;   
+            return star??throw new InvalidOperationException();   
         }
-    */
+    
         private int StarCount()
         {
             Random randomSource = new Random();
@@ -233,5 +266,4 @@ namespace theFermiParadox.Core
             return count;
         }
     }
-
 }

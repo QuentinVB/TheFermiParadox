@@ -24,16 +24,12 @@ namespace theFermiParadox.Core.Abstracts
 
         }
 
-        [XmlElement("Mass")]
-        public float Mass { get; set; } // kg
+        public double Mass { get; set; } // kg
 
-        [XmlElement("AngularMomentum")]
-        public float AngularMomentum { get; set; } // rad.s-1
+        public double AngularMomentum { get; set; } // rad.s-1
 
-        [XmlElement("Speed")]
-        public float Speed { get; set; } // m.s-1
+        public double Speed { get; set; } // m.s-1
 
-        [XmlElement("SurfaceTemperature")]
-        public float SurfaceTemperature { get; set; } // Kelvin
+        public double SurfaceTemperature { get; set; } // Kelvin
     }
 }
