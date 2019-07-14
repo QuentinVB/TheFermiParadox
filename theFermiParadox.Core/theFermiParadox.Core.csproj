@@ -63,9 +63,9 @@
     <Compile Include="Utilities\Polar3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StellarObjects\Star.cs" />
-    <Compile Include="StellarFactory.cs" />
+    <Compile Include="FactoryParts\StellarFactory.cs" />
     <Compile Include="Models\systemAgeSource.cs" />
-    <Compile Include="SystemFactory.cs" />
+    <Compile Include="FactoryParts\SystemFactory.cs" />
     <Compile Include="Utilities\Vector3.cs" />
     <Compile Include="Utilities\WeightedRandomBag.cs" />
   </ItemGroup>

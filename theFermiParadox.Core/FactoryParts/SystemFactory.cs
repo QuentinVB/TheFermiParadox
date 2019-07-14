@@ -15,20 +15,20 @@ namespace theFermiParadox.Core
             _stellarFactory = stellarFactory;
             randomSource = new Random();
         }
-        /*
+        
         public StellarSystem GetStellarSystem()
         {
             StellarSystem stellarSystem = new StellarSystem();
 
-            List<AStellarObject> stellarCollection = _stellarFactory.GenerateStellarCollection(stellarSystem);
+            List<APhysicalObject> stellarCollection = _stellarFactory.GenerateStellarCollection(stellarSystem);
             
             //system age (the smallest)
-            float systemAge = 0;
-            foreach (AStellarObject stellarObject in stellarCollection)
+            double systemAge = 0;
+            foreach (APhysicalObject stellarObject in stellarCollection)
             {
-                if (stellarObject.GetType().Equals(typeof(Star)))
+                if (stellarObject is Star star)
                 {
-                    if ((stellarObject as Star).Age < systemAge) systemAge = (stellarObject as Star).Age;
+                    if (star.Age < systemAge) systemAge = star.Age;
                 }                
             }
 
@@ -78,7 +78,7 @@ namespace theFermiParadox.Core
             //
             return stellarSystem;
         }
-        */
+        
         /*
         private IOrbit forgeOrbit(ABody A, ABody B, double systemAge)
         {

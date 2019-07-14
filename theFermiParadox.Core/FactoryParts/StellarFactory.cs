@@ -56,8 +56,12 @@ namespace theFermiParadox.Core
 
         }
 
+        public static StellarSystem Create()
+        {
+            throw new NotImplementedException();
+        }
 
-        /*
+        
 
         public List<APhysicalObject> GenerateStellarCollection(StellarSystem stellarSystem)
         {
@@ -68,7 +72,7 @@ namespace theFermiParadox.Core
         {
             List<APhysicalObject> stellarList = new List<APhysicalObject>();
             
-            Console.WriteLine($"star system count : {stellarAmount}");
+            //Console.WriteLine($"star system count : {stellarAmount}");
             //generate stellarList
             for (int i = 0; i < stellarAmount; i++)
             {
@@ -81,7 +85,6 @@ namespace theFermiParadox.Core
             stellarList.Reverse();
             return stellarList;
         }
-        */
  
         public Star GenerateStar(StellarSystem stellarSystem, int starGenerationRand)
         {
@@ -248,7 +251,6 @@ namespace theFermiParadox.Core
     
         private int StarCount()
         {
-            Random randomSource = new Random();
             int count = 1;
             int adder = 0;
             do
