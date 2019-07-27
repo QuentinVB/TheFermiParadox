@@ -9,38 +9,19 @@ using theFermiParadox.DAL;
 
 namespace theFermiParadox.Core
 {
-    public class StellarFactory
+    public partial class SystemFactory //Stellar Part
     {
-        Random randomSource;
-
-        readonly List<StarGeneration> _starGeneration;
-        readonly List<BasicStar> _basicStar;
-        readonly List<StarAge> _systemAgeSource;
-        readonly List<DwarfStar> _whitedwarfs;
-        readonly List<DwarfStar> _browndwarfs;
-
-        public StellarFactory()
-        {
-            _starGeneration= Loader<StarGeneration>.LoadTable("starGeneration.csv");
-            _basicStar = Loader<BasicStar>.LoadTable("basicStar.csv");
-            _systemAgeSource = Loader<StarAge>.LoadTable("systemAge.csv");
-            _whitedwarfs = Loader<DwarfStar>.LoadTable("whitedwarf.csv");
-            _browndwarfs = Loader<DwarfStar>.LoadTable("browndwarf.csv");
-
-            randomSource = new Random();
-        }
-
-        public APhysicalObject GenerateStellarObject(StellarSystem stellar)
+        public APhysicalObject GenerateStellarObject(ref StellarSystem stellar)
         {
             //define star class
-            return GenerateStellarObject(stellar, randomSource.Next(1, 100));
+            return GenerateStellarObject(ref stellar, randomSource.Next(1, 100));
         }
-        public APhysicalObject GenerateStellarObject(StellarSystem stellarSystem, int stellarGenerationRand)
+
+        public APhysicalObject GenerateStellarObject(ref StellarSystem stellarSystem, int stellarGenerationRand)
         {
             if (stellarGenerationRand < 100)
             {
-                //throw new NotImplementedException(); 
-                GenerateStar(stellarSystem,stellarGenerationRand);
+                return GenerateStar(stellarSystem,stellarGenerationRand);
             }
             else
             //Could be B-class stars, giants, neutron stars,protostars or other rare stellar objects
@@ -52,37 +33,33 @@ namespace theFermiParadox.Core
 
                 return gazCloud;
             }
-            return new GazCloud();
 
         }
 
-        public static StellarSystem Create()
-        {
-            throw new NotImplementedException();
-        }
+
 
         
 
-        public List<APhysicalObject> GenerateStellarCollection(StellarSystem stellarSystem)
+        public List<APhysicalObject> GenerateStellarCollection(ref StellarSystem stellarSystem)
         {
-            return GenerateStellarCollection(stellarSystem,StarCount());
+            return GenerateStellarCollection(ref stellarSystem,StarCount());
         }
 
-        public List<APhysicalObject> GenerateStellarCollection(StellarSystem stellarSystem,int stellarAmount)
+        public List<APhysicalObject> GenerateStellarCollection(ref StellarSystem stellarSystem,int stellarAmount)
         {
             List<APhysicalObject> stellarList = new List<APhysicalObject>();
             
-            //Console.WriteLine($"star system count : {stellarAmount}");
             //generate stellarList
             for (int i = 0; i < stellarAmount; i++)
             {
-                stellarList.Add(GenerateStellarObject(stellarSystem));
+                APhysicalObject @object = GenerateStellarObject(ref stellarSystem);
+                stellarSystem.Bodies.Add(@object as ABody);
+                stellarList.Add(@object);
             }
             stellarList.Sort((x, y)=>
             {
-                return x.Mass.CompareTo(y.Mass);
+                return y.Mass.CompareTo(x.Mass);
             });
-            stellarList.Reverse();
             return stellarList;
         }
  

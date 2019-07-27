@@ -8,8 +8,11 @@ namespace theFermiParadox.Core
     public class StellarSystem
     {
         List<ABody> _bodies;
-        APhysicalObject _PhysicalObjectRoot;
-        List<IOrbit> _orbits;
+        ABody _objectRoot;
+        double _systemAge;
+
+        int starCount = 0;
+        int planetCount = 0;
 
         public StellarSystem()
         {
@@ -19,12 +22,9 @@ namespace theFermiParadox.Core
         public void Add(ABody body)
         {
             _bodies.Add(body);
-            
-            /*
-            if(body.GetType().Equals(typeof(AStellarObject))){ _stellarObjects.Add(body as AStellarObject); }
-            if(body.GetType().Equals(typeof(ASystemObject))){ _systemObjects.Add(body as ASystemObject); }
-            _orbits.Add(body.GetOrbit);
-            */
+
+            if (body is Star) starCount ++;
+            if (body is Planet) starCount ++;
         }
 
         public Vector3 Barycenter { get; }
@@ -41,9 +41,10 @@ namespace theFermiParadox.Core
             }
         }
 
-        public List<IOrbit> Orbits { get => _orbits; set => _orbits = value; }
 
-        public APhysicalObject PhysicalObjectRoot { get => _PhysicalObjectRoot; private set => _PhysicalObjectRoot = value; }
+        public ABody PhysicalObjectRoot { get => _objectRoot; private set => _objectRoot = value; }
+        public List<ABody> Bodies { get => _bodies; internal set => _bodies = value; }
+        public double SystemAge { get => _systemAge; internal set => _systemAge = value; }
 
         //list of stellar object associated with orbital parameters
         //list of orbits around each stellar objects

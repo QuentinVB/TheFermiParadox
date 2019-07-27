@@ -2,28 +2,54 @@
 using System.Collections.Generic;
 using System.Text;
 using theFermiParadox.Core.Abstracts;
-
+using theFermiParadox.Core.Models;
+using theFermiParadox.DAL;
 
 namespace theFermiParadox.Core
 {
-    class SystemFactory
+    public partial class SystemFactory
     {
-        StellarFactory _stellarFactory;
         Random randomSource;
-        public SystemFactory(StellarFactory stellarFactory)
+
+        readonly List<StarGeneration> _starGeneration;
+        readonly List<BasicStar> _basicStar;
+        readonly List<StarAge> _systemAgeSource;
+        readonly List<DwarfStar> _whitedwarfs;
+        readonly List<DwarfStar> _browndwarfs;
+
+        public SystemFactory()
         {
-            _stellarFactory = stellarFactory;
+            _starGeneration = Loader<StarGeneration>.LoadTable("starGeneration.csv");
+            _basicStar = Loader<BasicStar>.LoadTable("basicStar.csv");
+            _systemAgeSource = Loader<StarAge>.LoadTable("systemAge.csv");
+            _whitedwarfs = Loader<DwarfStar>.LoadTable("whitedwarf.csv");
+            _browndwarfs = Loader<DwarfStar>.LoadTable("browndwarf.csv");
+
             randomSource = new Random();
         }
-        
+
         public StellarSystem GetStellarSystem()
         {
+            return GetStellarSystem(0);
+        }
+        public StellarSystem GetStellarSystem(int starCount)
+        {
+            
             StellarSystem stellarSystem = new StellarSystem();
 
-            List<APhysicalObject> stellarCollection = _stellarFactory.GenerateStellarCollection(stellarSystem);
-            
+            //generate a collection of StarLike Objects ordered by mass
+            List<APhysicalObject> stellarCollection;
+            if (starCount==0)
+            {
+                stellarCollection = GenerateStellarCollection(ref stellarSystem);
+            }
+            else
+            {
+                stellarCollection = GenerateStellarCollection(ref stellarSystem, starCount);
+            }
+
             //system age (the smallest)
-            double systemAge = 0;
+            double systemAge = double.MaxValue;
             foreach (APhysicalObject stellarObject in stellarCollection)
             {
                 if (stellarObject is Star star)
@@ -32,22 +58,26 @@ namespace theFermiParadox.Core
                 }                
             }
 
-            //set age for each stars based from table
+
+            //TODO : set age modification for each stars based from table
 
             //determining abudance factor
             int abudance = randomSource.Next(1, 20) + (int)systemAge;
             int abudanceModifier = 0;
             if(3 <= abudance && abudance <= 9) abudanceModifier = 2;
-            if(10 <= abudance && abudance <= 12) abudanceModifier = 1;
-            if(13 <= abudance && abudance <= 18) abudanceModifier = 0;
-            if(19 <= abudance && abudance <= 21) abudanceModifier = -1;
-            if(21 <= abudance ) abudanceModifier = -3;
+            else if(10 <= abudance && abudance <= 12) abudanceModifier = 1;
+            else if (13 <= abudance && abudance <= 18) abudanceModifier = 0;
+            else if (19 <= abudance && abudance <= 21) abudanceModifier = -1;
+            else if (21 <= abudance ) abudanceModifier = -3;
 
-            //multiple star case
+            //Building Orbits
+            //By Convention name are A,B,C... in the decreasing mass order
             if(stellarCollection.Count ==2)
             {
                 //B orbiting A
-
+                Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
+                //orbit.MainBody.ChildOrbit.Add(orbit);
+                //orbit.Body.ParentOrbit = orbit;
             }
             else if (stellarCollection.Count == 3)
             {
@@ -76,12 +106,16 @@ namespace theFermiParadox.Core
             //calculating orbits
 
             //
+            stellarSystem.SystemAge = systemAge;
+
             return stellarSystem;
         }
         
-        /*
-        private IOrbit forgeOrbit(ABody A, ABody B, double systemAge)
+        
+        private Orbit ForgeOrbit(ABody A, ABody B, double systemAge)
         {
+           
+
             int OrbitalEccentricityRand = 0;
 
             //Mean Separation p10
@@ -91,8 +125,8 @@ namespace theFermiParadox.Core
 
             meanSeparationRand = PhysicHelpers.Clamp(meanSeparationRand, 1, 10);
             float meanSeparation = 0;
-            if (1 <= meanSeparationRand && meanSeparationRand <= 3) {meanSeparation = randomSource.Next(1, 10) * 0.05; OrbitalEccentricityRand -= 2; }//AU
-            if (4 <= meanSeparationRand && meanSeparationRand <= 6) { meanSeparation = randomSource.Next(1, 10) * 0.5; OrbitalEccentricityRand--; } //AU
+            if (1 <= meanSeparationRand && meanSeparationRand <= 3) {meanSeparation = randomSource.Next(1, 10) * 0.05f; OrbitalEccentricityRand -= 2; }//AU
+            if (4 <= meanSeparationRand && meanSeparationRand <= 6) { meanSeparation = randomSource.Next(1, 10) * 0.5f; OrbitalEccentricityRand--; } //AU
             if (7 <= meanSeparationRand && meanSeparationRand <= 8) meanSeparation = randomSource.Next(1,10)* 3; //AU
             if (meanSeparationRand== 9) meanSeparation = randomSource.Next(1,10)* 20; //AU
             if (meanSeparationRand== 10) meanSeparation = randomSource.Next(1,100)* 200; //AU
@@ -115,12 +149,22 @@ namespace theFermiParadox.Core
             float periapsis = meanSeparation * (1 + OrbitalEccentricity);
 
             //Orbital Period
-            TimeSpan OrbitalPeriod = new TimeSpan((long)(Math.Pow(Math.Pow(meanSeparation, 3) / (A.Mass + B.Mass), 0.5)));
-                
+            //if virtual => take mass of childs
+            //TimeSpan OrbitalPeriod = new TimeSpan((long)(Math.Pow(Math.Pow(meanSeparation, 3) / (A.Mass + B.Mass), 0.5)));
 
 
-        }*/
+            //Finaly, put together
+            Orbit orbit = new Orbit(A, B)
+            {
+                Apoapsis = apoapsis,
+                Periapsis = periapsis,
+                Eccentricity = OrbitalEccentricity
+            };
 
+
+            return orbit;
+        }
+        
 
 
     }

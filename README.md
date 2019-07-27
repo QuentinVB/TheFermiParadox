@@ -13,6 +13,8 @@ The secondary output will be color/bump/spec maps of the planets for 3D applicat
 # Required Data
 A set of csv 
 
+ - Naming ? (using the same system from my python project)
+
 # Architecture
 rebuild in progress
 14/07/19 : change to csv data source, major rework of the architecture

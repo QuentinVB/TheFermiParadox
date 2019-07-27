@@ -13,23 +13,22 @@ namespace theFermiParadox.ManualTests
         {
             Console.WriteLine("Loading...");
 
-            StellarFactory stellarFactory = new StellarFactory();
+            SystemFactory systemFactory = new SystemFactory();
 
             StellarSystem system = new StellarSystem();
 
             Random randSource = new Random();
 
-            Star star = stellarFactory.GenerateStar(system, randSource.Next(0,100));
-            Console.WriteLine(star);
-            /*
-            StellarFactory stellarFactory = new StellarFactory();
-            List<AStellarObject> stellarList = stellarFactory.GenerateStellarCollection(    );
+            //Star star = systemFactory.GenerateStar(system, randSource.Next(0,100));
+            //Console.WriteLine(star);
+            StellarSystem stellarSystem = systemFactory.GetStellarSystem(2);
+            //List<APhysicalObject> stellarList = systemFactory.GenerateStellarCollection(ref stellarSystem);
             //to show
-            foreach (AStellarObject stellarObject in stellarList)
+            foreach (APhysicalObject stellarObject in stellarSystem.Bodies)
             {
                 Console.WriteLine(stellarObject);
             }
-            */
+            
             Console.ReadLine();
         }
     }
