@@ -25,7 +25,7 @@ namespace Helpers
             if (q == 0) throw new DivideByZeroException();
             return new Vector3(a.X / q, a.Y / q, a.Z / q);
         }
-        //static method//
+        //static methods//
         public static double Distance(Vector3 a, Vector3 b) => Math.Sqrt(Math.Pow((a.X - b.X), 2) + Math.Pow((a.Y - b.Y), 2) + Math.Pow((a.Z - b.Z), 2));
         public static double DotProduct(Vector3 a, Vector3 b) => a.Length * b.Length * Math.Cos(Angle(a, b));
         public static Angle Angle(Vector3 a, Vector3 b)

@@ -8,7 +8,7 @@ using theFermiParadox.Core;
 
 namespace theFermiParadox.Core.Abstracts
 {
-    public abstract class APhysicalObject : ABody
+    public abstract class APhysicalObject : ABody, IOrbitable
     {
         public APhysicalObject()
             : base("x", null)
