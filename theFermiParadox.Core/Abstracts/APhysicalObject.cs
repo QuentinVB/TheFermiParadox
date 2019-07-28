@@ -31,5 +31,8 @@ namespace theFermiParadox.Core.Abstracts
         public double Speed { get; set; } // m.s-1
 
         public double SurfaceTemperature { get; set; } // Kelvin
+
+        public double Radius { get; set; }
+
     }
 }

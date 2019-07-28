@@ -45,9 +45,11 @@
   <ItemGroup>
     <Compile Include="Abstracts\ABody.cs" />
     <Compile Include="Abstracts\APhysicalObject.cs" />
+    <Compile Include="Abstracts\IOrbitable.cs" />
     <Compile Include="Models\BasicStar.cs" />
     <Compile Include="Models\StarGeneration.cs" />
     <Compile Include="SystemObjects\Planet.cs" />
+    <Compile Include="Utilities\Attributes.cs" />
     <Compile Include="Utilities\Orbit.cs" />
     <Compile Include="StellarObjects\BlackHole.cs" />
     <Compile Include="StellarObjects\NeutronStar.cs" />

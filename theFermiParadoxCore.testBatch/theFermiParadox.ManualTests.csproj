@@ -51,6 +51,10 @@
       <Project>{6deaa57b-06ab-4088-9e0b-2b8c177d8bd2}</Project>
       <Name>theFermiParadox.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\theFermiParadox.DAL\theFermiParadox.DAL.csproj">
+      <Project>{0995F4C0-9603-4AEE-81DF-7F8D7D848813}</Project>
+      <Name>theFermiParadox.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

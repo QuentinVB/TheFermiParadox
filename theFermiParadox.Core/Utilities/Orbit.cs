@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core
 {
@@ -155,7 +157,9 @@ namespace theFermiParadox.Core
 
         //DRAWING
         public Vector3 CenterPosition { get { return new Vector3(); } }
+        [NonPrintable]
         public IOrbitable MainBody { get => _mainBody; }
+        [NonPrintable]
         public IOrbitable Body { get => _body; }
 
         public double Width { get => MajorAxis; }
@@ -180,17 +184,19 @@ namespace theFermiParadox.Core
             _apoapsis = meanAnomaly*(1 - eccentricity);
             _periapsis = meanAnomaly* (1 + eccentricity);
 
-            //THAR BE DRAGONZ
-            _orbitalPeriod = new TimeSpan((long)(Math.Sqrt(Math.Pow(meanAnomaly, 3) / (_mainBody.Mass + _body.Mass)))/100);
+            _eccentricAnomaly = ComputeEccentricAnomaly(Eccentricity, MeanAnomaly);
 
+
+            //THAR BE DRAGONZ
             _time = _epoch;
+            _orbitalPeriod = new TimeSpan((long)(Math.Sqrt(Math.Pow(MeanAnomaly, 3) / (_mainBody.Mass + _body.Mass)))/100);
 
         }
 
         public void UpdateTime(TimeSpan timeOffset)
         {
             _time += timeOffset;
-            _meanAnomaly = MeanMotion * (_time - _epoch).Seconds;
+            _meanAnomaly = MeanMotion * (_time - _epoch).Ticks;
             _eccentricAnomaly = ComputeEccentricAnomaly(Eccentricity, MeanAnomaly);
         }
 
@@ -204,6 +210,32 @@ namespace theFermiParadox.Core
                 E -= dE;
             }
             return E;
-         }      
+         }
+        public override string ToString()
+        {
+            string rslt = "";
+            foreach (PropertyInfo p in this.GetType().GetProperties().ToList())
+            {
+                System.Attribute[] attrs = System.Attribute.GetCustomAttributes(p);
+                bool isPrintable=true;
+                foreach (System.Attribute attr in attrs)
+                {
+                    if (attr is NonPrintable)
+                    {
+                        isPrintable = false;
+                    }
+                }
+                if(isPrintable)
+                {
+                    rslt += "  " + p.Name + " : " + (this.GetType().GetProperty(p.Name).GetValue(this, null) ?? "none").ToString() + "\n";
+
+                }
+                else
+                {
+                    rslt += "  " + p.Name + "\n";
+                }
+            }
+            return rslt;
+        }
     }
 }

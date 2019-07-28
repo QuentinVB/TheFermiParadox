@@ -85,7 +85,6 @@ namespace theFermiParadox.Core
 
         public double Age { get; set; }
 
-        public double Radius { get; set; }
 
         public BasicColor StarColor { get { return PhysicHelpers.ColorTemperatureToARGB((int)SurfaceTemperature); } }
 

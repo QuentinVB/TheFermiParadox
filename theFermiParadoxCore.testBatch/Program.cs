@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using theFermiParadox.Core;
 using theFermiParadox.Core.Abstracts;
+using theFermiParadox.DAL;
 
 namespace theFermiParadox.ManualTests
 {
@@ -15,20 +16,24 @@ namespace theFermiParadox.ManualTests
 
             SystemFactory systemFactory = new SystemFactory();
 
-            StellarSystem system = new StellarSystem();
 
-            Random randSource = new Random();
-
-            //Star star = systemFactory.GenerateStar(system, randSource.Next(0,100));
-            //Console.WriteLine(star);
             StellarSystem stellarSystem = systemFactory.GetStellarSystem(2);
-            //List<APhysicalObject> stellarList = systemFactory.GenerateStellarCollection(ref stellarSystem);
-            //to show
-            foreach (APhysicalObject stellarObject in stellarSystem.Bodies)
-            {
-                Console.WriteLine(stellarObject);
-            }
+
+            TimeSpan timeOffset = new TimeSpan(1, 0, 0, 0, 0);
+            Printer<Orbit>.PrintHeader("orbitRecord.csv", stellarSystem.Orbits[0]);
             
+            for (int i = 0; i < 10; i++)
+            {
+                stellarSystem.Orbits[0].UpdateTime(timeOffset);
+                Printer<Orbit>.PrintRecord("orbitRecord.csv", stellarSystem.Orbits[0]);
+            }
+
+    
+
+
+            Console.WriteLine("Finished...");
+
+
             Console.ReadLine();
         }
     }
