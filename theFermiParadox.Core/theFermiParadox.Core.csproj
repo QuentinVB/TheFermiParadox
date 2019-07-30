@@ -46,6 +46,7 @@
     <Compile Include="Abstracts\ABody.cs" />
     <Compile Include="Abstracts\APhysicalObject.cs" />
     <Compile Include="Abstracts\IOrbitable.cs" />
+    <Compile Include="FactoryParts\OrbitalFactoryPart.cs" />
     <Compile Include="Models\BasicStar.cs" />
     <Compile Include="Models\StarGeneration.cs" />
     <Compile Include="SystemObjects\Planet.cs" />
@@ -59,7 +60,7 @@
     <Compile Include="Utilities\BasicColor.cs" />
     <Compile Include="Models\dwarfSource.cs" />
     <Compile Include="StellarObjects\GazCloud.cs" />
-    <Compile Include="Utilities\PhysicHelpers.cs" />
+    <Compile Include="Utilities\Physic.cs" />
     <Compile Include="Utilities\Polar3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StellarObjects\Star.cs" />

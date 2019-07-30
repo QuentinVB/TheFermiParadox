@@ -7,7 +7,7 @@ using System.Text;
 namespace theFermiParadox.Core
 {
     
-    class PhysicHelpers
+    public class Physic
     {
         public const double GravitationalConstant = 6.673e-11;//N⋅m2⋅kg-2
         public const double SolarMass = 1.9884e30;//kg

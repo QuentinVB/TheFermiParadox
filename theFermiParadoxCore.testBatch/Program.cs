@@ -14,21 +14,22 @@ namespace theFermiParadox.ManualTests
         {
             Console.WriteLine("Loading...");
 
-            SystemFactory systemFactory = new SystemFactory();
+            SystemFactory systemFactory = new SystemFactory(true);
 
 
             StellarSystem stellarSystem = systemFactory.GetStellarSystem(2);
 
             TimeSpan timeOffset = new TimeSpan(1, 0, 0, 0, 0);
-            Printer<Orbit>.PrintHeader("orbitRecord.csv", stellarSystem.Orbits[0]);
-            
-            for (int i = 0; i < 10; i++)
+            //Printer<Orbit>.PrintHeader("orbitRecord.csv", stellarSystem.Orbits[0]);
+
+            List<Orbit> orbitalStates = new List<Orbit>();
+
+            for (int i = 0; i < 50; i++)
             {
                 stellarSystem.Orbits[0].UpdateTime(timeOffset);
-                Printer<Orbit>.PrintRecord("orbitRecord.csv", stellarSystem.Orbits[0]);
+                orbitalStates.Add((Orbit)stellarSystem.Orbits[0].Clone());
             }
-
-    
+            Printer<Orbit>.PrintTable("orbitRecord.csv", orbitalStates);
 
 
             Console.WriteLine("Finished...");

@@ -12,6 +12,10 @@ namespace theFermiParadox.DAL
             using (var writer = new StreamWriter(filePath))
             using (var csv = new CsvWriter(writer))
             {
+                csv.Configuration.Delimiter = ";";
+                csv.Configuration.HasHeaderRecord = true;
+                csv.Configuration.AutoMap<T>();
+
                 csv.WriteRecords(records);     
                 
             }
@@ -22,7 +26,6 @@ namespace theFermiParadox.DAL
             using (var csv = new CsvWriter(writer))
             {
                 csv.WriteHeader(record.GetType());
-
             }
         }
         public static void PrintRecord(string filePath,T record)
@@ -30,6 +33,7 @@ namespace theFermiParadox.DAL
             using (var writer = new StreamWriter(filePath))
             using (var csv = new CsvWriter(writer))
             {
+                csv.NextRecord();
                 csv.WriteRecord(record);
             }
         }

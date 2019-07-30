@@ -19,6 +19,7 @@ namespace theFermiParadox.Core
 
         public APhysicalObject GenerateStellarObject(ref StellarSystem stellarSystem, int stellarGenerationRand)
         {
+            if (_testMode) return GenerateStar(stellarSystem, stellarGenerationRand);
             if (stellarGenerationRand < 100)
             {
                 return GenerateStar(stellarSystem,stellarGenerationRand);
@@ -48,14 +49,50 @@ namespace theFermiParadox.Core
         public List<APhysicalObject> GenerateStellarCollection(ref StellarSystem stellarSystem,int stellarAmount)
         {
             List<APhysicalObject> stellarList = new List<APhysicalObject>();
-            
+
             //generate stellarList
-            for (int i = 0; i < stellarAmount; i++)
+            if (_testMode)
             {
-                APhysicalObject @object = GenerateStellarObject(ref stellarSystem);
+                APhysicalObject @object = new Star("Sun", stellarSystem)
+                {
+                    StarClass = "G",
+                    SizeCode = 2,
+                    SpectralClass = 5,
+                    Luminosity = 0.1,
+                    SurfaceTemperature = 5000,
+                    Radius = 1*Physic.SolarRadius,
+                    Mass = 1*Physic.SolarMass,
+                };
+                stellarSystem.Bodies.Add(@object as ABody);
+                stellarList.Add(@object);
+
+                @object = new Star("Nemesis", stellarSystem)
+                {
+                    StarClass = "D",
+                    SizeCode = 2,
+                    SpectralClass = 5,
+                    Luminosity = 0.01,
+                    SurfaceTemperature = 3000,
+                    Radius = 0.2 * Physic.SolarRadius,
+                    Mass = 0.2 * Physic.SolarMass,
+                };
                 stellarSystem.Bodies.Add(@object as ABody);
                 stellarList.Add(@object);
             }
+            else
+            {
+                for (int i = 0; i < stellarAmount; i++)
+                {
+
+                    APhysicalObject @object = GenerateStellarObject(ref stellarSystem);
+                    stellarSystem.Bodies.Add(@object as ABody);
+                    stellarList.Add(@object);
+                }
+                
+            }
+
+
+
             stellarList.Sort((x, y)=>
             {
                 return y.Mass.CompareTo(x.Mass);
@@ -65,6 +102,8 @@ namespace theFermiParadox.Core
  
         public Star GenerateStar(StellarSystem stellarSystem, int starGenerationRand)
         {
+
+            
             //star generation
             Star star;
 
@@ -210,7 +249,7 @@ namespace theFermiParadox.Core
 
                 star.Mass = dwarfData.Mass;
                 star.Radius = dwarfData.Radius;
-                dwarfGenerationRand = PhysicHelpers.Clamp(dwarfGenerationRand + starAge.TemperatureRollModifier, 1,10);
+                dwarfGenerationRand = Physic.Clamp(dwarfGenerationRand + starAge.TemperatureRollModifier, 1,10);
                 dwarfData =
                     (starClass == "D") ?
                     _whitedwarfs.Find(x => x.Random == dwarfGenerationRand)

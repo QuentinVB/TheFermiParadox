@@ -109,11 +109,11 @@ namespace Helpers
             return a.AngleValue;
         }
         /// <summary>
-        /// User-defined conversion from double to Angle, unit is degree by default
+        /// User-defined conversion from double to Angle, unit is radian by default
         /// </summary>
         public static implicit operator Angle(double d)
         {
-            return new Angle(d,AngleUnit.degree);
+            return new Angle(d,AngleUnit.radian);
         }
         public override string ToString()
         {
