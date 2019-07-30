@@ -16,24 +16,24 @@ namespace theFermiParadox.ManualTests
 
             SystemFactory systemFactory = new SystemFactory(true);
 
-
             StellarSystem stellarSystem = systemFactory.GetStellarSystem(2);
 
-            TimeSpan timeOffset = new TimeSpan(1, 0, 0, 0, 0);
+            TimeSpan timeOffset = new TimeSpan(365, 0, 0, 0, 0);
             //Printer<Orbit>.PrintHeader("orbitRecord.csv", stellarSystem.Orbits[0]);
 
             List<Orbit> orbitalStates = new List<Orbit>();
 
-            for (int i = 0; i < 50; i++)
+            int max = 3000;
+            for (int i = 0; i < max; i++)
             {
                 stellarSystem.Orbits[0].UpdateTime(timeOffset);
                 orbitalStates.Add((Orbit)stellarSystem.Orbits[0].Clone());
+                Console.WriteLine($"{i}/{max}");
             }
             Printer<Orbit>.PrintTable("orbitRecord.csv", orbitalStates);
 
-
             Console.WriteLine("Finished...");
-
+            Console.WriteLine($"{stellarSystem.Orbits[0].OrbitalPeriod/(24*60*60*365)} years");
 
             Console.ReadLine();
         }

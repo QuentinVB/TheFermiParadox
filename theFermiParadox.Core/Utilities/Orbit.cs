@@ -24,9 +24,9 @@ namespace theFermiParadox.Core
         private Angle _argumentOfPeriapsis = 0;
 
         private readonly DateTime _startDate;
-        private TimeSpan _orbitalPeriod;
+        private ulong _orbitalPeriod;
 
-        private TimeSpan _time;
+        private ulong _time;
         private double _eccentricAnomaly=0;
 
 
@@ -69,21 +69,14 @@ namespace theFermiParadox.Core
 
             //initialise internal value
             _startDate = epoch;
-            _time = new TimeSpan();
+            _time = 0;
             _eccentricity = eccentricity;
             _meanAnomaly = 0;
             _apoapsis = meanDistance * (1 + eccentricity);
             _periapsis = meanDistance * (1 - eccentricity);
 
             //THAR BE DRAGONZ
-            long nanosecondPeriod = (long)(
-                    1e+9 * 2 * Math.PI * Math.Sqrt(
-                            SemiMajorAxis * SemiMajorAxis * SemiMajorAxis /
-                            (Physic.GravitationalConstant * _mainBody.Mass)
-                            )
-                     );
-            _orbitalPeriod = new TimeSpan(nanosecondPeriod
-                );
+            _orbitalPeriod = (ulong)(2 * Math.PI * Math.Sqrt(SemiMajorAxis * SemiMajorAxis * SemiMajorAxis/(Physic.GravitationalConstant * _mainBody.Mass)));
         }
         //INITIALS
 
@@ -96,9 +89,9 @@ namespace theFermiParadox.Core
         /// </summary>
         public double Periapsis { get => _periapsis; }
         /// <summary>
-        /// period aroud the orbital focus (in seconds)
+        /// period around the orbital focus (in seconds)
         /// </summary>
-        public TimeSpan OrbitalPeriod { get => _orbitalPeriod; }
+        public ulong OrbitalPeriod { get => _orbitalPeriod; }
         /// <summary>
         /// derivation from perfect circle : 0 is circle, below 1 is elipsoid, above is a escape trajectory (no units)
         /// </summary>
@@ -106,7 +99,7 @@ namespace theFermiParadox.Core
         /// <summary>
         /// time since t0
         /// </summary>
-        public TimeSpan ElapsedTime { get => _time; }
+        public ulong ElapsedTime { get => _time; }
         /// <summary>
         /// The t0 of the orbit, when smaller body is at periapsis, used to calculate every position from this reference point in time
         /// </summary>
@@ -114,11 +107,8 @@ namespace theFermiParadox.Core
         /// <summary>
         /// The actual time, in human earth format
         /// </summary>
-        public DateTime Date => _startDate.AddSeconds(_time.TotalSeconds);
-        /// <summary>
-        /// And updated each time the time update
-        /// </summary>
-        public Angle MeanAnomaly { get => _meanAnomaly; }
+        public DateTime Date => _startDate.AddSeconds(_time);
+
 
 
         //DERIVED
@@ -143,31 +133,39 @@ namespace theFermiParadox.Core
         /// </summary>
         public double SemiLatusRectum { get => Math.Pow(SemiMajorAxis,2)/SemiMajorAxis; }
         /// <summary>
-        /// mean motion around the orbit (in m.s-1)
+        /// The mean motion around the orbit (in rad.s-1)
         /// </summary>
-        public double MeanMotion { get => Math.Sqrt(
-                    (Physic.GravitationalConstant *(_mainBody.Mass + _body.Mass )) /Math.Pow(SemiMajorAxis,3)); }
+        public double MeanMotion {
+            get => 2 * Math.PI / OrbitalPeriod; 
+            /*get => Math.Sqrt(
+                    (Physic.GravitationalConstant *(_mainBody.Mass + _body.Mass )) 
+                    /Math.Pow(SemiMajorAxis,3)
+            );*/ }
 
         //VARIABLE IN TIME
         /// <summary>
-        /// The current time of the system, thus derivate all the motion calculus
+        /// Updated each time the time update (in rad.s-1)
         /// </summary>
-        public TimeSpan CurrentTime { get => _time; }
+        public Angle MeanAnomaly { get => _meanAnomaly; }
+        /// <summary>
+        /// The current time of the system, thus derivate all the motion calculus (in s)
+        /// </summary>
+        public ulong CurrentTime { get => _time; }
 
         /// <summary>
-        /// The local eccentric anomaly, recalculated everytime the time update
-        /// </summary>
+        /// The local eccentric anomaly, recalculated everytime the time update (no unit)
+        /// </summary> 
         public double EccentricAnomaly { get => _eccentricAnomaly; }
         /// <summary>
-        /// the current distance between the main body and the smaller body
+        /// the current distance between the main body and the smaller body (in m)
         /// </summary>
         public double CurrentRadius { get => SemiMajorAxis * (1 - Math.Cos(EccentricAnomaly)); }
         /// <summary>
-        /// angle between periapsis and actual position of the smaller body on the orbit (i in rad)
+        /// real angle between periapsis and actual position of the smaller body on the orbit (in rad)
         /// </summary>
         public Angle TrueAnomaly { get => 2 * Math.Atan(Math.Sqrt((1+Eccentricity)/(1-Eccentricity)) * Math.Tan(EccentricAnomaly/2) ); }
 
-        //INCLINAISON (NOT SUPPORTED)
+        //INCLINAISON (NOT SUPPORTED YET)
         /// <summary>
         /// inclination of the orbit from ecliptic (i in degree)
         /// </summary>
@@ -182,8 +180,14 @@ namespace theFermiParadox.Core
         //public Angle ArgumentOfPeriapsis { get => _argumentOfPeriapsis; }
 
 
-        //DRAWING
-        public Vector3 CenterPosition { get { return new Vector3(); } }
+        //DRAWING FUNCTIONS
+        /// <summary>
+        /// The center of the orbit in the World coordinates
+        /// </summary>
+        public Vector3 CenterPosition { get; set; }
+
+        public Vector3 MainBodyOffset { get => new Vector3(MajorAxis-Periapsis, 0, 0); }
+
         [NonPrintable]
         public IOrbitable MainBody { get => _mainBody; }
         [NonPrintable]
@@ -191,7 +195,9 @@ namespace theFermiParadox.Core
 
         public double Width { get => MajorAxis; }
         public double Height { get=> MinorAxis; }
-
+        /// <summary>
+        /// The current body position, in the cartesian vector of the center of the orbit
+        /// </summary>
         public Vector3 CurrentBodyPosition => new Vector3(
             SemiMajorAxis * (Math.Cos(EccentricAnomaly) - Eccentricity),
             SemiMinorAxis*Math.Sin(EccentricAnomaly),
@@ -204,10 +210,10 @@ namespace theFermiParadox.Core
          */
         public void UpdateTime(TimeSpan timeOffset)
         {
-            _time += timeOffset;
+            _time += (uint)timeOffset.TotalSeconds;
             //THAR BE DRAGONZ
             //add mean anomaly at 0 
-            _meanAnomaly =  (MeanMotion * _time.TotalSeconds)%(2*Math.PI); 
+            _meanAnomaly =  (MeanMotion * _time)%(2*Math.PI); 
             _eccentricAnomaly = ComputeEccentricAnomaly(Eccentricity, MeanAnomaly);
         }
 
@@ -239,7 +245,6 @@ namespace theFermiParadox.Core
                 if(isPrintable)
                 {
                     rslt += "  " + p.Name + " : " + (this.GetType().GetProperty(p.Name).GetValue(this, null) ?? "none").ToString() + "\n";
-
                 }
                 else
                 {

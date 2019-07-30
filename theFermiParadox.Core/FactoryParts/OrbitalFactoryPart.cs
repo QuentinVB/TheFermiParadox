@@ -54,7 +54,7 @@ namespace theFermiParadox.Core
             //Finaly, put together
             if (_testMode)
             {
-                orbit = new Orbit(A, B, DateTime.Now, 0.0, 0.1 * Physic.AstronomicUnit);
+                orbit = new Orbit(A, B, DateTime.Now, 0.0,1 * Physic.AstronomicUnit);
             }
             else
             {
