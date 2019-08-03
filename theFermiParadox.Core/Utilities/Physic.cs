@@ -16,7 +16,8 @@ namespace theFermiParadox.Core
         public const double StefanBoltzmanConstant = 5.670374e-8;//W.m-2.K-4
         public const double AstronomicUnit = 1.49597870e11;//m
         public const double LightSpeed = 299792458;//m.s-1
-        
+        public const double LightYear = LightSpeed * 365 * 24 * 60 * 60; //m
+
         public static double GravitationnalForce(double massA, double massB, double distance) => GravitationalConstant * (massA * massB) / distance;
 
         public static BasicColor ColorTemperatureToARGB(int kelvin)

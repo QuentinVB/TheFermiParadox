@@ -45,9 +45,9 @@ namespace theFermiParadox.Core
                 else if (OrbitalEccentricityRand == 9) orbitalEccentricity = 0.04f + adder * 0.01f;
                 else if (OrbitalEccentricityRand == 10) orbitalEccentricity = 0.05f + adder * 0.04f;
 
-                periapsis = meanDistance * (1 + orbitalEccentricity);
+                periapsis = meanDistance * Physic.AstronomicUnit * (1 + orbitalEccentricity);
             }
-            while (periapsis > A.Radius+B.Radius); //periapsis<radiusA+radiusB
+            while (periapsis < A.Radius * Physic.SolarRadius + B.Radius * Physic.SolarRadius); //periapsis<radiusA+radiusB
             //TEST FOR EDGE CASES (ex radius<body radius)
 
             Orbit orbit;
@@ -58,7 +58,7 @@ namespace theFermiParadox.Core
             }
             else
             {
-                orbit = new Orbit(A, B, DateTime.Now, orbitalEccentricity, meanDistance);
+                orbit = new Orbit(A, B, DateTime.Now, orbitalEccentricity, meanDistance * Physic.AstronomicUnit);
             }
             
             return orbit;

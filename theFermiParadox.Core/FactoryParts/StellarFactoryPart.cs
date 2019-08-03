@@ -60,8 +60,8 @@ namespace theFermiParadox.Core
                     SpectralClass = 5,
                     Luminosity = 0.1,
                     SurfaceTemperature = 5000,
-                    Radius = 1*Physic.SolarRadius,
-                    Mass = 1*Physic.SolarMass,
+                    Radius = 1,
+                    Mass = 1,
                 };
                 stellarSystem.Bodies.Add(@object as ABody);
                 stellarList.Add(@object);
@@ -73,8 +73,8 @@ namespace theFermiParadox.Core
                     SpectralClass = 5,
                     Luminosity = 0.01,
                     SurfaceTemperature = 3000,
-                    Radius = 0.2 * Physic.SolarRadius,
-                    Mass = 0.2 * Physic.SolarMass,
+                    Radius = 0.2 ,
+                    Mass = 0.2 ,
                 };
                 stellarSystem.Bodies.Add(@object as ABody);
                 stellarList.Add(@object);
@@ -90,8 +90,6 @@ namespace theFermiParadox.Core
                 }
                 
             }
-
-
 
             stellarList.Sort((x, y)=>
             {

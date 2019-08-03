@@ -24,7 +24,7 @@ namespace theFermiParadox.Core.Abstracts
 
         }
 
-        public double Mass { get; set; } // kg
+        public double Mass { get; set; } // in Solar Mass
 
         public double AngularMomentum { get; set; } // rad.s-1
 
@@ -32,7 +32,7 @@ namespace theFermiParadox.Core.Abstracts
 
         public double SurfaceTemperature { get; set; } // Kelvin
 
-        public double Radius { get; set; }
+        public double Radius { get; set; } // in solar Radii
 
     }
 }

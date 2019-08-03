@@ -26,7 +26,9 @@ namespace theFermiParadox.Core
             _bodies.Add(body);
 
             if (body is Star) starCount ++;
-            if (body is Planet) starCount ++;
+            if (body is Planet) planetCount++;
+
+            //keeping it sorted by mass ?
         }
 
         public Vector3 Barycenter { get; }
@@ -44,7 +46,7 @@ namespace theFermiParadox.Core
         }
 
 
-        public ABody PhysicalObjectRoot { get => _objectRoot; private set => _objectRoot = value; }
+        public ABody PhysicalObjectRoot { get => _objectRoot; internal set => _objectRoot = value; }
         public List<ABody> Bodies { get => _bodies; internal set => _bodies = value; }
         public double SystemAge { get => _systemAge; internal set => _systemAge = value; }
         public List<Orbit> Orbits { get => _orbits; set => _orbits = value; }

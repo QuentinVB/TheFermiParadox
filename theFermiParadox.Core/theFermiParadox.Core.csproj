@@ -49,6 +49,7 @@
     <Compile Include="FactoryParts\OrbitalFactoryPart.cs" />
     <Compile Include="Models\BasicStar.cs" />
     <Compile Include="Models\StarGeneration.cs" />
+    <Compile Include="StellarObjects\Barycenter.cs" />
     <Compile Include="SystemObjects\Planet.cs" />
     <Compile Include="Utilities\Attributes.cs" />
     <Compile Include="Utilities\Orbit.cs" />

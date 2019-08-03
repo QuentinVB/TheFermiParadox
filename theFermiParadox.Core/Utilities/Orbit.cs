@@ -9,8 +9,8 @@ using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core
 {
-//https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion#Position_as_a_function_of_time
-//https://space.stackexchange.com/questions/8911/determining-orbital-position-at-a-future-point-in-time
+    //https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion#Position_as_a_function_of_time
+    //https://space.stackexchange.com/questions/8911/determining-orbital-position-at-a-future-point-in-time
     public class Orbit : ICloneable
     {
         private double _eccentricity;
@@ -18,8 +18,8 @@ namespace theFermiParadox.Core
 
         private double _apoapsis;
         private double _periapsis;
-        
-        private Angle _inclination=0;
+
+        private Angle _inclination = 0;
         private Angle _longitudeOfAscendingNode = 0;
         private Angle _argumentOfPeriapsis = 0;
 
@@ -27,10 +27,9 @@ namespace theFermiParadox.Core
         private ulong _orbitalPeriod;
 
         private ulong _time;
-        private double _eccentricAnomaly=0;
+        private double _eccentricAnomaly = 0;
 
 
-        //private Vector3 _position;
         IOrbitable _mainBody;
         IOrbitable _body;
 
@@ -76,7 +75,7 @@ namespace theFermiParadox.Core
             _periapsis = meanDistance * (1 - eccentricity);
 
             //THAR BE DRAGONZ
-            _orbitalPeriod = (ulong)(2 * Math.PI * Math.Sqrt(SemiMajorAxis * SemiMajorAxis * SemiMajorAxis/(Physic.GravitationalConstant * _mainBody.Mass)));
+            _orbitalPeriod = (ulong)(2 * Math.PI * Math.Sqrt(SemiMajorAxis * SemiMajorAxis * SemiMajorAxis / (Physic.GravitationalConstant * _mainBody.Mass * Physic.SolarMass)));
         }
         //INITIALS
 
@@ -97,7 +96,7 @@ namespace theFermiParadox.Core
         /// </summary>
         public double Eccentricity { get => _eccentricity; }
         /// <summary>
-        /// time since t0
+        /// time since t0 (in seconds)
         /// </summary>
         public ulong ElapsedTime { get => _time; }
         /// <summary>
@@ -105,17 +104,15 @@ namespace theFermiParadox.Core
         /// </summary>
         public DateTime Epoch => _startDate;
         /// <summary>
-        /// The actual time, in human earth format
+        /// The actual time of the orbit, in human earth format
         /// </summary>
-        public DateTime Date => _startDate.AddSeconds(_time);
-
-
+        public DateTime CurrentDate => _startDate.AddSeconds(_time);
 
         //DERIVED
         /// <summary>
         /// the major axis, the longest diameter (in meters)
         /// </summary>
-        public double MajorAxis { get => _periapsis+_apoapsis; }
+        public double MajorAxis { get => _periapsis + _apoapsis; }
         /// <summary>
         /// the semi major axis, the longest diameter divided by 2(in meters)
         /// </summary>
@@ -123,24 +120,19 @@ namespace theFermiParadox.Core
         /// <summary>
         /// the minor axis, the shortest diameter (in meters)
         /// </summary>
-        public double MinorAxis { get => SemiMinorAxis*2; }
+        public double MinorAxis { get => SemiMinorAxis * 2; }
         /// <summary>
         /// the minor axis, the shortest diameter (in meters)
         /// </summary>
-        public double SemiMinorAxis { get => Math.Sqrt(_apoapsis*_periapsis); }
+        public double SemiMinorAxis { get => Math.Sqrt(_apoapsis * _periapsis); }
         /// <summary>
         /// the chord above the focii (in meters)
         /// </summary>
-        public double SemiLatusRectum { get => Math.Pow(SemiMajorAxis,2)/SemiMajorAxis; }
+        public double SemiLatusRectum { get => Math.Pow(SemiMajorAxis, 2) / SemiMajorAxis; }
         /// <summary>
         /// The mean motion around the orbit (in rad.s-1)
         /// </summary>
-        public double MeanMotion {
-            get => 2 * Math.PI / OrbitalPeriod; 
-            /*get => Math.Sqrt(
-                    (Physic.GravitationalConstant *(_mainBody.Mass + _body.Mass )) 
-                    /Math.Pow(SemiMajorAxis,3)
-            );*/ }
+        public double MeanMotion { get => 2 * Math.PI / OrbitalPeriod; }
 
         //VARIABLE IN TIME
         /// <summary>
@@ -163,7 +155,7 @@ namespace theFermiParadox.Core
         /// <summary>
         /// real angle between periapsis and actual position of the smaller body on the orbit (in rad)
         /// </summary>
-        public Angle TrueAnomaly { get => 2 * Math.Atan(Math.Sqrt((1+Eccentricity)/(1-Eccentricity)) * Math.Tan(EccentricAnomaly/2) ); }
+        public Angle TrueAnomaly { get => 2 * Math.Atan(Math.Sqrt((1 + Eccentricity) / (1 - Eccentricity)) * Math.Tan(EccentricAnomaly / 2)); }
 
         //INCLINAISON (NOT SUPPORTED YET)
         /// <summary>
@@ -186,7 +178,7 @@ namespace theFermiParadox.Core
         /// </summary>
         public Vector3 CenterPosition { get; set; }
 
-        public Vector3 MainBodyOffset { get => new Vector3(MajorAxis-Periapsis, 0, 0); }
+        public Vector3 MainBodyOffset { get => new Vector3(MajorAxis - Periapsis, 0, 0); }
 
         [NonPrintable]
         public IOrbitable MainBody { get => _mainBody; }
@@ -194,13 +186,13 @@ namespace theFermiParadox.Core
         public IOrbitable Body { get => _body; }
 
         public double Width { get => MajorAxis; }
-        public double Height { get=> MinorAxis; }
+        public double Height { get => MinorAxis; }
         /// <summary>
         /// The current body position, in the cartesian vector of the center of the orbit
         /// </summary>
         public Vector3 CurrentBodyPosition => new Vector3(
             SemiMajorAxis * (Math.Cos(EccentricAnomaly) - Eccentricity),
-            SemiMinorAxis*Math.Sin(EccentricAnomaly),
+            SemiMinorAxis * Math.Sin(EccentricAnomaly),
             0
             );
 
@@ -213,11 +205,11 @@ namespace theFermiParadox.Core
             _time += (uint)timeOffset.TotalSeconds;
             //THAR BE DRAGONZ
             //add mean anomaly at 0 
-            _meanAnomaly =  (MeanMotion * _time)%(2*Math.PI); 
+            _meanAnomaly = (MeanMotion * _time) % (2 * Math.PI);
             _eccentricAnomaly = ComputeEccentricAnomaly(Eccentricity, MeanAnomaly);
         }
 
-        private double ComputeEccentricAnomaly(double eccentricity,double meanAnomaly)
+        private double ComputeEccentricAnomaly(double eccentricity, double meanAnomaly)
         {
             double E = meanAnomaly;
             double dE = 1;
@@ -227,14 +219,14 @@ namespace theFermiParadox.Core
                 E -= dE;
             }
             return E;
-         }
+        }
         public override string ToString()
         {
             string rslt = "";
             foreach (PropertyInfo p in this.GetType().GetProperties().ToList())
             {
                 System.Attribute[] attrs = System.Attribute.GetCustomAttributes(p);
-                bool isPrintable=true;
+                bool isPrintable = true;
                 foreach (System.Attribute attr in attrs)
                 {
                     if (attr is NonPrintable)
@@ -242,7 +234,7 @@ namespace theFermiParadox.Core
                         isPrintable = false;
                     }
                 }
-                if(isPrintable)
+                if (isPrintable)
                 {
                     rslt += "  " + p.Name + " : " + (this.GetType().GetProperty(p.Name).GetValue(this, null) ?? "none").ToString() + "\n";
                 }
@@ -256,7 +248,7 @@ namespace theFermiParadox.Core
 
         public object Clone()
         {
-             return this.MemberwiseClone(); ;        
+            return this.MemberwiseClone(); ;
         }
     }
 }
