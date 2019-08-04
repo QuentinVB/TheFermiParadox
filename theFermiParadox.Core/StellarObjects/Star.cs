@@ -8,6 +8,7 @@ using theFermiParadox.Core.Abstracts;
 
 namespace theFermiParadox.Core
 {
+    //unused
     public enum StarClass
     {
         A,//Blue

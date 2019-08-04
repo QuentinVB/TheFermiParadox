@@ -31,5 +31,6 @@ namespace theFermiParadox.Core
 
         public double Age { get; set; }
 
+        //TODO
     }
 }

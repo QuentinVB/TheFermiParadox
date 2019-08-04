@@ -37,7 +37,7 @@ namespace theFermiParadox.Core.Abstracts
 
         public List<Orbit> ChildOrbit { get => _childOrbit ; set => _childOrbit = value; }
 
-        //ROTATION
+        //TODO ROTATION
 
         public bool IsReady()
         {

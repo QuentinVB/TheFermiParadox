@@ -57,7 +57,6 @@
     <Compile Include="StellarObjects\NeutronStar.cs" />
     <Compile Include="StellarSystem.cs" />
     <Compile Include="Utilities\Angle.cs" />
-    <Compile Include="Models\BasicStarSource.cs" />
     <Compile Include="Utilities\BasicColor.cs" />
     <Compile Include="Models\dwarfSource.cs" />
     <Compile Include="StellarObjects\GazCloud.cs" />

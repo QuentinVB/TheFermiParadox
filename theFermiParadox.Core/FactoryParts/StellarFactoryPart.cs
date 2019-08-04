@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 using theFermiParadox.Core.Abstracts;
-using theFermiParadox.Core.Models;
 using theFermiParadox.DAL;
 
 namespace theFermiParadox.Core
@@ -25,7 +24,7 @@ namespace theFermiParadox.Core
                 return GenerateStar(stellarSystem,stellarGenerationRand);
             }
             else
-            //Could be B-class stars, giants, neutron stars,protostars or other rare stellar objects
+            //Could be B-class stars, giants, neutron stars,protostars, blackholes or other rare stellar objects
             {
                 GazCloud gazCloud = new GazCloud()
                 {
@@ -36,10 +35,6 @@ namespace theFermiParadox.Core
             }
 
         }
-
-
-
-        
 
         public List<APhysicalObject> GenerateStellarCollection(ref StellarSystem stellarSystem)
         {
@@ -99,9 +94,7 @@ namespace theFermiParadox.Core
         }
  
         public Star GenerateStar(StellarSystem stellarSystem, int starGenerationRand)
-        {
-
-            
+        {   
             //star generation
             Star star;
 

@@ -9,6 +9,7 @@ namespace theFermiParadox.Core
     
     public class Physic
     {
+        //CONSTANTS
         public const double GravitationalConstant = 6.673e-11;//N⋅m2⋅kg-2
         public const double SolarMass = 1.9884e30;//kg
         public const double SolarRadius = 6.957e8;//m

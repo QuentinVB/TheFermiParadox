@@ -4,6 +4,7 @@ namespace theFermiParadox.Core
 {
     public class BlackHole : APhysicalObject
     {
+        //THE INFAMOUS SPOOOKY
         public BlackHole()
         {
 

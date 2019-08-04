@@ -31,8 +31,6 @@ namespace theFermiParadox.Core
             //keeping it sorted by mass ?
         }
 
-        public Vector3 Barycenter { get; }
-
         public double Mass
         {
             get {
@@ -45,14 +43,33 @@ namespace theFermiParadox.Core
             }
         }
 
-
+        /// <summary>
+        /// position from barycenter calculator ?
+        /// </summary>
+        public Vector3 Barycenter { get; }
+        /// <summary>
+        /// The first object of the tree
+        /// </summary>
         public ABody PhysicalObjectRoot { get => _objectRoot; internal set => _objectRoot = value; }
+        /// <summary>
+        /// list of bodies inside the stellar system
+        /// </summary>
         public List<ABody> Bodies { get => _bodies; internal set => _bodies = value; }
+        /// <summary>
+        /// The age of the system, in Gy
+        /// </summary>
         public double SystemAge { get => _systemAge; internal set => _systemAge = value; }
+        /// <summary>
+        /// list of orbits 
+        /// </summary>
         public List<Orbit> Orbits { get => _orbits; set => _orbits = value; }
-
-        //list of stellar object associated with orbital parameters
-        //list of orbits around each stellar objects
-        //position from barycenter calculator
+        /// <summary>
+        /// Number of stars
+        /// </summary>
+        public int StarCount { get => starCount;  }
+        /// <summary>
+        /// Number of planets
+        /// </summary>
+        public int PlanetCount { get => planetCount; }
     }
 }

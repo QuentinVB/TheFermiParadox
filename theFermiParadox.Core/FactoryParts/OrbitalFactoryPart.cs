@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using theFermiParadox.Core.Abstracts;
-using theFermiParadox.Core.Models;
 using theFermiParadox.DAL;
 
 namespace theFermiParadox.Core

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using theFermiParadox.Core.Abstracts;
-using theFermiParadox.Core.Models;
 using theFermiParadox.DAL;
 
 namespace theFermiParadox.Core
@@ -19,14 +18,22 @@ namespace theFermiParadox.Core
 
         readonly bool _testMode;
 
+        /// <summary>
+        /// The factory that create stellar system
+        /// </summary>
+        /// <param name="testMode">if test mode, generate a simple binary star system with a Yellow sun and an red dwarf orbiting circulary</param>
         public SystemFactory(bool testMode=false)
         {
             _testMode = testMode;
-            _starGeneration = Loader<StarGeneration>.LoadTable("starGeneration.csv");
-            _basicStar = Loader<BasicStar>.LoadTable("basicStar.csv");
-            _systemAgeSource = Loader<StarAge>.LoadTable("systemAge.csv");
-            _whitedwarfs = Loader<DwarfStar>.LoadTable("whitedwarf.csv");
-            _browndwarfs = Loader<DwarfStar>.LoadTable("browndwarf.csv");
+            //load ressources (very inelegant)
+            if(!_testMode)
+            {
+                _starGeneration = Loader<StarGeneration>.LoadTable("starGeneration.csv");
+                _basicStar = Loader<BasicStar>.LoadTable("basicStar.csv");
+                _systemAgeSource = Loader<StarAge>.LoadTable("systemAge.csv");
+                _whitedwarfs = Loader<DwarfStar>.LoadTable("whitedwarf.csv");
+                _browndwarfs = Loader<DwarfStar>.LoadTable("browndwarf.csv");
+            }
 
             randomSource = new Random();
         }
@@ -77,14 +84,14 @@ namespace theFermiParadox.Core
 
             //Building Orbits
 
-            //ring orbits
+            //ring orbits, as substitute
             for (int i = 1; i < stellarCollection.Count; i++)
             {
                 Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[i], systemAge);
                 stellarSystem.Orbits.Add(orbit);
             }
 
-            //WARNING : EXTREMLY NOT DRY !
+            //WARNING : EXTREMLY NOT DRY ! Algorithmic solution needed
             /*
             //By Convention name are A,B,C... in the decreasing mass order
             if(stellarCollection.Count ==2)
