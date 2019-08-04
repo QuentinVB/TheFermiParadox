@@ -45,33 +45,32 @@
   <ItemGroup>
     <Compile Include="Abstracts\ABody.cs" />
     <Compile Include="Abstracts\APhysicalObject.cs" />
-    <Compile Include="Abstracts\IOrbit.cs" />
+    <Compile Include="Abstracts\IOrbitable.cs" />
+    <Compile Include="FactoryParts\OrbitalFactoryPart.cs" />
     <Compile Include="Models\BasicStar.cs" />
     <Compile Include="Models\StarGeneration.cs" />
-    <Compile Include="Utilities\EmptyOrbit.cs" />
-    <Compile Include="Utilities\BarycenterOrbit.cs" />
+    <Compile Include="StellarObjects\Barycenter.cs" />
+    <Compile Include="SystemObjects\Planet.cs" />
+    <Compile Include="Utilities\Attributes.cs" />
     <Compile Include="Utilities\Orbit.cs" />
     <Compile Include="StellarObjects\BlackHole.cs" />
     <Compile Include="StellarObjects\NeutronStar.cs" />
     <Compile Include="StellarSystem.cs" />
     <Compile Include="Utilities\Angle.cs" />
-    <Compile Include="Models\BasicStarSource.cs" />
     <Compile Include="Utilities\BasicColor.cs" />
     <Compile Include="Models\dwarfSource.cs" />
     <Compile Include="StellarObjects\GazCloud.cs" />
-    <Compile Include="Utilities\PhysicHelpers.cs" />
+    <Compile Include="Utilities\Physic.cs" />
     <Compile Include="Utilities\Polar3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StellarObjects\Star.cs" />
-    <Compile Include="StellarFactory.cs" />
+    <Compile Include="FactoryParts\StellarFactoryPart.cs" />
     <Compile Include="Models\systemAgeSource.cs" />
-    <Compile Include="SystemFactory.cs" />
+    <Compile Include="FactoryParts\SystemFactory.cs" />
     <Compile Include="Utilities\Vector3.cs" />
     <Compile Include="Utilities\WeightedRandomBag.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SystemObjects\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\theFermiParadox.DAL\theFermiParadox.DAL.csproj">
       <Project>{0995f4c0-9603-4aee-81df-7f8d7d848813}</Project>

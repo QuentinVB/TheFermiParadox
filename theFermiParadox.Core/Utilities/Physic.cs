@@ -7,8 +7,9 @@ using System.Text;
 namespace theFermiParadox.Core
 {
     
-    class PhysicHelpers
+    public class Physic
     {
+        //CONSTANTS
         public const double GravitationalConstant = 6.673e-11;//N⋅m2⋅kg-2
         public const double SolarMass = 1.9884e30;//kg
         public const double SolarRadius = 6.957e8;//m
@@ -16,7 +17,8 @@ namespace theFermiParadox.Core
         public const double StefanBoltzmanConstant = 5.670374e-8;//W.m-2.K-4
         public const double AstronomicUnit = 1.49597870e11;//m
         public const double LightSpeed = 299792458;//m.s-1
-        
+        public const double LightYear = LightSpeed * 365 * 24 * 60 * 60; //m
+
         public static double GravitationnalForce(double massA, double massB, double distance) => GravitationalConstant * (massA * massB) / distance;
 
         public static BasicColor ColorTemperatureToARGB(int kelvin)

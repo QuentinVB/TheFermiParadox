@@ -12,6 +12,6 @@ namespace theFermiParadox.Core
         public double LifeSpan { get; set; }
         public double Age { get; set; }
         public double LuminosityModifier { get; set; }
-        public double TemperatureRollModifier { get; set; }
+        public int TemperatureRollModifier { get; set; }
     }
 }

@@ -23,6 +23,8 @@ namespace Helpers
         public static Polar3 operator +(Vector3 a, Polar3 b) => b + a;
         public static Polar3 operator -(Polar3 a, Vector3 b) => (a.ToCartesian() - b).ToPolar();
         public static Polar3 operator -(Vector3 a, Polar3 b) => b - a;
+        //TODO POLAR + POLAR
+
         //static//
         public static double Distance(Polar3 a, Polar3 b)
         {

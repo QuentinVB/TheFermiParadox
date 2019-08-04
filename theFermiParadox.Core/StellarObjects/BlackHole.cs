@@ -4,6 +4,7 @@ namespace theFermiParadox.Core
 {
     public class BlackHole : APhysicalObject
     {
+        //THE INFAMOUS SPOOOKY
         public BlackHole()
         {
 
@@ -16,7 +17,7 @@ namespace theFermiParadox.Core
                 return "Black Hole";
             }
         }
-        public double SchwarzschildRadius { get { return 2 * Mass * PhysicHelpers.GravitationalConstant / PhysicHelpers.LightSpeed * PhysicHelpers.LightSpeed; } }
+        public double SchwarzschildRadius { get { return 2 * Mass * Physic.GravitationalConstant / Physic.LightSpeed * Physic.LightSpeed; } }
         public int ElectricCharge { get { return 0; } }
     }
 }

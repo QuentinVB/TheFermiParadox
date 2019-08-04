@@ -8,7 +8,7 @@ using theFermiParadox.Core;
 
 namespace theFermiParadox.Core.Abstracts
 {
-    public abstract class APhysicalObject : ABody
+    public abstract class APhysicalObject : ABody, IOrbitable
     {
         public APhysicalObject()
             : base("x", null)
@@ -24,16 +24,15 @@ namespace theFermiParadox.Core.Abstracts
 
         }
 
-        [XmlElement("Mass")]
-        public float Mass { get; set; } // kg
+        public double Mass { get; set; } // in Solar Mass
 
-        [XmlElement("AngularMomentum")]
-        public float AngularMomentum { get; set; } // rad.s-1
+        public double AngularMomentum { get; set; } // rad.s-1
 
-        [XmlElement("Speed")]
-        public float Speed { get; set; } // m.s-1
+        public double Speed { get; set; } // m.s-1
 
-        [XmlElement("SurfaceTemperature")]
-        public float SurfaceTemperature { get; set; } // Kelvin
+        public double SurfaceTemperature { get; set; } // Kelvin
+
+        public double Radius { get; set; } // in solar Radii
+
     }
 }
