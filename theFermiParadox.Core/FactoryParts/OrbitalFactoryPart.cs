@@ -9,7 +9,7 @@ namespace theFermiParadox.Core
     public partial class SystemFactory
     { 
         
-        private Orbit ForgeOrbit(IOrbitable A, IOrbitable B, double systemAge)
+        private Orbit ForgeOrbit(IOrbitable A, IOrbitable B, double systemAge, int meanSeparationOffset)
         {
             double periapsis;
             double meanDistance = 0;
@@ -22,11 +22,11 @@ namespace theFermiParadox.Core
                 int OrbitalEccentricityRand = 0;
 
                 //Mean Separation p10
-                int meanAnomalyRand = randomSource.Next(1, 10);
+                int meanAnomalyRand = randomSource.Next(1, 10)+ meanSeparationOffset;
                 if (systemAge > 5) meanAnomalyRand++;
                 else if (systemAge < 1) meanAnomalyRand--;
-
                 meanAnomalyRand = Physic.Clamp(meanAnomalyRand, 1, 10);
+
                 if (1 <= meanAnomalyRand && meanAnomalyRand <= 3) { meanDistance = randomSource.Next(1, 10) * 0.05f; OrbitalEccentricityRand -= 2; }//AU
                 else if (4 <= meanAnomalyRand && meanAnomalyRand <= 6) { meanDistance = randomSource.Next(1, 10) * 0.5f; OrbitalEccentricityRand--; } //AU
                 else if (7 <= meanAnomalyRand && meanAnomalyRand <= 8) meanDistance = randomSource.Next(1, 10) * 3; //AU

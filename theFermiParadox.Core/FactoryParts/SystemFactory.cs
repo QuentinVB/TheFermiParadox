@@ -87,7 +87,7 @@ namespace theFermiParadox.Core
             //ring orbits, as substitute
             for (int i = 1; i < stellarCollection.Count; i++)
             {
-                Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[i], systemAge);
+                Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[i], systemAge,i-1);
                 stellarSystem.Orbits.Add(orbit);
             }
 
@@ -161,9 +161,6 @@ namespace theFermiParadox.Core
             */
 
             stellarSystem.PhysicalObjectRoot = stellarCollection[0];
-            //set the age limitation factor
-
-            //
 
             return stellarSystem;
         }   
