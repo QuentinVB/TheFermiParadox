@@ -14,13 +14,16 @@ namespace theFermiParadox.Core.Abstracts
         private readonly Guid _uuid;
         private readonly StellarSystem _stellarSystem;
         private List<Orbit> _childOrbit;
+        private readonly bool _isVirtual;
 
-        public ABody(string name, StellarSystem stellarSystem)
+
+        public ABody(string name, StellarSystem stellarSystem, bool isVirtual)
         {
             _name = name;
             _stellarSystem = stellarSystem;
             _uuid = Guid.NewGuid();
             _childOrbit = new List<Orbit>();
+            _isVirtual = isVirtual;
         }
 
         public Guid Uuid => _uuid;
@@ -29,7 +32,7 @@ namespace theFermiParadox.Core.Abstracts
 
         public abstract string Denomination { get; }
 
-        public bool IsVirtual { get; set; }
+        public bool IsVirtual { get { return _isVirtual; } }
 
         public Vector3 Position { get; set; }
 

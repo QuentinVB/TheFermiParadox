@@ -4,21 +4,15 @@ namespace theFermiParadox.Core
 {
     public class Barycenter : ABody,IOrbitable
     {
-       
-        public Barycenter()
-            : base("x", null)
-        { }
-
-        public Barycenter(string name)
-            : base(name, null)
-        { }
-
-        public Barycenter(string name, StellarSystem stellarSystem)
-            : base(name, stellarSystem)
+        APhysicalObject _bodyA;
+        APhysicalObject _bodyB;
+        
+        public Barycenter(string name, StellarSystem stellarSystem, APhysicalObject bodyA, APhysicalObject bodyB)
+            : base(name, stellarSystem, true)
         {
-
+            _bodyA = bodyA;
+            _bodyB = bodyB;
         }
-
         public override string Denomination
         {
             get
@@ -27,9 +21,9 @@ namespace theFermiParadox.Core
             }
         }
 
-        public double Radius { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public double Radius { get { return 0; } }
         //virtual mass ?
 
-        public double Mass { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public double Mass { get => _bodyA.Mass + _bodyB.Mass; }
     }
 }

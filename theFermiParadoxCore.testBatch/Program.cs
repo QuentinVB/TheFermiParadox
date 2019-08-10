@@ -14,13 +14,13 @@ namespace theFermiParadox.ManualTests
         {
             Console.WriteLine("Loading...");
 
-            SystemFactory systemFactory = new SystemFactory(true);
+            SystemFactory systemFactory = new SystemFactory();
 
-            StellarSystem stellarSystem = systemFactory.GetStellarSystem();
+            StellarSystem stellarSystem = systemFactory.GetStellarSystem(2);
 
-            foreach (APhysicalObject star in stellarSystem.Bodies)
+            foreach (ABody body in stellarSystem.Bodies)
             {
-                Console.WriteLine(star);
+                Console.WriteLine(body);
             }
 
             /*

@@ -91,9 +91,46 @@ namespace theFermiParadox.Core
                 stellarSystem.Orbits.Add(orbit);
             }
 
+            //multiple star system
+            if(stellarCollection.Count>1)
+            {
+                //By Convention name are A,B,C... in the decreasing mass order
+                if (stellarCollection.Count % 2 == 0)//even result
+                {
+                    //get 2 first
+                    APhysicalObject bodyA = stellarCollection[0];
+                    APhysicalObject bodyB = stellarCollection[1];
+
+                    if(bodyA.Mass > bodyB.Mass*10)//B mass is significatifly 10 times less than A mass
+                    {
+                        Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
+                        stellarSystem.Orbits.Add(orbit);
+                    }
+                    else// B mass is close to A mass : barycenter orbit
+                    {
+                        Barycenter barycenter = new Barycenter("barycenter", stellarSystem, stellarCollection[0], stellarCollection[1]);
+                        stellarSystem.Add(barycenter);
+
+                        Orbit orbit = ForgeOrbit(barycenter, stellarCollection[0], systemAge);
+                        stellarSystem.Orbits.Add(orbit);
+
+                        Orbit orbit2 = ForgeOrbit(barycenter, stellarCollection[1], systemAge);
+                        stellarSystem.Orbits.Add(orbit2);
+                    }
+                }
+                else//odd result
+                {
+
+                }
+            }
+            else
+            {
+                //nothing ?
+            }
+           
+
             //WARNING : EXTREMLY NOT DRY ! Algorithmic solution needed
             /*
-            //By Convention name are A,B,C... in the decreasing mass order
             if(stellarCollection.Count ==2)
             {
                 //B orbiting A
