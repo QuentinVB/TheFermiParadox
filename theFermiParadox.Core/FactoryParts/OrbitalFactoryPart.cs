@@ -7,8 +7,13 @@ using theFermiParadox.DAL;
 namespace theFermiParadox.Core
 {
     public partial class SystemFactory
-    { 
-        
+    {
+        private Orbit ForgeOrbit(IOrbitable A, IOrbitable B, double systemAge)
+        {
+            return ForgeOrbit( A, B,systemAge, 0);
+        }
+
+
         private Orbit ForgeOrbit(IOrbitable A, IOrbitable B, double systemAge, int meanSeparationOffset)
         {
             double periapsis;

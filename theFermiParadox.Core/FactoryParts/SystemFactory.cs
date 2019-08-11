@@ -85,119 +85,83 @@ namespace theFermiParadox.Core
             //Building Orbits
 
             //ring orbits, as substitute
+            /*
             for (int i = 1; i < stellarCollection.Count; i++)
             {
                 Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[i], systemAge,i-1);
                 stellarSystem.Orbits.Add(orbit);
+            }*/
+
+            IOrbitable ForgeBinaryOrbit(APhysicalObject bodyA, APhysicalObject bodyB,int offset)
+            {
+                if (bodyA.Mass > bodyB.Mass * 10)//B mass is significatifly 10 times less than A mass
+                {
+                    Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
+                    stellarSystem.Orbits.Add(orbit);
+
+                    return orbit.MainBody;
+                }
+                else// B mass is close to A mass : barycenter orbit
+                {
+                    Barycenter barycenter = new Barycenter("barycenter", stellarSystem, stellarCollection[0], stellarCollection[1]);
+                    stellarSystem.Add(barycenter);
+
+                    Orbit orbit = ForgeOrbit(barycenter, stellarCollection[0], systemAge);
+                    stellarSystem.Orbits.Add(orbit);
+
+                    Orbit orbit2 = ForgeOrbit(barycenter, stellarCollection[1], systemAge);
+                    stellarSystem.Orbits.Add(orbit2);
+
+                    return barycenter;
+                }
             }
 
             //multiple star system
-            if(stellarCollection.Count>1)
+            //By Convention name are A,B,C... in the decreasing mass order
+
+            if (stellarCollection.Count>1)
             {
-                //By Convention name are A,B,C... in the decreasing mass order
-                if (stellarCollection.Count % 2 == 0)//even result
+                ABody[] roots = new ABody[stellarCollection.Count / 2];
+                int index=0;
+                
+                //creating binary couple
+                for (int i = 0; i < stellarCollection.Count-1; i += 2)
                 {
                     //get 2 first
-                    APhysicalObject bodyA = stellarCollection[0];
-                    APhysicalObject bodyB = stellarCollection[1];
-
-                    if(bodyA.Mass > bodyB.Mass*10)//B mass is significatifly 10 times less than A mass
-                    {
-                        Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
-                        stellarSystem.Orbits.Add(orbit);
-                    }
-                    else// B mass is close to A mass : barycenter orbit
-                    {
-                        Barycenter barycenter = new Barycenter("barycenter", stellarSystem, stellarCollection[0], stellarCollection[1]);
-                        stellarSystem.Add(barycenter);
-
-                        Orbit orbit = ForgeOrbit(barycenter, stellarCollection[0], systemAge);
-                        stellarSystem.Orbits.Add(orbit);
-
-                        Orbit orbit2 = ForgeOrbit(barycenter, stellarCollection[1], systemAge);
-                        stellarSystem.Orbits.Add(orbit2);
-                    }
+                    APhysicalObject bodyA = stellarCollection[i];
+                    APhysicalObject bodyB = stellarCollection[i + 1];
+                    roots[index]= (ABody)ForgeBinaryOrbit(bodyA, bodyB, 1 - i);
+                    index++;
                 }
-                else//odd result
-                {
 
+                if (index==1)
+                {
+                    //only one pair , get the root (barycenter or the most massive star)
+                    stellarSystem.PhysicalObjectRoot = roots[0];
+
+
+                }
+                else
+                {
+                    //THAR BE DRAGONZ
+                    //many pairs
+                    throw new NotImplementedException();
+                }
+
+                if (stellarCollection.Count % 2 > 0)//odd result, there is a lonely star to add
+                {
+                    throw new NotImplementedException();
                 }
             }
             else
             {
-                //nothing ?
-            }
-           
-
-            //WARNING : EXTREMLY NOT DRY ! Algorithmic solution needed
-            /*
-            if(stellarCollection.Count ==2)
-            {
-                //B orbiting A
-                Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
-                stellarSystem.Orbits.Add(orbit);
-            }
-            else if (stellarCollection.Count == 3)
-            {
-                //triple case for C : around A, around B, Around AB
-
-                APhysicalObject A = stellarCollection[0];
-                APhysicalObject B = stellarCollection[1];
-                APhysicalObject C = stellarCollection[2];
-
-                int dice = randomSource.Next(0,2);
-                if (dice==0)
-                {
-                    //Create AB
-                    Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
-                    stellarSystem.Orbits.Add(orbit);
-
-                    // around A
-                    Orbit orbit2 = ForgeOrbit(stellarCollection[0], stellarCollection[2], systemAge);
-                    stellarSystem.Orbits.Add(orbit2);
-
-                } //around B
-                else if (dice == 1)
-                {
-                    //Create AB
-                    Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
-                    stellarSystem.Orbits.Add(orbit);
-
-                    // around A
-                    Orbit orbit2 = ForgeOrbit(stellarCollection[1], stellarCollection[2], systemAge);
-                    stellarSystem.Orbits.Add(orbit2);
-                }
-                else //Around AB
-                {
-                    //Create AB
-
-                    //forge barycentric orbit between A,B and a barycenter
-                    //forge orbit of C around barycenter
-
-                    //Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
-                    //stellarSystem.Orbits.Add(orbit);
-                }
+                //A single lonely star
+                stellarSystem.PhysicalObjectRoot = stellarCollection[0];
 
             }
-            else if (stellarCollection.Count == 4)
-            {
-                //4 case for D :around A, around AB with C,  Around ABC
-            }
-            else if (stellarCollection.Count == 5)
-            {
-                //3 case for D : around AB and CD,  Around AB , around CD
-            }
-            else if (stellarCollection.Count == 6)
-            {
-                //3 case for D : around AB and CD,  Around AB , around CD
-            }
-            else
-            {
-                //orbit on rings
-            }
-            */
 
-            stellarSystem.PhysicalObjectRoot = stellarCollection[0];
+            
+
 
             return stellarSystem;
         }   
