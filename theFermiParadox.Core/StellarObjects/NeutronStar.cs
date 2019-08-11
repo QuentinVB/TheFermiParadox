@@ -15,5 +15,9 @@ namespace theFermiParadox.Core
                 return "Neutron Star";
             }
         }
+
+        BasicColor IStellar.DisplayColor => throw new System.NotImplementedException();
+
+        
     }
 }

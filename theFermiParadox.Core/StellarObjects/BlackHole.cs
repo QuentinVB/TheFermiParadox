@@ -19,5 +19,7 @@ namespace theFermiParadox.Core
         }
         public double SchwarzschildRadius { get { return 2 * Mass * Physic.GravitationalConstant / Physic.LightSpeed * Physic.LightSpeed; } }
         public int ElectricCharge { get { return 0; } }
+
+        public BasicColor DisplayColor => throw new System.NotImplementedException();
     }
 }

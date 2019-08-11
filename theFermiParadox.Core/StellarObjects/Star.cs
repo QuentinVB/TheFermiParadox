@@ -74,7 +74,7 @@ namespace theFermiParadox.Core
         public double Age { get; set; }
 
 
-        public BasicColor StarColor { get { return Physic.ColorTemperatureToARGB((int)SurfaceTemperature); } }
+        public BasicColor DisplayColor { get { return Physic.ColorTemperatureToARGB((int)SurfaceTemperature); } }
 
     }
 }

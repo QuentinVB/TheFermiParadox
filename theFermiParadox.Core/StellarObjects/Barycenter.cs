@@ -25,5 +25,7 @@ namespace theFermiParadox.Core
         //virtual mass ?
 
         public double Mass { get => _bodyA.Mass + _bodyB.Mass; }
+
+        public BasicColor DisplayColor => throw new System.NotImplementedException();
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace theFermiParadox.Core
 {
-    internal interface IStellar
+    public interface IStellar
     {
+        BasicColor DisplayColor { get; }
     }
 }

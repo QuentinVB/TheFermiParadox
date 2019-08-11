@@ -15,7 +15,7 @@ namespace theFermiParadox.Core.Abstracts
         private readonly StellarSystem _stellarSystem;
         private List<Orbit> _childOrbit;
         private readonly bool _isVirtual;
-        private int bodyIndex;
+        //private int bodyIndex;
 
 
         public ABody(StellarSystem stellarSystem, bool isVirtual)

@@ -3,7 +3,6 @@ using FluentAssertions;
 using theFermiParadox.Core;
 using theFermiParadox.DAL;
 using System.Collections.Generic;
-using theFermiParadox.Core.Models;
 
 namespace Tests
 {
