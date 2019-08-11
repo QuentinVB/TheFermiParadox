@@ -2,7 +2,7 @@
 
 namespace theFermiParadox.Core
 {
-    public class NeutronStar : APhysicalObject
+    public class NeutronStar : APhysicalObject, IStellar
     {
         public NeutronStar() 
         {

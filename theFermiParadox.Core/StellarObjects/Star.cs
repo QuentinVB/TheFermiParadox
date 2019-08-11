@@ -19,14 +19,14 @@ namespace theFermiParadox.Core
         D,//White Dwarf
         L//Brown Dwarf
     }
-    public class Star : APhysicalObject
+    public class Star : APhysicalObject, IStellar
     {
         public Star()
-           : base("x", null)
+           : base(null)
         {
         }
-        public Star(string name, StellarSystem stellarSystem)
-           : base(name, stellarSystem)
+        public Star(StellarSystem stellarSystem)
+           : base(stellarSystem)
         {
         }
 
@@ -62,20 +62,7 @@ namespace theFermiParadox.Core
         {
             get
             {
-                switch (SizeCode)
-                {
-                    case 0: return "-";
-                    case 1: return "I";
-                    case 2: return "II";
-                    case 3: return "III";
-                    case 4: return "IV";
-                    case 5: return "V";
-                    case 6: return "VI";
-                    case 7: return "VII";
-                    case 8: return "VIII";
-                    case 9: return "IX";
-                    default: return "";
-                }
+                return Physic.latinNumber(SizeCode);
             }
         }
 

@@ -2,13 +2,13 @@
 
 namespace theFermiParadox.Core
 {
-    public class Barycenter : ABody,IOrbitable
+    public class Barycenter : ABody,IOrbitable, IStellar
     {
         APhysicalObject _bodyA;
         APhysicalObject _bodyB;
         
-        public Barycenter(string name, StellarSystem stellarSystem, APhysicalObject bodyA, APhysicalObject bodyB)
-            : base(name, stellarSystem, true)
+        public Barycenter(StellarSystem stellarSystem, APhysicalObject bodyA, APhysicalObject bodyB)
+            : base(stellarSystem, true)
         {
             _bodyA = bodyA;
             _bodyB = bodyB;

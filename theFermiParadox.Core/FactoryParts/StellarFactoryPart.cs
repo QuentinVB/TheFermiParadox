@@ -48,7 +48,7 @@ namespace theFermiParadox.Core
             //generate stellarList
             if (_testMode)
             {
-                APhysicalObject @object = new Star("Sun", stellarSystem)
+                APhysicalObject @object = new Star(stellarSystem)
                 {
                     StarClass = "G",
                     SizeCode = 2,
@@ -57,11 +57,13 @@ namespace theFermiParadox.Core
                     SurfaceTemperature = 5000,
                     Radius = 1,
                     Mass = 1,
+                    Name = "Sol"
+
                 };
                 stellarSystem.Bodies.Add(@object as ABody);
                 stellarList.Add(@object);
 
-                @object = new Star("Nemesis", stellarSystem)
+                @object = new Star(stellarSystem)
                 {
                     StarClass = "D",
                     SizeCode = 2,
@@ -70,6 +72,7 @@ namespace theFermiParadox.Core
                     SurfaceTemperature = 3000,
                     Radius = 0.2 ,
                     Mass = 0.2 ,
+                    Name = "Nemesis"
                 };
                 stellarSystem.Bodies.Add(@object as ABody);
                 stellarList.Add(@object);
@@ -154,7 +157,7 @@ namespace theFermiParadox.Core
             int dwarfGenerationRand = randomSource.Next(1, 10);
             if (starClass == "D" || starClass == "L")
             {
-                star = new Star("unnamed", stellarSystem)
+                star = new Star(stellarSystem)
                 {
                     StarClass = starClass,
                     SizeCode = 0,
@@ -169,7 +172,7 @@ namespace theFermiParadox.Core
                     && x.SizeCode == sizeCode
                     && x.Random == spectralClass
                     );
-                star = new Star("unnamed", stellarSystem)
+                star = new Star(stellarSystem)
                 {
                     StarClass = starClass,
                     SizeCode = sizeCode,

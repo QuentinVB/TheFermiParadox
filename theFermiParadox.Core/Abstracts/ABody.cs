@@ -10,16 +10,16 @@ namespace theFermiParadox.Core.Abstracts
 {
     public abstract class ABody
     {
-        private readonly string _name;
+        private string _name;
         private readonly Guid _uuid;
         private readonly StellarSystem _stellarSystem;
         private List<Orbit> _childOrbit;
         private readonly bool _isVirtual;
+        private int bodyIndex;
 
 
-        public ABody(string name, StellarSystem stellarSystem, bool isVirtual)
+        public ABody(StellarSystem stellarSystem, bool isVirtual)
         {
-            _name = name;
             _stellarSystem = stellarSystem;
             _uuid = Guid.NewGuid();
             _childOrbit = new List<Orbit>();
@@ -28,7 +28,18 @@ namespace theFermiParadox.Core.Abstracts
 
         public Guid Uuid => _uuid;
 
-        public string Name => _name;
+        public string Name {
+            get {
+                if(string.IsNullOrWhiteSpace(_name))
+                {
+                    return $"{_stellarSystem.Name} {Physic.latinNumber(BodyIndex)}";
+                }
+                else
+                {
+                    return _name;
+                }
+            }
+            set { _name = value; } }
 
         public abstract string Denomination { get; }
 
@@ -40,7 +51,9 @@ namespace theFermiParadox.Core.Abstracts
 
         public List<Orbit> ChildOrbit { get => _childOrbit ; set => _childOrbit = value; }
 
-        //TODO ROTATION
+        public int BodyIndex { get => _stellarSystem.GetIndexOf(this); }
+
+        //TODO self ROTATION
 
         public bool IsReady()
         {

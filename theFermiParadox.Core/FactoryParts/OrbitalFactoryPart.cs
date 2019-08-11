@@ -22,8 +22,6 @@ namespace theFermiParadox.Core
 
             do
             {
-
-
                 int OrbitalEccentricityRand = 0;
 
                 //Mean Separation p10
@@ -67,8 +65,5 @@ namespace theFermiParadox.Core
             
             return orbit;
         }
-        
-
-
     }
 }

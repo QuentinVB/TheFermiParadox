@@ -47,6 +47,8 @@
     <Compile Include="Abstracts\APhysicalObject.cs" />
     <Compile Include="Abstracts\IOrbitable.cs" />
     <Compile Include="FactoryParts\OrbitalFactoryPart.cs" />
+    <Compile Include="Abstracts\IStellar.cs" />
+    <Compile Include="Models\StarName.cs" />
     <Compile Include="Models\BasicStar.cs" />
     <Compile Include="Models\StarGeneration.cs" />
     <Compile Include="StellarObjects\Barycenter.cs" />

@@ -18,6 +18,7 @@ namespace theFermiParadox.Core
         public const double AstronomicUnit = 1.49597870e11;//m
         public const double LightSpeed = 299792458;//m.s-1
         public const double LightYear = LightSpeed * 365 * 24 * 60 * 60; //m
+        public static string[] GREEKALPHABET = new string[24] { "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega" };
 
         public static double GravitationnalForce(double massA, double massB, double distance) => GravitationalConstant * (massA * massB) / distance;
 
@@ -68,6 +69,25 @@ namespace theFermiParadox.Core
             if (x > max) { return max; }
             return x;
         }
+
+        public static string latinNumber(int number)
+        {
+            switch (number)
+            {
+                case 0: return "-";
+                case 1: return "I";
+                case 2: return "II";
+                case 3: return "III";
+                case 4: return "IV";
+                case 5: return "V";
+                case 6: return "VI";
+                case 7: return "VII";
+                case 8: return "VIII";
+                case 9: return "IX";
+                default: return "";
+            }
+        }
     }
+
     
 }

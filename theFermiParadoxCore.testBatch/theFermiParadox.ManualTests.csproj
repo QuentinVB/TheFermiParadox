@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0C77BD46-4395-4DF4-BAA4-D65E528FB090}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>theFermiParadoxCore.testBatch</RootNamespace>
-    <AssemblyName>theFermiParadoxCore.testBatch</AssemblyName>
+    <RootNamespace>theFermiParadox.testBatch</RootNamespace>
+    <AssemblyName>theFermiParadox.testBatch</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

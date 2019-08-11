@@ -11,15 +11,11 @@ namespace theFermiParadox.Core.Abstracts
     public abstract class APhysicalObject : ABody, IOrbitable
     {
         public APhysicalObject()
-            : base("x", null,false)
+            : base(null,false)
         { }
-
-        public APhysicalObject(string name)
-            : base(name, null, false)
-        {}
-
-        public APhysicalObject(string name, StellarSystem stellarSystem)
-            : base(name, stellarSystem, false)
+        
+        public APhysicalObject( StellarSystem stellarSystem)
+            : base(stellarSystem, false)
         {
 
         }

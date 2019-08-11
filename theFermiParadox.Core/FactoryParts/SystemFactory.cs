@@ -15,6 +15,7 @@ namespace theFermiParadox.Core
         readonly List<StarAge> _systemAgeSource;
         readonly List<DwarfStar> _whitedwarfs;
         readonly List<DwarfStar> _browndwarfs;
+        readonly StarName[] _starNames;
 
         readonly bool _testMode;
 
@@ -25,7 +26,7 @@ namespace theFermiParadox.Core
         public SystemFactory(bool testMode=false)
         {
             _testMode = testMode;
-            //load ressources (very inelegant)
+            //load ressources (very inelegant, next time async)
             if(!_testMode)
             {
                 _starGeneration = Loader<StarGeneration>.LoadTable("starGeneration.csv");
@@ -33,20 +34,27 @@ namespace theFermiParadox.Core
                 _systemAgeSource = Loader<StarAge>.LoadTable("systemAge.csv");
                 _whitedwarfs = Loader<DwarfStar>.LoadTable("whitedwarf.csv");
                 _browndwarfs = Loader<DwarfStar>.LoadTable("browndwarf.csv");
+                _starNames = Loader<StarName>.LoadTable("constellationNames.csv").ToArray();
             }
 
             randomSource = new Random();
+        }
+
+        private string GetSystemName()
+        {
+            return $"{Physic.GREEKALPHABET[randomSource.Next(0, Physic.GREEKALPHABET.Length - 1)]} {_starNames[randomSource.Next(0, _starNames.Length-1)].Name}";
         }
 
         public StellarSystem GetStellarSystem()
         {
             return GetStellarSystem(0);
         }
+
         public StellarSystem GetStellarSystem(int starCount)
         {
             if (_testMode) starCount = 2;
 
-            StellarSystem stellarSystem = new StellarSystem();
+            StellarSystem stellarSystem = new StellarSystem(GetSystemName());
 
             //generate a collection of StarLike Objects ordered by mass
             List<APhysicalObject> stellarCollection;
@@ -103,7 +111,10 @@ namespace theFermiParadox.Core
                 }
                 else// B mass is close to A mass : barycenter orbit
                 {
-                    Barycenter barycenter = new Barycenter("barycenter", stellarSystem, stellarCollection[0], stellarCollection[1]);
+                    Barycenter barycenter = new Barycenter(stellarSystem, stellarCollection[0], stellarCollection[1])
+                    {
+                        Name = "Barycenter"
+                    };
                     stellarSystem.Add(barycenter);
 
                     Orbit orbit = ForgeOrbit(barycenter, stellarCollection[0], systemAge);
@@ -159,10 +170,6 @@ namespace theFermiParadox.Core
                 stellarSystem.PhysicalObjectRoot = stellarCollection[0];
 
             }
-
-            
-
-
             return stellarSystem;
         }   
     }
