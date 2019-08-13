@@ -64,7 +64,7 @@ namespace theFermiParadox.Core
             }
 
             //Bind the body to this orbit
-            _mainBody.ChildOrbit.Add(this);
+            _mainBody.ChildOrbits.Add(this);
             _body.ParentOrbit = this;
 
             //initialise internal value

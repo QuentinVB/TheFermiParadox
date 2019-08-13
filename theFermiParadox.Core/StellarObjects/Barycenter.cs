@@ -27,5 +27,8 @@ namespace theFermiParadox.Core
         public double Mass { get => _bodyA.Mass + _bodyB.Mass; }
 
         public BasicColor DisplayColor => BasicColor.Black;
+
+        public override void Accept(BodyVisitor v) => v.Visit(this);
+
     }
 }

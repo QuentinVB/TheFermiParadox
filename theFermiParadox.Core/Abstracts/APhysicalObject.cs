@@ -30,5 +30,7 @@ namespace theFermiParadox.Core.Abstracts
 
         public double Radius { get; set; } // in solar Radii
 
+        public override void Accept(BodyVisitor v) => v.Visit(this);
+
     }
 }

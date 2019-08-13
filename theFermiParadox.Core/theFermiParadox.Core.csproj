@@ -54,6 +54,7 @@
     <Compile Include="StellarObjects\Barycenter.cs" />
     <Compile Include="SystemObjects\Planet.cs" />
     <Compile Include="Utilities\Attributes.cs" />
+    <Compile Include="Utilities\PrintVisitor.cs" />
     <Compile Include="Utilities\Orbit.cs" />
     <Compile Include="StellarObjects\BlackHole.cs" />
     <Compile Include="StellarObjects\NeutronStar.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Models\systemAgeSource.cs" />
     <Compile Include="FactoryParts\SystemFactory.cs" />
     <Compile Include="Utilities\Vector3.cs" />
+    <Compile Include="Utilities\BodyVisitor.cs" />
     <Compile Include="Utilities\WeightedRandomBag.cs" />
   </ItemGroup>
   <ItemGroup />

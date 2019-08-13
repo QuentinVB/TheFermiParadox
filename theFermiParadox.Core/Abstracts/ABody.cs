@@ -13,7 +13,7 @@ namespace theFermiParadox.Core.Abstracts
         private string _name;
         private readonly Guid _uuid;
         private readonly StellarSystem _stellarSystem;
-        private List<Orbit> _childOrbit;
+        private List<Orbit> _childOrbits;
         private readonly bool _isVirtual;
         //private int bodyIndex;
 
@@ -22,7 +22,7 @@ namespace theFermiParadox.Core.Abstracts
         {
             _stellarSystem = stellarSystem;
             _uuid = Guid.NewGuid();
-            _childOrbit = new List<Orbit>();
+            _childOrbits = new List<Orbit>();
             _isVirtual = isVirtual;
         }
 
@@ -55,7 +55,7 @@ namespace theFermiParadox.Core.Abstracts
 
         public Orbit ParentOrbit { get; set; }
 
-        public List<Orbit> ChildOrbit { get => _childOrbit ; set => _childOrbit = value; }
+        public List<Orbit> ChildOrbits { get => _childOrbits ; set => _childOrbits = value; }
 
         public int BodyIndex { get => _stellarSystem.GetIndexOf(this); }
 
@@ -88,5 +88,10 @@ namespace theFermiParadox.Core.Abstracts
             }
             return null;
         }*/
+
+        public abstract void Accept(BodyVisitor v);
+
+        //internal abstract ABody Accept(MutationVisitor v);
+
     }
 }
