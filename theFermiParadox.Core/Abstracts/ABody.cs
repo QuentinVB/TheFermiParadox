@@ -45,6 +45,12 @@ namespace theFermiParadox.Core.Abstracts
 
         public bool IsVirtual { get { return _isVirtual; } }
 
+        /// <summary>
+        /// Gets or sets the position in meters.
+        /// </summary>
+        /// <value>
+        /// The position.
+        /// </value>
         public Vector3 Position { get; set; }
 
         public Orbit ParentOrbit { get; set; }

@@ -9,6 +9,7 @@
             B = b;
         }
 
+        public static BasicColor Black { get { return new BasicColor(0, 0, 0); } }
         public int R { get; set; }
         public int G { get; set; }
         public int B { get; set; }

@@ -65,13 +65,13 @@ namespace theFermiParadox.Core
 
                 @object = new Star(stellarSystem)
                 {
-                    StarClass = "D",
+                    StarClass = "M",
                     SizeCode = 2,
                     SpectralClass = 5,
                     Luminosity = 0.01,
                     SurfaceTemperature = 3000,
                     Radius = 0.2 ,
-                    Mass = 0.2 ,
+                    Mass = 0.1 ,
                     Name = "Nemesis"
                 };
                 stellarSystem.Bodies.Add(@object as ABody);

@@ -42,6 +42,11 @@ namespace theFermiParadox.Core
 
         private string GetSystemName()
         {
+            if(_testMode)
+            {
+                return "Sol";
+            }
+
             return $"{Physic.GREEKALPHABET[randomSource.Next(0, Physic.GREEKALPHABET.Length - 1)]} {_starNames[randomSource.Next(0, _starNames.Length-1)].Name}";
         }
 
@@ -102,7 +107,7 @@ namespace theFermiParadox.Core
 
             IOrbitable ForgeBinaryOrbit(APhysicalObject bodyA, APhysicalObject bodyB,int offset)
             {
-                if (bodyA.Mass > bodyB.Mass * 10)//B mass is significatifly 10 times less than A mass
+                if (bodyA.Mass > bodyB.Mass * 9.9)//B mass is significatifly 10 times less than A mass
                 {
                     Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
                     stellarSystem.Orbits.Add(orbit);

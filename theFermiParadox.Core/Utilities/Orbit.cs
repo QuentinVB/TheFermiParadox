@@ -77,6 +77,8 @@ namespace theFermiParadox.Core
 
             //THAR BE DRAGONZ
             _orbitalPeriod = (ulong)(2 * Math.PI * Math.Sqrt(SemiMajorAxis * SemiMajorAxis * SemiMajorAxis / (Physic.GravitationalConstant * _mainBody.Mass * Physic.SolarMass)));
+
+            Body.Position = CurrentBodyPosition;
         }
         //INITIALS DATA
         /// <summary>
@@ -203,6 +205,9 @@ namespace theFermiParadox.Core
             //add mean anomaly at 0 ?
             _meanAnomaly = (MeanMotion * _time) % (2 * Math.PI);
             _eccentricAnomaly = ComputeEccentricAnomaly(Eccentricity, MeanAnomaly);
+
+            //update
+            Body.Position = CurrentBodyPosition;
         }
 
         private double ComputeEccentricAnomaly(double eccentricity, double meanAnomaly)

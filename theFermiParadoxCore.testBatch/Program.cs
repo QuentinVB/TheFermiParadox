@@ -14,7 +14,7 @@ namespace theFermiParadox.ManualTests
         {
             Console.WriteLine("Loading...");
 
-            SystemFactory systemFactory = new SystemFactory();
+            SystemFactory systemFactory = new SystemFactory(true);
 
             StellarSystem stellarSystem = systemFactory.GetStellarSystem(2);
 
