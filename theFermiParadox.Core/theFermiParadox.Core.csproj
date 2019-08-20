@@ -46,6 +46,7 @@
     <Compile Include="Abstracts\ABody.cs" />
     <Compile Include="Abstracts\APhysicalObject.cs" />
     <Compile Include="Abstracts\IOrbitable.cs" />
+    <Compile Include="Abstracts\Node.cs" />
     <Compile Include="FactoryParts\OrbitalFactoryPart.cs" />
     <Compile Include="Abstracts\IStellar.cs" />
     <Compile Include="Models\StarName.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="StellarObjects\Barycenter.cs" />
     <Compile Include="SystemObjects\Planet.cs" />
     <Compile Include="Utilities\Attributes.cs" />
+    <Compile Include="Utilities\FullPrintVisitor.cs" />
     <Compile Include="Utilities\PrintVisitor.cs" />
     <Compile Include="Utilities\Orbit.cs" />
     <Compile Include="StellarObjects\BlackHole.cs" />
@@ -71,7 +73,7 @@
     <Compile Include="Models\systemAgeSource.cs" />
     <Compile Include="FactoryParts\SystemFactory.cs" />
     <Compile Include="Utilities\Vector3.cs" />
-    <Compile Include="Utilities\BodyVisitor.cs" />
+    <Compile Include="Utilities\Visitor.cs" />
     <Compile Include="Utilities\WeightedRandomBag.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -83,8 +85,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)bin\Debug\theFermiParadox.Core.dll" "D:\Documents\02-SIDEPROJECT\Orbital\Assets\Plugins"
+    <PostBuildEvent>if $(COMPUTERNAME) ==  HARFANG (
+copy "$(ProjectDir)bin\Debug\theFermiParadox.Core.dll" "D:\Documents\02-SIDEPROJECT\Orbital\Assets\Plugins"
 copy "$(ProjectDir)bin\Debug\theFermiParadox.DAL.dll" "D:\Documents\02-SIDEPROJECT\Orbital\Assets\Plugins"
-</PostBuildEvent>
+)</PostBuildEvent>
   </PropertyGroup>
 </Project>

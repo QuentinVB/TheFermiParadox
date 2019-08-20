@@ -1,4 +1,5 @@
-﻿using theFermiParadox.Core.Abstracts;
+﻿using System;
+using theFermiParadox.Core.Abstracts;
 
 namespace theFermiParadox.Core
 {
@@ -22,13 +23,12 @@ namespace theFermiParadox.Core
         }
 
         public double Radius { get { return 0; } }
-        //virtual mass ?
 
-        public double Mass { get => _bodyA.Mass + _bodyB.Mass; }
+        public override double Mass { get => _bodyA.Mass + _bodyB.Mass; set => throw new InvalidOperationException(); }
 
         public BasicColor DisplayColor => BasicColor.Black;
 
-        public override void Accept(BodyVisitor v) => v.Visit(this);
+        public override void Accept(Visitor v) => v.Visit(this);
 
     }
 }

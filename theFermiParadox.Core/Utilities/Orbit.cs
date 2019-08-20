@@ -11,7 +11,7 @@ namespace theFermiParadox.Core
 {
     //https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion#Position_as_a_function_of_time
     //https://space.stackexchange.com/questions/8911/determining-orbital-position-at-a-future-point-in-time
-    public class Orbit : ICloneable
+    public class Orbit :Node, ICloneable
     {
         private double _eccentricity;
         private Angle _meanAnomaly;
@@ -221,35 +221,13 @@ namespace theFermiParadox.Core
             }
             return E;
         }
-        public override string ToString()
-        {
-            string rslt = "";
-            foreach (PropertyInfo p in this.GetType().GetProperties().ToList())
-            {
-                System.Attribute[] attrs = System.Attribute.GetCustomAttributes(p);
-                bool isPrintable = true;
-                foreach (System.Attribute attr in attrs)
-                {
-                    if (attr is NonPrintable)
-                    {
-                        isPrintable = false;
-                    }
-                }
-                if (isPrintable)
-                {
-                    rslt += "  " + p.Name + " : " + (this.GetType().GetProperty(p.Name).GetValue(this, null) ?? "none").ToString() + "\n";
-                }
-                else
-                {
-                    rslt += "  " + p.Name + "\n";
-                }
-            }
-            return rslt;
-        }
+        
 
         public object Clone()
         {
             return this.MemberwiseClone(); ;
         }
+
+        public override void Accept(Visitor v) => v.Visit(this);
     }
 }

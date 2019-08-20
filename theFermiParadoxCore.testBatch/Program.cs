@@ -25,12 +25,11 @@ namespace theFermiParadox.ManualTests
             }
             */
 
-            PrintVisitor visitor = new PrintVisitor();
+            FullPrintVisitor visitor = new FullPrintVisitor();
 
-            visitor.VisitNode((IOrbitable)stellarSystem.PhysicalObjectRoot);
+            visitor.VisitNode(stellarSystem.PhysicalObjectRoot);
 
             Console.WriteLine(visitor.Result);
-
 
             /*
             TimeSpan timeOffset = new TimeSpan(365, 0, 0, 0, 0);

@@ -93,6 +93,12 @@ namespace theFermiParadox.Core
             {
                 return y.Mass.CompareTo(x.Mass);
             });
+
+            stellarSystem.Bodies.Sort((x, y) =>
+            {
+                return y.Mass.CompareTo(x.Mass);
+            });
+
             return stellarList;
         }
  

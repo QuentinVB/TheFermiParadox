@@ -15,7 +15,7 @@ namespace theFermiParadox.Core.Abstracts
 
         List<Orbit> ChildOrbits { get; set; }
 
-        void Accept(BodyVisitor bodyVisitor);
+        void Accept(Visitor bodyVisitor);
 
 
     }

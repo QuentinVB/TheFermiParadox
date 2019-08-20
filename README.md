@@ -51,6 +51,10 @@ There is two test library. One for automated UnitTest and one for manuel console
 # Notes
 
 ```shell
+
 copy "$(ProjectDir)bin\Debug\theFermiParadox.Core.dll" "D:\Documents\02-SIDEPROJECT\Orbital\Assets\Plugins"
+copy "$(ProjectDir)bin\Debug\theFermiParadox.DAL.dll" "D:\Documents\02-SIDEPROJECT\Orbital\Assets\Plugins"
+
+
 ```
 Funny : https://en.wikipedia.org/wiki/The_Fermi_Paradox_Is_Our_Business_Model

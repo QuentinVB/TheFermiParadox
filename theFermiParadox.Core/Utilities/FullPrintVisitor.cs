@@ -7,7 +7,7 @@ using theFermiParadox.Core.Abstracts;
 
 namespace theFermiParadox.Core
 {
-    public class PrintVisitor: Visitor
+    public class FullPrintVisitor : Visitor
     {
         StringBuilder _buffer = new StringBuilder();
 
@@ -15,38 +15,39 @@ namespace theFermiParadox.Core
 
         public override void Visit(APhysicalObject n)
         {
-            _buffer.Append(n.Name);
+            _buffer.Append(n.ToString());
 
             if (n.ChildOrbits.Count>0)
             {
-                _buffer.Append('(');
+                _buffer.Append("{\n");
                 foreach (Orbit orbit in n.ChildOrbits)
                 {
                     VisitNode(orbit);
                 }
-                _buffer.Append(')');
-            }
-            
+                _buffer.Append("\n}");
+            }           
         }
         public override void Visit(Barycenter n)
         {
-            _buffer.Append('*');
+            _buffer.Append(n.ToString());
 
             if (n.ChildOrbits.Count > 0)
             {
-                _buffer.Append('(');
+                _buffer.Append("{\n");
                 foreach (Orbit orbit in n.ChildOrbits)
                 {
                     VisitNode(orbit);
                 }
-                _buffer.Append(')');
+                _buffer.Append("\n}");
             }
         }
         public override void Visit(Orbit n)
         {
-            _buffer.Append('(');          
-            VisitNode(n.Body as ABody);            
-            _buffer.Append(')');
+            _buffer.Append("(\n");
+            VisitNode(n.Body as ABody);
+            _buffer.Append("\n=======================\n");
+            _buffer.Append(n.ToString());
+            _buffer.Append("\n)");
         }
     }
 }

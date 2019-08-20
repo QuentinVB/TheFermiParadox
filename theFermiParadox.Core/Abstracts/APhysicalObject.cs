@@ -20,7 +20,7 @@ namespace theFermiParadox.Core.Abstracts
 
         }
 
-        public double Mass { get; set; } // in Solar Mass
+        public override double Mass { get; set; } // in Solar Mass
 
         public double AngularMomentum { get; set; } // rad.s-1
 
@@ -30,7 +30,6 @@ namespace theFermiParadox.Core.Abstracts
 
         public double Radius { get; set; } // in solar Radii
 
-        public override void Accept(BodyVisitor v) => v.Visit(this);
-
+        public override void Accept(Visitor v) => v.Visit(this);
     }
 }

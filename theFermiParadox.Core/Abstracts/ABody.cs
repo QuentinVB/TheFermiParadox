@@ -5,19 +5,17 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
+using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core.Abstracts
 {
-    public abstract class ABody
+    public abstract class ABody: Node
     {
         private string _name;
         private readonly Guid _uuid;
         private readonly StellarSystem _stellarSystem;
         private List<Orbit> _childOrbits;
         private readonly bool _isVirtual;
-        //private int bodyIndex;
-
-
         public ABody(StellarSystem stellarSystem, bool isVirtual)
         {
             _stellarSystem = stellarSystem;
@@ -43,6 +41,8 @@ namespace theFermiParadox.Core.Abstracts
 
         public abstract string Denomination { get; }
 
+        public abstract double Mass { get; set; }
+
         public bool IsVirtual { get { return _isVirtual; } }
 
         /// <summary>
@@ -53,8 +53,10 @@ namespace theFermiParadox.Core.Abstracts
         /// </value>
         public Vector3 Position { get; set; }
 
+        [NonPrintable]
         public Orbit ParentOrbit { get; set; }
 
+        [NonPrintable]
         public List<Orbit> ChildOrbits { get => _childOrbits ; set => _childOrbits = value; }
 
         public int BodyIndex { get => _stellarSystem.GetIndexOf(this); }
@@ -70,15 +72,7 @@ namespace theFermiParadox.Core.Abstracts
             return true;
         }
 
-        public override string ToString()
-        {
-            string rslt = "";
-            foreach (PropertyInfo p in this.GetType().GetProperties().ToList())
-            {
-                rslt += "  " + p.Name + " : " + (this.GetType().GetProperty(p.Name).GetValue(this, null) ?? "none").ToString() + "\n";
-            }
-            return rslt;
-        }
+        
         /*
         public static object GetDefault(Type type)
         {
@@ -88,10 +82,5 @@ namespace theFermiParadox.Core.Abstracts
             }
             return null;
         }*/
-
-        public abstract void Accept(BodyVisitor v);
-
-        //internal abstract ABody Accept(MutationVisitor v);
-
     }
 }
