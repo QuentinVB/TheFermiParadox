@@ -6,13 +6,15 @@ using System.Text;
 
 namespace theFermiParadox.Core
 {
-    
+
     public class Physic
     {
         //CONSTANTS
         public const double GravitationalConstant = 6.673e-11;//N⋅m2⋅kg-2
         public const double SolarMass = 1.9884e30;//kg
         public const double SolarRadius = 6.957e8;//m
+        //earth mass
+        //earth radius
         public const double SolarLumniosity = 3.828e26; //W
         public const double StefanBoltzmanConstant = 5.670374e-8;//W.m-2.K-4
         public const double AstronomicUnit = 1.49597870e11;//m
@@ -20,9 +22,9 @@ namespace theFermiParadox.Core
         public const double LightYear = LightSpeed * 365 * 24 * 60 * 60; //m
         public static string[] GREEKALPHABET = new string[24] { "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega" };
 
-        public static double GravitationnalForce(double massA, double massB, double distance) => GravitationalConstant * (massA * massB) / distance;
+        public static double GravitationnalForce(double massA, double massB, double distance) => GravitationalConstant * (massA * massB) / (distance * distance);
 
-        public static BasicColor ColorTemperatureToARGB(int kelvin)
+        public static BasicColor ColorTemperatureToRGB(int kelvin)
         {
             double temp = kelvin / 100;
             double red;
@@ -55,7 +57,7 @@ namespace theFermiParadox.Core
                 Clamp((int)red, 0, 255),
                 Clamp((int)green, 0, 255),
                 Clamp((int)blue, 0, 255)
-                );  
+                );
         }
         public static int Clamp(int x, int min, int max)
         {
@@ -70,7 +72,7 @@ namespace theFermiParadox.Core
             return x;
         }
 
-        public static string latinNumber(int number)
+        public static string LatinNumber(int number)
         {
             switch (number)
             {
@@ -84,10 +86,11 @@ namespace theFermiParadox.Core
                 case 7: return "VII";
                 case 8: return "VIII";
                 case 9: return "IX";
+                case 10: return "X";
                 default: return "";
             }
         }
     }
 
-    
+
 }

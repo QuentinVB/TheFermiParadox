@@ -62,7 +62,7 @@ namespace theFermiParadox.Core
         {
             get
             {
-                return Physic.latinNumber(SizeCode);
+                return Physic.LatinNumber(SizeCode);
             }
         }
 
@@ -74,7 +74,7 @@ namespace theFermiParadox.Core
         public double Age { get; set; }
 
 
-        public BasicColor DisplayColor { get { return Physic.ColorTemperatureToARGB((int)SurfaceTemperature); } }
+        public BasicColor DisplayColor { get { return Physic.ColorTemperatureToRGB((int)SurfaceTemperature); } }
 
     }
 }

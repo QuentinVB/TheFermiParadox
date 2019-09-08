@@ -105,7 +105,7 @@ namespace theFermiParadox.Core
                 stellarSystem.Orbits.Add(orbit);
             }*/
 
-            IOrbitable ForgeBinaryOrbit(APhysicalObject bodyA, APhysicalObject bodyB,int offset)
+            ABody ForgeBinaryOrbit(APhysicalObject bodyA, APhysicalObject bodyB,int offset)
             {
                 if (bodyA.Mass > bodyB.Mass * 9.9)//B mass is significatifly 10 times less than A mass
                 {

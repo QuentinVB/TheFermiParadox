@@ -30,7 +30,7 @@ namespace theFermiParadox.Core.Abstracts
             get {
                 if(string.IsNullOrWhiteSpace(_name))
                 {
-                    return $"{_stellarSystem.Name} {Physic.latinNumber(BodyIndex)}";
+                    return $"{_stellarSystem.Name} {Physic.LatinNumber(BodyIndex)}";
                 }
                 else
                 {

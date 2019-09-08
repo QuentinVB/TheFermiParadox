@@ -30,8 +30,8 @@ namespace theFermiParadox.Core
         private double _eccentricAnomaly = 0;
 
 
-        IOrbitable _mainBody;
-        IOrbitable _body;
+        ABody _mainBody;
+        ABody _body;
 
         /// <summary>
         /// Define the orbit between 2 body. The most massive will be the main body.
@@ -41,7 +41,7 @@ namespace theFermiParadox.Core
         /// <param name="epoch">The t0 date of the system</param>
         /// <param name="eccentricity">derivation from perfect circle : 0 is circle, below 1 is elipsoid, above is a escape trajectory (no units)</param>
         /// <param name="meanDistance">aka the semi Major axis of the orbit (in meters)</param>
-        public Orbit(IOrbitable bodyA, IOrbitable bodyB, DateTime epoch, double eccentricity, double meanDistance)
+        public Orbit(ABody bodyA, ABody bodyB, DateTime epoch, double eccentricity, double meanDistance)
         {
             //Setup bodies position according to their mass, maybe a better approach ?
 
@@ -174,16 +174,12 @@ namespace theFermiParadox.Core
 
 
         //DRAWING FUNCTIONS
-        /// <summary>
-        /// The center of the orbit in the World coordinates
-        /// </summary>
-        public Vector3 CenterPosition { get; set; }
         public Vector3 MainBodyOffset { get => new Vector3(MajorAxis - Periapsis, 0, 0); }
 
         [NonPrintable]
-        public IOrbitable MainBody { get => _mainBody; }
+        public ABody MainBody { get => _mainBody; }
         [NonPrintable]
-        public IOrbitable Body { get => _body; }
+        public ABody Body { get => _body; }
 
         public double Width { get => MajorAxis; }
         public double Height { get => MinorAxis; }
@@ -229,5 +225,6 @@ namespace theFermiParadox.Core
         }
 
         public override void Accept(Visitor v) => v.Visit(this);
+        public override Node Accept(MutationVisitor v) => v.Visit(this);
     }
 }

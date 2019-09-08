@@ -73,6 +73,7 @@
     <Compile Include="Models\systemAgeSource.cs" />
     <Compile Include="FactoryParts\SystemFactory.cs" />
     <Compile Include="Utilities\Vector3.cs" />
+    <Compile Include="Utilities\MutationVisitor.cs" />
     <Compile Include="Utilities\Visitor.cs" />
     <Compile Include="Utilities\WeightedRandomBag.cs" />
   </ItemGroup>
@@ -85,9 +86,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(COMPUTERNAME) ==  HARFANG (
-copy "$(ProjectDir)bin\Debug\theFermiParadox.Core.dll" "D:\Documents\02-SIDEPROJECT\Orbital\Assets\Plugins"
-copy "$(ProjectDir)bin\Debug\theFermiParadox.DAL.dll" "D:\Documents\02-SIDEPROJECT\Orbital\Assets\Plugins"
-)</PostBuildEvent>
+    <PostBuildEvent>IF EXIST "$(ProjectDir)..\..\Orbital" (
+echo Copying...
+copy "$(ProjectDir)bin\Debug\theFermiParadox.Core.dll" "$(ProjectDir)..\..\Orbital\Assets\Plugins"
+copy "$(ProjectDir)bin\Debug\theFermiParadox.DAL.dll" "$(ProjectDir)..\..\Orbital\Assets\Plugins"
+) ELSE (
+echo No copy
+)
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -12,6 +12,8 @@ namespace theFermiParadox.Core.Abstracts
     {
         public abstract void Accept(Visitor v);
 
+        public abstract Node Accept(MutationVisitor v);
+
         public override string ToString()
         {
             string rslt = "";

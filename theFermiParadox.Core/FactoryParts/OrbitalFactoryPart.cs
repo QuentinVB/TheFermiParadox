@@ -8,20 +8,20 @@ namespace theFermiParadox.Core
 {
     public partial class SystemFactory
     {
-        private Orbit ForgeOrbit(IOrbitable A, IOrbitable B, double systemAge)
+        private Orbit ForgeOrbit(ABody A, ABody B, double systemAge)
         {
             return ForgeOrbit( A, B,systemAge, 0);
         }
 
 
-        private Orbit ForgeOrbit(IOrbitable A, IOrbitable B, double systemAge, int meanSeparationOffset)
+        private Orbit ForgeOrbit(ABody A, ABody B, double systemAge, int meanSeparationOffset)
         {
             double periapsis;
             double meanDistance = 0;
             double orbitalEccentricity = 0;
 
-            do
-            {
+            /*do
+            {*/
                 int OrbitalEccentricityRand = 0;
 
                 //Mean Separation p10
@@ -48,8 +48,10 @@ namespace theFermiParadox.Core
                 else if (OrbitalEccentricityRand == 10) orbitalEccentricity = 0.05f + adder * 0.04f;
 
                 periapsis = meanDistance * Physic.AstronomicUnit * (1 + orbitalEccentricity);
+/*
             }
             while (periapsis < A.Radius * Physic.SolarRadius + B.Radius * Physic.SolarRadius); //periapsis<radiusA+radiusB
+            */
             //TEST FOR EDGE CASES (ex radius<body radius)
 
             Orbit orbit;
