@@ -45,8 +45,9 @@
   <ItemGroup>
     <Compile Include="Abstracts\ABody.cs" />
     <Compile Include="Abstracts\APhysicalObject.cs" />
+    <Compile Include="Abstracts\INode.cs" />
     <Compile Include="Abstracts\IOrbitable.cs" />
-    <Compile Include="Abstracts\Node.cs" />
+    <Compile Include="Abstracts\APrintable.cs" />
     <Compile Include="FactoryParts\OrbitalFactoryPart.cs" />
     <Compile Include="Abstracts\IStellar.cs" />
     <Compile Include="Models\StarName.cs" />

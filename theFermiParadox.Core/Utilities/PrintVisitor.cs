@@ -45,7 +45,7 @@ namespace theFermiParadox.Core
         public override void Visit(Orbit n)
         {
             _buffer.Append('(');          
-            VisitNode(n.Body as ABody);            
+            VisitNode(n.Body);            
             _buffer.Append(')');
         }
     }

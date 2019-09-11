@@ -8,13 +8,13 @@ namespace theFermiParadox.Core
 {
     public partial class SystemFactory
     {
-        private Orbit ForgeOrbit(ABody A, ABody B, double systemAge)
+        private Orbit ForgeOrbit(IOrbitable A, IOrbitable B, double systemAge)
         {
             return ForgeOrbit( A, B,systemAge, 0);
         }
 
 
-        private Orbit ForgeOrbit(ABody A, ABody B, double systemAge, int meanSeparationOffset)
+        private Orbit ForgeOrbit(IOrbitable A, IOrbitable B, double systemAge, int meanSeparationOffset)
         {
             double periapsis;
             double meanDistance = 0;

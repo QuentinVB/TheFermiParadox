@@ -9,7 +9,7 @@ using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core.Abstracts
 {
-    public abstract class ABody: Node
+    public abstract class ABody: APrintable, INode
     {
         private string _name;
         private readonly Guid _uuid;
@@ -72,7 +72,10 @@ namespace theFermiParadox.Core.Abstracts
             return true;
         }
 
-        
+        public abstract void Accept(Visitor v);
+        public abstract INode Accept(MutationVisitor v);
+
+
         /*
         public static object GetDefault(Type type)
         {

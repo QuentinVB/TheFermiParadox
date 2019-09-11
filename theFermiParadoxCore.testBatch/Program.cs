@@ -27,7 +27,7 @@ namespace theFermiParadox.ManualTests
 
             FullPrintVisitor visitor = new FullPrintVisitor();
 
-            visitor.VisitNode(stellarSystem.PhysicalObjectRoot);
+            visitor.VisitNode(stellarSystem.PhysicalObjectRoot as INode);
 
             Console.WriteLine(visitor.Result);
 

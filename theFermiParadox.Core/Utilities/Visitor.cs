@@ -9,7 +9,7 @@ namespace theFermiParadox.Core
 {
     public abstract class Visitor
     {
-        public void VisitNode(Node n) => n.Accept(this);
+        public void VisitNode(INode n) => n.Accept(this);
 
         public virtual void Visit(APhysicalObject n)
         {
@@ -33,7 +33,7 @@ namespace theFermiParadox.Core
         }
         public virtual void Visit(Orbit n)
         {            
-             VisitNode(n.Body as ABody);                
+             VisitNode(n.Body);                
         }
     }
 }

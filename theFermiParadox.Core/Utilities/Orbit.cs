@@ -11,7 +11,7 @@ namespace theFermiParadox.Core
 {
     //https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion#Position_as_a_function_of_time
     //https://space.stackexchange.com/questions/8911/determining-orbital-position-at-a-future-point-in-time
-    public class Orbit :Node, ICloneable
+    public class Orbit : APrintable,INode, ICloneable
     {
         private double _eccentricity;
         private Angle _meanAnomaly;
@@ -30,8 +30,8 @@ namespace theFermiParadox.Core
         private double _eccentricAnomaly = 0;
 
 
-        ABody _mainBody;
-        ABody _body;
+        IOrbitable _mainBody;
+        IOrbitable _body;
 
         /// <summary>
         /// Define the orbit between 2 body. The most massive will be the main body.
@@ -41,7 +41,7 @@ namespace theFermiParadox.Core
         /// <param name="epoch">The t0 date of the system</param>
         /// <param name="eccentricity">derivation from perfect circle : 0 is circle, below 1 is elipsoid, above is a escape trajectory (no units)</param>
         /// <param name="meanDistance">aka the semi Major axis of the orbit (in meters)</param>
-        public Orbit(ABody bodyA, ABody bodyB, DateTime epoch, double eccentricity, double meanDistance)
+        public Orbit(IOrbitable bodyA, IOrbitable bodyB, DateTime epoch, double eccentricity, double meanDistance)
         {
             //Setup bodies position according to their mass, maybe a better approach ?
 
@@ -177,9 +177,9 @@ namespace theFermiParadox.Core
         public Vector3 MainBodyOffset { get => new Vector3(MajorAxis - Periapsis, 0, 0); }
 
         [NonPrintable]
-        public ABody MainBody { get => _mainBody; }
+        public IOrbitable MainBody { get => _mainBody; }
         [NonPrintable]
-        public ABody Body { get => _body; }
+        public IOrbitable Body { get => _body; }
 
         public double Width { get => MajorAxis; }
         public double Height { get => MinorAxis; }
@@ -224,7 +224,7 @@ namespace theFermiParadox.Core
             return this.MemberwiseClone(); ;
         }
 
-        public override void Accept(Visitor v) => v.Visit(this);
-        public override Node Accept(MutationVisitor v) => v.Visit(this);
+        public void Accept(Visitor v) => v.Visit(this);
+        public INode Accept(MutationVisitor v) => v.Visit(this);
     }
 }

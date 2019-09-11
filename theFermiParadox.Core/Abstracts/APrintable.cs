@@ -8,12 +8,8 @@ using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core.Abstracts
 {
-    public abstract class Node
+    public abstract class APrintable 
     {
-        public abstract void Accept(Visitor v);
-
-        public abstract Node Accept(MutationVisitor v);
-
         public override string ToString()
         {
             string rslt = "";

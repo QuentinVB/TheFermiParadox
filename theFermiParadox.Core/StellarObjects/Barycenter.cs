@@ -29,8 +29,6 @@ namespace theFermiParadox.Core
         public BasicColor DisplayColor => BasicColor.Black;
 
         public override void Accept(Visitor v) => v.Visit(this);
-        public override Node Accept(MutationVisitor v) => v.Visit(this);
-
-
+        public override INode Accept(MutationVisitor v) => v.Visit(this);
     }
 }

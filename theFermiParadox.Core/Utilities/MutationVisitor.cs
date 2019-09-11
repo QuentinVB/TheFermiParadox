@@ -9,9 +9,9 @@ namespace theFermiParadox.Core
 {
     public abstract class MutationVisitor
     {
-        public Node VisitNode(Node n) => n.Accept(this);
+        public INode VisitNode(INode n) => n.Accept(this);
 
-        public virtual Node Visit(APhysicalObject n)
+        public virtual INode Visit(APhysicalObject n)
         {
             if (n is IOrbitable)
             {
@@ -22,7 +22,7 @@ namespace theFermiParadox.Core
             }
             return n;
         }
-        public virtual Node Visit(Barycenter n)
+        public virtual INode Visit(Barycenter n)
         {
             if (n is IOrbitable)
             {
@@ -34,9 +34,9 @@ namespace theFermiParadox.Core
             return n;
 
         }
-        public virtual Node Visit(Orbit n)
+        public virtual INode Visit(Orbit n)
         {            
-            VisitNode(n.Body as ABody);    
+            VisitNode(n.Body);    
             return n;
         }
     }

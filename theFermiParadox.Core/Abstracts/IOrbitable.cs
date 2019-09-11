@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace theFermiParadox.Core.Abstracts
 {
-    public interface IOrbitable
+    public interface IOrbitable : INode
     {
         string Name { get; }
         bool IsVirtual { get; }
@@ -11,12 +11,6 @@ namespace theFermiParadox.Core.Abstracts
         double Mass { get; }
         Vector3 Position { get; set; }
         Orbit ParentOrbit { get; set; }
-
-
         List<Orbit> ChildOrbits { get; set; }
-
-        void Accept(Visitor bodyVisitor);
-
-
     }
 }
