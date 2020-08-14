@@ -12,7 +12,7 @@ namespace theFermiParadox.Core
     public class Planet : APhysicalObject
     {
         public Planet()
-           : base( null)
+           : base(null)
         {
         }
         public Planet(StellarSystem stellarSystem)

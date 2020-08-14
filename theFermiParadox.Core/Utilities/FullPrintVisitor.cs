@@ -45,7 +45,7 @@ namespace theFermiParadox.Core
         {
             _buffer.Append("(\n");
             VisitNode(n.Body);
-            _buffer.Append("\n=======================\n");
+            _buffer.Append("\n=======================\n\n");
             _buffer.Append(n.ToString());
             _buffer.Append("\n)");
         }

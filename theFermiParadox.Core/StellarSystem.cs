@@ -8,9 +8,11 @@ namespace theFermiParadox.Core
 {
     public class StellarSystem
     {
+        static FullPrintVisitor _printVisitor;
+
         List<ABody> _bodies;
         List<Orbit> _orbits;
-        ABody _objectRoot;
+        INode _objectRoot;
         double _systemAge;
 
         int starCount = 0;
@@ -40,11 +42,12 @@ namespace theFermiParadox.Core
 
         public double Mass
         {
+            //TODO : make it lazy
             get {
                 double sum = 0;
                 foreach (ABody body in _bodies)
                 {
-                    if (body is APhysicalObject @object) sum += @object.Mass;
+                    if (body is APhysicalObject @object && !body.IsVirtual) sum += @object.Mass;
                 }
                 return sum;
             }
@@ -57,18 +60,19 @@ namespace theFermiParadox.Core
         /// <summary>
         /// The first object of the tree
         /// </summary>
-        public ABody PhysicalObjectRoot { get => _objectRoot; internal set => _objectRoot = value; }
+        //TODO : add safety on setter (tree root should be in the collection)
+        public INode PhysicalObjectRoot { get => _objectRoot; internal set => _objectRoot = value; }
         /// <summary>
-        /// Gets the index of the body in the system.
+        /// Gets the index of the reals body in the system.
         /// </summary>
         /// <param name="aBody">a body.</param>
         /// <returns>the index</returns>
         internal int GetIndexOf(ABody aBody)
         {
             int idx=0;
-            foreach (ABody  body in _bodies)
+            foreach (ABody body in _bodies)
             {
-                if(body is IStellar stellarObject)
+                if(body is IStellar stellarObject && body != null)
                 {
                     idx++;
                     if (body.Uuid == aBody.Uuid) return idx;
@@ -105,5 +109,14 @@ namespace theFermiParadox.Core
         /// Gets the UUID of the system.
         /// </summary>
         public Guid Uuid => _uuid;
+
+        public override string ToString()
+        {
+            if(_printVisitor== null) _printVisitor = new FullPrintVisitor(); //lazy
+
+            _printVisitor.VisitNode(PhysicalObjectRoot);
+
+            return _printVisitor.Result;
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace theFermiParadox.Core
         public const double LightSpeed = 299792458;//m.s-1
         public const double LightYear = LightSpeed * 365 * 24 * 60 * 60; //m
         public static string[] GREEKALPHABET = new string[24] { "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega" };
+        public static string STARLETTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         public static double GravitationnalForce(double massA, double massB, double distance) => GravitationalConstant * (massA * massB) / (distance * distance);
 
@@ -89,6 +90,12 @@ namespace theFermiParadox.Core
                 case 10: return "X";
                 default: return "";
             }
+        }
+
+        public static string StarLetter(int index)
+        {
+            //TODO : add safety and maj/min ctrl
+            return STARLETTER[index].ToString();
         }
     }
 

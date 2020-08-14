@@ -73,6 +73,7 @@
     <Compile Include="FactoryParts\StellarFactoryPart.cs" />
     <Compile Include="Models\systemAgeSource.cs" />
     <Compile Include="FactoryParts\SystemFactory.cs" />
+    <Compile Include="Utilities\RandomF.cs" />
     <Compile Include="Utilities\Vector3.cs" />
     <Compile Include="Utilities\MutationVisitor.cs" />
     <Compile Include="Utilities\Visitor.cs" />

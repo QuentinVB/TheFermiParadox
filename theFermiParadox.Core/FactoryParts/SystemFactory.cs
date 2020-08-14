@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Utilities;
 using theFermiParadox.DAL;
 
 namespace theFermiParadox.Core
 {
     public partial class SystemFactory
     {
-        Random randomSource;
+        RandomF randomSource;
 
         readonly List<StarGeneration> _starGeneration;
         readonly List<BasicStar> _basicStar;
@@ -37,17 +38,15 @@ namespace theFermiParadox.Core
                 _starNames = Loader<StarName>.LoadTable("constellationNames.csv").ToArray();
             }
 
-            randomSource = new Random();
+            randomSource = new RandomF();
         }
 
         private string GetSystemName()
         {
-            if(_testMode)
-            {
-                return "Sol";
-            }
+            if(_testMode) return "Sol";
 
-            return $"{Physic.GREEKALPHABET[randomSource.Next(0, Physic.GREEKALPHABET.Length - 1)]} {_starNames[randomSource.Next(0, _starNames.Length-1)].Name}";
+
+            return $"{Physic.GREEKALPHABET[randomSource.NextInclusive(0, Physic.GREEKALPHABET.Length - 1)]} {_starNames[randomSource.NextInclusive(0, _starNames.Length-1)].Name}";
         }
 
         public StellarSystem GetStellarSystem()
@@ -87,7 +86,7 @@ namespace theFermiParadox.Core
             //TODO : set age modification for each stars based from table
 
             //determining abudance factor
-            int abudance = randomSource.Next(1, 20) + (int)systemAge;
+            int abudance = randomSource.NextInclusive(1, 20) + (int)systemAge;
             int abudanceModifier = 0;
             if(3 <= abudance && abudance <= 9) abudanceModifier = 2;
             else if(10 <= abudance && abudance <= 12) abudanceModifier = 1;
@@ -97,7 +96,7 @@ namespace theFermiParadox.Core
 
             //Building Orbits
 
-            //ring orbits, as substitute
+            //ring orbits, as temp substitute
             /*
             for (int i = 1; i < stellarCollection.Count; i++)
             {
@@ -105,39 +104,14 @@ namespace theFermiParadox.Core
                 stellarSystem.Orbits.Add(orbit);
             }*/
 
-            IOrbitable ForgeBinaryOrbit(APhysicalObject bodyA, APhysicalObject bodyB,int offset)
-            {
-                if (bodyA.Mass > bodyB.Mass * 9.9)//B mass is significatifly 10 times less than A mass
-                {
-                    Orbit orbit = ForgeOrbit(stellarCollection[0], stellarCollection[1], systemAge);
-                    stellarSystem.Orbits.Add(orbit);
+            
 
-                    return orbit.MainBody;
-                }
-                else// B mass is close to A mass : barycenter orbit
-                {
-                    Barycenter barycenter = new Barycenter(stellarSystem, stellarCollection[0], stellarCollection[1])
-                    {
-                        Name = "Barycenter"
-                    };
-                    stellarSystem.Add(barycenter);
-
-                    Orbit orbit = ForgeOrbit(barycenter, stellarCollection[0], systemAge);
-                    stellarSystem.Orbits.Add(orbit);
-
-                    Orbit orbit2 = ForgeOrbit(barycenter, stellarCollection[1], systemAge);
-                    stellarSystem.Orbits.Add(orbit2);
-
-                    return barycenter;
-                }
-            }
-
-            //multiple star system
+            //manage multiple star system
             //By Convention name are A,B,C... in the decreasing mass order
 
             if (stellarCollection.Count>1)
             {
-                ABody[] roots = new ABody[stellarCollection.Count / 2];
+                IOrbitable[] roots = new IOrbitable[(int)Math.Floor( stellarCollection.Count / 2.0)];
                 int index=0;
                 
                 //creating binary couple
@@ -146,7 +120,7 @@ namespace theFermiParadox.Core
                     //get 2 first
                     APhysicalObject bodyA = stellarCollection[i];
                     APhysicalObject bodyB = stellarCollection[i + 1];
-                    roots[index]= (ABody)ForgeBinaryOrbit(bodyA, bodyB, 1 - i);
+                    roots[index]= ForgeBinaryOrbit(ref stellarSystem, bodyA, bodyB, systemAge);
                     index++;
                 }
 
@@ -155,23 +129,35 @@ namespace theFermiParadox.Core
                     //only one pair , get the root (barycenter or the most massive star)
                     stellarSystem.PhysicalObjectRoot = roots[0];
 
-
                 }
                 else
                 {
                     //THAR BE DRAGONZ
                     //many pairs
-                    throw new NotImplementedException();
+
+                    IOrbitable rootPair = roots[0];
+                    int offset = 0;
+                    for (int i = 1; i < roots.Length-1; i++)
+                    {
+                        Orbit orbit = ForgeOrbit(rootPair, roots[i],systemAge,i);
+                        stellarSystem.Orbits.Add(orbit);
+                        offset++;
+                    }
+
+                    if (stellarCollection.Count % 2 > 0)//odd result, there is a lonely star to add
+                    {
+                        Orbit orbit = ForgeOrbit(rootPair, roots[roots.Length - 1], systemAge, offset+1);
+                        stellarSystem.Orbits.Add(orbit);
+                    }
+
+                    stellarSystem.PhysicalObjectRoot = roots[0];
+
                 }
 
-                if (stellarCollection.Count % 2 > 0)//odd result, there is a lonely star to add
-                {
-                    throw new NotImplementedException();
-                }
             }
             else
             {
-                //A single lonely star
+                //A single lonely star, sad, but simple
                 stellarSystem.PhysicalObjectRoot = stellarCollection[0];
 
             }

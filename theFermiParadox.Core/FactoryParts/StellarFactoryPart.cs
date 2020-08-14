@@ -13,7 +13,7 @@ namespace theFermiParadox.Core
         public APhysicalObject GenerateStellarObject(ref StellarSystem stellar)
         {
             //define star class
-            return GenerateStellarObject(ref stellar, randomSource.Next(1, 100));
+            return GenerateStellarObject(ref stellar, randomSource.NextInclusive(1, 100));
         }
 
         public APhysicalObject GenerateStellarObject(ref StellarSystem stellarSystem, int stellarGenerationRand)
@@ -110,7 +110,7 @@ namespace theFermiParadox.Core
             string starClass = "";
             int sizeCode = 0;
 
-            int giantSize = randomSource.Next(1, 10) >= 7 ? 4 : 5;
+            int giantSize = randomSource.NextInclusive(1, 10) >= 7 ? 4 : 5;
 
             //manque O et B classes : case 0
             if (starGenerationRand == 1)
@@ -149,7 +149,7 @@ namespace theFermiParadox.Core
             }
             if (starGenerationRand == 99)//Giants
             {
-                int giantRand = randomSource.Next(1, 10);
+                int giantRand = randomSource.NextInclusive(1, 10);
                 if (giantRand == 1) { starClass = "F"; sizeCode = 3; }
                 if (giantRand == 2) { starClass = "G"; sizeCode = 3; }
                 if (3 <= giantRand && giantRand <= 7) { starClass = "F"; sizeCode = 3; }
@@ -157,10 +157,10 @@ namespace theFermiParadox.Core
             }
             
             //define spectralClass
-            int spectralClass = (starClass == "K" && sizeCode == 4) ? 0 : randomSource.Next(0, 9);
+            int spectralClass = (starClass == "K" && sizeCode == 4) ? 0 : randomSource.NextInclusive(0, 9);
 
             //White/Brown Dwarf case
-            int dwarfGenerationRand = randomSource.Next(1, 10);
+            int dwarfGenerationRand = randomSource.NextInclusive(1, 10);
             if (starClass == "D" || starClass == "L")
             {
                 star = new Star(stellarSystem)
@@ -197,7 +197,7 @@ namespace theFermiParadox.Core
             //subGiant randomisation
             if (sizeCode == 4)
             {
-                int subGiantRand = randomSource.Next(1, 10);
+                int subGiantRand = randomSource.NextInclusive(1, 10);
                 float rate = 0;
                 switch (subGiantRand)
                 {
@@ -217,7 +217,7 @@ namespace theFermiParadox.Core
             }
 
             //age
-            int ageRandom = randomSource.Next(1, 10);
+            int ageRandom = randomSource.NextInclusive(1, 10);
 
             //from table
             StarAge starAge = _systemAgeSource
@@ -271,7 +271,7 @@ namespace theFermiParadox.Core
             int adder = 0;
             do
             {
-                if (randomSource.Next(0, 10) >= 6)
+                if (randomSource.NextInclusive(0, 10) >= 6)
                 {
                     count++;
                 }

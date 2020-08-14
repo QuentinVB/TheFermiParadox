@@ -25,6 +25,7 @@ namespace theFermiParadox.Core
 
         private readonly DateTime _startDate;
         private ulong _orbitalPeriod;
+        private ulong _periodOffset=0;
 
         private ulong _time;
         private double _eccentricAnomaly = 0;
@@ -32,6 +33,8 @@ namespace theFermiParadox.Core
 
         IOrbitable _mainBody;
         IOrbitable _body;
+
+
 
         /// <summary>
         /// Define the orbit between 2 body. The most massive will be the main body.
@@ -41,7 +44,24 @@ namespace theFermiParadox.Core
         /// <param name="epoch">The t0 date of the system</param>
         /// <param name="eccentricity">derivation from perfect circle : 0 is circle, below 1 is elipsoid, above is a escape trajectory (no units)</param>
         /// <param name="meanDistance">aka the semi Major axis of the orbit (in meters)</param>
+        //TODO : should exist a constructor with other parameter (major axis, minor axis for instance)
         public Orbit(IOrbitable bodyA, IOrbitable bodyB, DateTime epoch, double eccentricity, double meanDistance)
+            :this(bodyA,bodyB)
+        {    
+            //initialise internal value
+            _startDate = epoch;
+            _time = 0;
+            _eccentricity = eccentricity;
+            _meanAnomaly = 0;
+            _apoapsis = meanDistance * (1 + eccentricity);
+            _periapsis = meanDistance * (1 - eccentricity);
+
+            //THAR BE DRAGONZ
+            _orbitalPeriod = (ulong)(2 * Math.PI * Math.Sqrt(SemiMajorAxis * SemiMajorAxis * SemiMajorAxis / (Physic.GravitationalConstant * _mainBody.Mass * Physic.SolarMass)));
+
+            Body.Position = CurrentBodyPosition;
+        }
+        private Orbit(IOrbitable bodyA, IOrbitable bodyB)
         {
             //Setup bodies position according to their mass, maybe a better approach ?
 
@@ -67,18 +87,6 @@ namespace theFermiParadox.Core
             _mainBody.ChildOrbits.Add(this);
             _body.ParentOrbit = this;
 
-            //initialise internal value
-            _startDate = epoch;
-            _time = 0;
-            _eccentricity = eccentricity;
-            _meanAnomaly = 0;
-            _apoapsis = meanDistance * (1 + eccentricity);
-            _periapsis = meanDistance * (1 - eccentricity);
-
-            //THAR BE DRAGONZ
-            _orbitalPeriod = (ulong)(2 * Math.PI * Math.Sqrt(SemiMajorAxis * SemiMajorAxis * SemiMajorAxis / (Physic.GravitationalConstant * _mainBody.Mass * Physic.SolarMass)));
-
-            Body.Position = CurrentBodyPosition;
         }
         //INITIALS DATA
         /// <summary>
@@ -128,9 +136,13 @@ namespace theFermiParadox.Core
         /// </summary>
         public double SemiMinorAxis { get => Math.Sqrt(_apoapsis * _periapsis); }
         /// <summary>
-        /// the chord above the main focii (in meters)
+        /// the chord above the main focus (in meters)
         /// </summary>
         public double SemiLatusRectum { get => Math.Pow(SemiMajorAxis, 2) / SemiMajorAxis; }
+        /// <summary>
+        /// the distance between the center to a focus (in meters)
+        /// </summary>
+        public double LinearEccentricity { get => Math.Sqrt(SemiMajorAxis*SemiMajorAxis- SemiMinorAxis * SemiMinorAxis); }
         /// <summary>
         /// The mean motion around the orbit (in rad.s-1)
         /// </summary>
@@ -160,9 +172,9 @@ namespace theFermiParadox.Core
 
         //INCLINAISON (NOT SUPPORTED YET)
         /// <summary>
-        /// inclination of the orbit from ecliptic (i in degree)
+        /// inclination of the orbit from ecliptic (i in radian)
         /// </summary>
-        //public Angle Inclination { get => _inclination; }
+        public Angle Inclination { get => _inclination; set => _inclination = value; }
         /// <summary>
         ///(in degree)
         /// </summary>
@@ -199,7 +211,7 @@ namespace theFermiParadox.Core
 
             _time += (uint)timeOffset.TotalSeconds;
             //add mean anomaly at 0 ?
-            _meanAnomaly = (MeanMotion * _time) % (2 * Math.PI);
+            _meanAnomaly = (MeanMotion * (_time+_periodOffset)) % (2 * Math.PI);
             _eccentricAnomaly = ComputeEccentricAnomaly(Eccentricity, MeanAnomaly);
 
             //update
@@ -223,7 +235,15 @@ namespace theFermiParadox.Core
         {
             return this.MemberwiseClone(); ;
         }
-
+        /// <summary>
+        /// Offset the time of the period to match realistic resonnant orbit for instance
+        /// </summary>
+        /// <param name="fractionOfPeriod">the fraction of the period to offset</param>
+        internal void OffsetPeriod(double fractionOfPeriod)
+        {
+            if (0 > fractionOfPeriod || fractionOfPeriod > 1) throw new ArgumentOutOfRangeException("the fraction should be between 0 and 1");
+            _periodOffset = (ulong)Math.Round(OrbitalPeriod * fractionOfPeriod);
+        }
         public void Accept(Visitor v) => v.Visit(this);
         public INode Accept(MutationVisitor v) => v.Visit(this);
     }

@@ -16,6 +16,7 @@ namespace theFermiParadox.Core.Abstracts
         private readonly StellarSystem _stellarSystem;
         private List<Orbit> _childOrbits;
         private readonly bool _isVirtual;
+        private int _bodyIndex=-1;
         public ABody(StellarSystem stellarSystem, bool isVirtual)
         {
             _stellarSystem = stellarSystem;
@@ -30,7 +31,8 @@ namespace theFermiParadox.Core.Abstracts
             get {
                 if(string.IsNullOrWhiteSpace(_name))
                 {
-                    return $"{_stellarSystem.Name} {Physic.LatinNumber(BodyIndex)}";
+                    _name = IsVirtual? _stellarSystem.Name:$"{_stellarSystem.Name} {Physic.StarLetter(BodyIndex-1)}";
+                    return _name;
                 }
                 else
                 {
@@ -59,7 +61,20 @@ namespace theFermiParadox.Core.Abstracts
         [NonPrintable]
         public List<Orbit> ChildOrbits { get => _childOrbits ; set => _childOrbits = value; }
 
-        public int BodyIndex { get => _stellarSystem.GetIndexOf(this); }
+        //TODO : avoid virtual in get index, (this cause offset) should be lazy
+        public int BodyIndex {
+            get {
+                if (_bodyIndex != -1)
+                {
+                    return _bodyIndex;
+                }
+                else
+                { 
+                    _bodyIndex = _stellarSystem.GetIndexOf(this);
+                    return _bodyIndex;
+                }
+            } 
+        }
 
         //TODO self ROTATION
 

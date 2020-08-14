@@ -24,7 +24,7 @@ namespace theFermiParadox.Core
 
         public double Radius { get { return 0; } }
 
-        public override double Mass { get => _bodyA.Mass + _bodyB.Mass; set => throw new InvalidOperationException(); }
+        public override double Mass { get => (_bodyA.Mass + _bodyB.Mass)/2; set => throw new InvalidOperationException(); }
 
         public BasicColor DisplayColor => BasicColor.Black;
 

@@ -25,14 +25,10 @@ namespace theFermiParadox.ManualTests
             }
             */
 
-            FullPrintVisitor visitor = new FullPrintVisitor();
-
-            visitor.VisitNode(stellarSystem.PhysicalObjectRoot as INode);
-
-            Console.WriteLine(visitor.Result);
+            Console.WriteLine(stellarSystem);
 
             /*
-            TimeSpan timeOffset = new TimeSpan(365, 0, 0, 0, 0);
+            TimeSpan timeOffset = new TimeSpan(20, 0, 0, 0, 0);
             //Printer<Orbit>.PrintHeader("orbitRecord.csv", stellarSystem.Orbits[0]);
 
             List<Orbit> orbitalStates = new List<Orbit>();
