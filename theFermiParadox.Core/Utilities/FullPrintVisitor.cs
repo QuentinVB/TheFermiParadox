@@ -49,5 +49,10 @@ namespace theFermiParadox.Core
             _buffer.Append(n.ToString());
             _buffer.Append("\n)");
         }
+
+        internal void Clear()
+        {
+            _buffer.Clear();
+        }
     }
 }

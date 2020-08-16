@@ -61,7 +61,6 @@ namespace theFermiParadox.Core.Abstracts
         [NonPrintable]
         public List<Orbit> ChildOrbits { get => _childOrbits ; set => _childOrbits = value; }
 
-        //TODO : avoid virtual in get index, (this cause offset) should be lazy
         public int BodyIndex {
             get {
                 if (_bodyIndex != -1)
@@ -76,7 +75,6 @@ namespace theFermiParadox.Core.Abstracts
             } 
         }
 
-        //TODO self ROTATION
 
         public bool IsReady()
         {

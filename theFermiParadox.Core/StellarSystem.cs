@@ -113,6 +113,7 @@ namespace theFermiParadox.Core
         public override string ToString()
         {
             if(_printVisitor== null) _printVisitor = new FullPrintVisitor(); //lazy
+            _printVisitor.Clear();
 
             _printVisitor.VisitNode(PhysicalObjectRoot);
 

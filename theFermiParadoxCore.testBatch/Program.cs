@@ -16,7 +16,7 @@ namespace theFermiParadox.ManualTests
 
             SystemFactory systemFactory = new SystemFactory();
 
-            StellarSystem stellarSystem = systemFactory.GetStellarSystem(2);
+            StellarSystem stellarSystem = systemFactory.GetStellarSystem(3);
 
             /*
             foreach (ABody body in stellarSystem.Bodies)

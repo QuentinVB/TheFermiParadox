@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using theFermiParadox.Core.Abstracts;
 using theFermiParadox.Core.Utilities;
@@ -108,10 +109,9 @@ namespace theFermiParadox.Core
 
             //manage multiple star system
             //By Convention name are A,B,C... in the decreasing mass order
-
             if (stellarCollection.Count>1)
             {
-                IOrbitable[] roots = new IOrbitable[(int)Math.Floor( stellarCollection.Count / 2.0)];
+                IOrbitable[] pairs = new IOrbitable[(int)Math.Floor( stellarCollection.Count / 2.0)];
                 int index=0;
                 
                 //creating binary couple
@@ -120,44 +120,45 @@ namespace theFermiParadox.Core
                     //get 2 first
                     APhysicalObject bodyA = stellarCollection[i];
                     APhysicalObject bodyB = stellarCollection[i + 1];
-                    roots[index]= ForgeBinaryOrbit(ref stellarSystem, bodyA, bodyB, systemAge);
+                    pairs[index]= ForgeBinaryOrbit(ref stellarSystem, bodyA, bodyB, systemAge);
                     index++;
                 }
+                IOrbitable rootPair = pairs[0];
+                int offset = 0;
 
                 if (index==1)
                 {
+
                     //only one pair , get the root (barycenter or the most massive star)
-                    stellarSystem.PhysicalObjectRoot = roots[0];
+                    stellarSystem.PhysicalObjectRoot = pairs[0];
 
                 }
                 else
                 {
                     //THAR BE DRAGONZ
-                    //many pairs
-
-                    IOrbitable rootPair = roots[0];
-                    int offset = 0;
-                    for (int i = 1; i < roots.Length-1; i++)
+                    //many pairs orbiting the root pair
+                    for (int i = 1; i < pairs.Length; i++)
                     {
-                        Orbit orbit = ForgeOrbit(rootPair, roots[i],systemAge,i);
+                        Orbit orbit = ForgeOrbit(rootPair, pairs[i],systemAge,i);
                         stellarSystem.Orbits.Add(orbit);
                         offset++;
                     }
+                    stellarSystem.PhysicalObjectRoot = rootPair;
 
-                    if (stellarCollection.Count % 2 > 0)//odd result, there is a lonely star to add
-                    {
-                        Orbit orbit = ForgeOrbit(rootPair, roots[roots.Length - 1], systemAge, offset+1);
-                        stellarSystem.Orbits.Add(orbit);
-                    }
-
-                    stellarSystem.PhysicalObjectRoot = roots[0];
-
+                }
+                //odd result, there is a lonely star wandering add far away
+                //OR, if odd result : the most massive is at the center and the other are spinning aroud, or spinning around each other around the big one
+                if (stellarCollection.Count % 2 > 0)
+                {
+                    Orbit orbit = ForgeOrbit(rootPair, stellarCollection.Last(), systemAge, offset + 1);
+                    stellarSystem.Orbits.Add(orbit);
                 }
 
             }
+            //A single lonely star, sad, but simple
             else
             {
-                //A single lonely star, sad, but simple
+                
                 stellarSystem.PhysicalObjectRoot = stellarCollection[0];
 
             }

@@ -25,7 +25,7 @@ namespace theFermiParadox.Core
         IOrbitable ForgeBinaryOrbit(ref StellarSystem stellarSystem,APhysicalObject bodyA, APhysicalObject bodyB, double systemAge)
         {
             //TODO : add barycenter avoidance for large object ?
-            if (bodyA.Mass > bodyB.Mass * BARYCENTERTHRESHOLD)//B mass is significantly 10 times less than A mass, then no barycenter
+            if (bodyA.Mass > bodyB.Mass * BARYCENTERTHRESHOLD)//B mass is significantly 6 times less than A mass, then no barycenter
             {
                 
                 Orbit orbit = ForgeOrbit(bodyA, bodyB, systemAge);
@@ -35,18 +35,23 @@ namespace theFermiParadox.Core
             }
             else// B mass is close to A mass : barycenter orbit
             {
+                //https://en.wikipedia.org/wiki/Barycenter
+                //TODO: create better barycenter management
                 Barycenter barycenter = new Barycenter(stellarSystem, bodyA, bodyB)
                 {
                     Name = $"{stellarSystem.Name} {Physic.StarLetter(bodyA.BodyIndex - 1)}{Physic.StarLetter(bodyB.BodyIndex - 1)}" 
                 };
                 stellarSystem.Add(barycenter);
 
-                //TODO : force resonant orbit for barycenter 
                 Orbit orbit = ForgeOrbit(barycenter, bodyA, systemAge);
                 stellarSystem.Orbits.Add(orbit);
 
-                Orbit orbit2 = ForgeOrbit(barycenter, bodyB, systemAge);
-                orbit2.OffsetPeriod(0.5);
+                //TODO : maybe a bit extreme for forcing  resonant orbit for barycenter ?
+                Orbit orbit2 = new Orbit(barycenter, bodyB, DateTime.Now, orbit.Eccentricity,orbit.SemiMajorAxis);
+                //and invert https://en.wikipedia.org/wiki/Argument_of_periapsis
+                //orbit2.OffsetPeriod(0.5);
+                orbit2.Inclination = -orbit.Inclination;
+                orbit2.ArgumentOfPeriapsis = Math.PI;//half turn
 
                 stellarSystem.Orbits.Add(orbit2);
 
@@ -68,7 +73,9 @@ namespace theFermiParadox.Core
             if (systemAge > 5) meanAnomalyRand++;
             else if (systemAge < 1) meanAnomalyRand--;
             meanAnomalyRand = Physic.Clamp(meanAnomalyRand, 1, 10);
-                
+
+            //https://en.wikipedia.org/wiki/Titius–Bode_law ?
+
             //edge case ?
             /*
             if(A.Radius * Physic.SolarRadius + B.Radius * Physic.SolarRadius < 0.05f )

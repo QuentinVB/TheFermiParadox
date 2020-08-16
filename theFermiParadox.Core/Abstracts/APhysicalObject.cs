@@ -10,6 +10,8 @@ namespace theFermiParadox.Core.Abstracts
 {
     public abstract class APhysicalObject : ABody, IOrbitable
     {
+        private TimeSpan _rotationPeriod;
+        private double _angularVelocity;
         public APhysicalObject()
             : base(null,false)
         { }
@@ -19,10 +21,28 @@ namespace theFermiParadox.Core.Abstracts
         {
 
         }
+        //todo : having a constistent unit system is mandatory to switch from solar mass to earth mass to tons and kg
+        public override double Mass { get; set; } // in Solar Mass... 
 
-        public override double Mass { get; set; } // in Solar Mass
+        //https://fr.wikipedia.org/wiki/Moment_cinétique
+        public double AngularMomentum { get; set; } // 	kg⋅m2⋅s−1
 
-        public double AngularMomentum { get; set; } // rad.s-1
+        //get/set update pattern...
+        public double AngularVelocity { 
+            get=> _angularVelocity; // rad.s-1
+            set {
+                _angularVelocity = value;
+                _rotationPeriod = TimeSpan.FromSeconds(2 * Math.PI / _angularVelocity);
+            }
+        } 
+        public TimeSpan RotationPeriod { 
+            get=> _rotationPeriod;  // in s
+            set {
+                _rotationPeriod = value;
+                _angularVelocity = 2 * Math.PI / _rotationPeriod.Seconds;
+            } 
+        } 
+
 
         public double Speed { get; set; } // m.s-1
 

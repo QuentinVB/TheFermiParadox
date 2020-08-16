@@ -92,10 +92,11 @@ namespace theFermiParadox.Core
             }
         }
 
-        public static string StarLetter(int index)
+        public static string StarLetter(int index,bool isMaj = true)
         {
-            //TODO : add safety and maj/min ctrl
-            return STARLETTER[index].ToString();
+            if (index < 0 || index > STARLETTER.Length) throw new IndexOutOfRangeException($"there is no letter at the specified index {index}");
+            char selectedLetter = STARLETTER[index];
+            return ((isMaj)?selectedLetter:char.ToLower(selectedLetter)).ToString();
         }
     }
 

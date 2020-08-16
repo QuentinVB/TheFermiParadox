@@ -182,7 +182,8 @@ namespace theFermiParadox.Core
         /// <summary>
         /// (in degree)
         /// </summary>
-        //public Angle ArgumentOfPeriapsis { get => _argumentOfPeriapsis; }
+        //TODO :add control of the limits
+        public Angle ArgumentOfPeriapsis { get => _argumentOfPeriapsis; set => _argumentOfPeriapsis = value; }
 
 
         //DRAWING FUNCTIONS

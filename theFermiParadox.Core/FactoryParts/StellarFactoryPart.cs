@@ -19,12 +19,12 @@ namespace theFermiParadox.Core
         public APhysicalObject GenerateStellarObject(ref StellarSystem stellarSystem, int stellarGenerationRand)
         {
             if (_testMode) return GenerateStar(stellarSystem, stellarGenerationRand);
-            if (stellarGenerationRand < 100)
+            if (stellarGenerationRand <= 100)
             {
                 return GenerateStar(stellarSystem,stellarGenerationRand);
             }
             else
-            //Could be B-class stars, giants, neutron stars,protostars, blackholes or other rare stellar objects
+            //TODO : Could be B-class stars, giants, neutron stars,protostars, blackholes or other rare stellar objects
             {
                 GazCloud gazCloud = new GazCloud()
                 {
@@ -261,6 +261,9 @@ namespace theFermiParadox.Core
             }
 
             star.Luminosity += star.Luminosity * starAge.LuminosityModifier;
+
+            //self rotation, sun : 1,997 km/s, sun rotation period : 30days
+            star.RotationPeriod = TimeSpan.FromDays(30);
 
             return star??throw new InvalidOperationException();   
         }
