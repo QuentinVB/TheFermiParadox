@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace theFermiParadox.DAL
         public static List<T> LoadTable(string filePath)
         {
             using (var reader = new StreamReader(filePath))
-            using (var csv = new CsvReader(reader))
+            using (var csv = new CsvReader(reader,CultureInfo.InvariantCulture))
             {
                 return csv.GetRecords<T>().ToList();
                 /*

@@ -16,6 +16,8 @@ namespace theFermiParadox.Core
             }
         }
 
+        public override double Volume => Physic.SphereVolume(RadiusInM);
+
         BasicColor IStellar.DisplayColor => throw new System.NotImplementedException();
 
         

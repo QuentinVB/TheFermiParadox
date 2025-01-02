@@ -15,5 +15,7 @@ namespace theFermiParadox.Core
                 return "Gaz cloud";
             }
         }
+
+        public override double Volume => throw new System.NotImplementedException();
     }
 }

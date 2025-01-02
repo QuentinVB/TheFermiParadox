@@ -21,5 +21,7 @@ namespace theFermiParadox.Core
         public int ElectricCharge { get { return 0; } }
 
         public BasicColor DisplayColor => BasicColor.Black;
+
+        public override double Volume => Physic.SphereVolume(SchwarzschildRadius);
     }
 }

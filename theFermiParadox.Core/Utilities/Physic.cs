@@ -98,6 +98,11 @@ namespace theFermiParadox.Core
             char selectedLetter = STARLETTER[index];
             return ((isMaj)?selectedLetter:char.ToLower(selectedLetter)).ToString();
         }
+
+        internal static double SphereVolume(double radius)
+        {
+            return (radius * radius * Math.PI * 4) / 3;
+        }
     }
 
 

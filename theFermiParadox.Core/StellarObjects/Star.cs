@@ -67,14 +67,11 @@ namespace theFermiParadox.Core
         }
 
 
-        public double Luminosity { get; set; }
 
-        public double LifeSpan { get; set; }
-
-        public double Age { get; set; }
+        public override double Volume => Physic.SphereVolume(RadiusInM);
 
 
         public BasicColor DisplayColor { get { return Physic.ColorTemperatureToRGB((int)SurfaceTemperature); } }
-
+        public double Luminosity { get; set; }
     }
 }
