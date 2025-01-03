@@ -1,7 +1,8 @@
-﻿using Helpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Numerics;
+using theFermiParadox.Core.Utilities;
 
-namespace theFermiParadox.Core.Abstracts
+namespace theFermiParadox.Core.Interfaces
 {
     public interface IOrbitable : INode
     {

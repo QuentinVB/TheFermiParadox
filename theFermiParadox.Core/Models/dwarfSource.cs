@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
-
-namespace theFermiParadox.Core
+﻿namespace theFermiParadox.Core
 {
     public struct DwarfStar
     {

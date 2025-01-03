@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using theFermiParadox.Core.Abstracts;
+﻿using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Interfaces;
 
-namespace theFermiParadox.Core
+namespace theFermiParadox.Core.Utilities
 {
     public abstract class Visitor
     {

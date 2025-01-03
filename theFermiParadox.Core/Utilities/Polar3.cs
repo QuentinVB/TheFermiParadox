@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-//using System.Numerics;
-using System.Text;
+using System.Numerics;
 
-namespace Helpers
+namespace theFermiParadox.Core.Utilities
 {
     public struct Polar3
     {
@@ -43,7 +40,7 @@ namespace Helpers
         }
         public static Vector3 ToCartesian(Polar3 a)
         {
-            return new Vector3(a.R * Math.Sin(a.P) * Math.Cos(a.O), a.R * Math.Sin(a.P) * Math.Sin(a.O), a.R * Math.Cos(a.P));
+            return new Vector3((float)(a.R * Math.Sin(a.P) * Math.Cos(a.O)), (float)(a.R * Math.Sin(a.P) * Math.Sin(a.O)), (float)(a.R * Math.Cos(a.P)));
         }
 
     }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Interfaces;
 using theFermiParadox.Core.Utilities;
 using theFermiParadox.DAL;
 

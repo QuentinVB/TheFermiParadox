@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Xml.Serialization;
 using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Utilities;
 using theFermiParadox.DAL;
 
 namespace theFermiParadox.Core
@@ -33,7 +31,6 @@ namespace theFermiParadox.Core
 
                 return gazCloud;
             }
-
         }
 
         public List<APhysicalObject> GenerateStellarCollection(ref StellarSystem stellarSystem)

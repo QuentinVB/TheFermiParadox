@@ -1,4 +1,6 @@
-﻿namespace theFermiParadox.Core.Abstracts
+﻿using theFermiParadox.Core.Utilities;
+
+namespace theFermiParadox.Core.Interfaces
 {
     public interface INode
     {

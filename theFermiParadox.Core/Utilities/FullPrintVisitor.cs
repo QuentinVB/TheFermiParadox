@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core
 {

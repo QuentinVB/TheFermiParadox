@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
 
 //https://docs.microsoft.com/fr-fr/dotnet/api/system.numerics.vector3?view=netframework-4.7.2
 
-namespace theFermiParadox.Core
+namespace theFermiParadox.Core.Utilities
 {
-
     public class Physic
     {
         //CONSTANTS
@@ -25,7 +23,7 @@ namespace theFermiParadox.Core
 
         public static double GravitationnalForce(double massA, double massB, double distance) => GravitationalConstant * (massA * massB) / (distance * distance);
 
-        public static BasicColor ColorTemperatureToRGB(int kelvin)
+        public static Color ColorTemperatureToRGB(int kelvin)
         {
             double temp = kelvin / 100;
             double red;
@@ -54,7 +52,7 @@ namespace theFermiParadox.Core
                 green = 288.1221695283 * Math.Pow(green, -0.0755148492);
                 blue = 255;
             }
-            return new BasicColor(
+            return Color.FromArgb(
                 Clamp((int)red, 0, 255),
                 Clamp((int)green, 0, 255),
                 Clamp((int)blue, 0, 255)
@@ -104,6 +102,4 @@ namespace theFermiParadox.Core
             return (radius * radius * Math.PI * 4) / 3;
         }
     }
-
-
 }

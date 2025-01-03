@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Xml.Serialization;
+﻿using System.Drawing;
 using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Interfaces;
+using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core
 {
@@ -71,7 +68,7 @@ namespace theFermiParadox.Core
         public override double Volume => Physic.SphereVolume(RadiusInM);
 
 
-        public BasicColor DisplayColor { get { return Physic.ColorTemperatureToRGB((int)SurfaceTemperature); } }
+        public Color DisplayColor { get { return Physic.ColorTemperatureToRGB((int)SurfaceTemperature); } }
         public double Luminosity { get; set; }
     }
 }

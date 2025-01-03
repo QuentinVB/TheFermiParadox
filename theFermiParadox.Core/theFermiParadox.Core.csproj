@@ -37,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -46,12 +48,12 @@
     <Compile Include="Abstracts\ABody.cs" />
     <Compile Include="Abstracts\APhysicalObject.cs" />
     <Compile Include="Abstracts\AXMLSerializable.cs" />
-    <Compile Include="Abstracts\INode.cs" />
-    <Compile Include="Abstracts\IOrbitable.cs" />
+    <Compile Include="Interfaces\INode.cs" />
+    <Compile Include="Interfaces\IOrbitable.cs" />
     <Compile Include="Abstracts\APrintable.cs" />
-    <Compile Include="Abstracts\PlanetaryFeature.cs" />
+    <Compile Include="Interfaces\PlanetaryFeature.cs" />
     <Compile Include="FactoryParts\OrbitalFactoryPart.cs" />
-    <Compile Include="Abstracts\IStellar.cs" />
+    <Compile Include="Interfaces\IStellar.cs" />
     <Compile Include="Interfaces\IPlanetaryFeature.cs" />
     <Compile Include="Models\StarName.cs" />
     <Compile Include="Models\BasicStar.cs" />
@@ -67,7 +69,6 @@
     <Compile Include="StellarObjects\NeutronStar.cs" />
     <Compile Include="StellarSystem.cs" />
     <Compile Include="Utilities\Angle.cs" />
-    <Compile Include="Utilities\BasicColor.cs" />
     <Compile Include="Models\dwarfSource.cs" />
     <Compile Include="StellarObjects\GazCloud.cs" />
     <Compile Include="Utilities\Physic.cs" />
@@ -78,7 +79,7 @@
     <Compile Include="Models\systemAgeSource.cs" />
     <Compile Include="FactoryParts\SystemFactory.cs" />
     <Compile Include="Utilities\RandomF.cs" />
-    <Compile Include="Utilities\Vector3.cs" />
+    <Compile Include="Utilities\Vector3Extensions.cs" />
     <Compile Include="Utilities\MutationVisitor.cs" />
     <Compile Include="Utilities\Visitor.cs" />
     <Compile Include="Utilities\WeightedRandomBag.cs" />

@@ -1,4 +1,7 @@
-﻿using theFermiParadox.Core.Abstracts;
+﻿using System.Drawing;
+using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Interfaces;
+using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core
 {
@@ -18,7 +21,7 @@ namespace theFermiParadox.Core
 
         public override double Volume => Physic.SphereVolume(RadiusInM);
 
-        BasicColor IStellar.DisplayColor => throw new System.NotImplementedException();
+        Color IStellar.DisplayColor => throw new System.NotImplementedException();
 
         
     }

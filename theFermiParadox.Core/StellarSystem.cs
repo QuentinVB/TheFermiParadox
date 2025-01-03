@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 using theFermiParadox.Core.Abstracts;
-using System.Linq;
-using Helpers;
-using System;
+using theFermiParadox.Core.Interfaces;
+using theFermiParadox.Core.Utilities;
+
 
 namespace theFermiParadox.Core
 {

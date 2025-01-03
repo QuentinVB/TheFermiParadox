@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Xml.Serialization;
-
-namespace theFermiParadox.Core
+﻿namespace theFermiParadox.Core
 {
     public struct StarAge
     {

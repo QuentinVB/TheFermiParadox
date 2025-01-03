@@ -1,13 +1,10 @@
-﻿using Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿using System;
+using System.Numerics;
 using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Interfaces;
 using theFermiParadox.Core.Utilities;
 
-namespace theFermiParadox.Core
+namespace theFermiParadox.Core.Utilities
 {
     //https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion#Position_as_a_function_of_time
     //https://space.stackexchange.com/questions/8911/determining-orbital-position-at-a-future-point-in-time
@@ -44,6 +41,7 @@ namespace theFermiParadox.Core
         /// <param name="epoch">The t0 date of the system</param>
         /// <param name="eccentricity">derivation from perfect circle : 0 is circle, below 1 is elipsoid, above is a escape trajectory (no units)</param>
         /// <param name="meanDistance">aka the semi Major axis of the orbit (in meters)</param>
+        /// <exception cref="ArgumentException">Thrown if eccentricity is invalid or bodies are incorrectly defined.</exception>
         //TODO : should exist a constructor with other parameter (major axis, minor axis for instance)
         public Orbit(IOrbitable bodyA, IOrbitable bodyB, DateTime epoch, double eccentricity, double meanDistance)
             :this(bodyA,bodyB)
@@ -187,7 +185,7 @@ namespace theFermiParadox.Core
 
 
         //DRAWING FUNCTIONS
-        public Vector3 MainBodyOffset { get => new Vector3(MajorAxis - Periapsis, 0, 0); }
+        public Vector3 MainBodyOffset { get => new Vector3((float)(MajorAxis - Periapsis), 0, 0); }
 
         [NonPrintable]
         public IOrbitable MainBody { get => _mainBody; }
@@ -197,15 +195,18 @@ namespace theFermiParadox.Core
         public double Width { get => MajorAxis; }
         public double Height { get => MinorAxis; }
         /// <summary>
-        /// The current body position, in the cartesian vector of the center of the orbit
+        /// Gets the current position of the smaller body in Cartesian coordinates relative to the orbital center.
         /// </summary>
         public Vector3 CurrentBodyPosition => new Vector3(
-            SemiMajorAxis * (Math.Cos(EccentricAnomaly) - Eccentricity),
-            SemiMinorAxis * Math.Sin(EccentricAnomaly),
+            (float)(SemiMajorAxis * (Math.Cos(EccentricAnomaly) - Eccentricity)),
+            (float)(SemiMinorAxis * Math.Sin(EccentricAnomaly)),
             0
             );
 
-
+        /// <summary>
+        /// Updates the orbit's state by advancing the simulation time.
+        /// </summary>
+        /// <param name="timeOffset">The amount of time to advance in seconds.</param>
         public void UpdateTime(TimeSpan timeOffset)
         {
             //THAR BE DRAGONZ
@@ -230,22 +231,29 @@ namespace theFermiParadox.Core
             }
             return E;
         }
-        
 
-        public object Clone()
-        {
-            return this.MemberwiseClone(); ;
-        }
+        
         /// <summary>
-        /// Offset the time of the period to match realistic resonnant orbit for instance
+        /// Offsets the orbital period to adjust synchronization with other orbits.
         /// </summary>
-        /// <param name="fractionOfPeriod">the fraction of the period to offset</param>
+        /// <param name="fractionOfPeriod">The fraction of the period to offset, between 0 and 1.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the fraction is out of range.</exception>
         internal void OffsetPeriod(double fractionOfPeriod)
         {
             if (0 > fractionOfPeriod || fractionOfPeriod > 1) throw new ArgumentOutOfRangeException("the fraction should be between 0 and 1");
             _periodOffset = (ulong)Math.Round(OrbitalPeriod * fractionOfPeriod);
         }
+
+        /// <summary>
+        /// Creates a shallow copy of the current orbit.
+        /// </summary>
+        /// <returns>A cloned instance of the current orbit.</returns>
+        public object Clone()
+        {
+            return this.MemberwiseClone(); ;
+        }
         public void Accept(Visitor v) => v.Visit(this);
         public INode Accept(MutationVisitor v) => v.Visit(this);
+
     }
 }

@@ -1,10 +1,9 @@
-﻿using Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
-using System.Text;
-using System.Xml.Serialization;
+using theFermiParadox.Core.Interfaces;
 using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core.Abstracts

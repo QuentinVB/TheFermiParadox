@@ -1,4 +1,7 @@
-﻿using theFermiParadox.Core.Abstracts;
+﻿using System.Drawing;
+using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Interfaces;
+using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core
 {
@@ -20,7 +23,7 @@ namespace theFermiParadox.Core
         public double SchwarzschildRadius { get { return 2 * Mass * Physic.GravitationalConstant / Physic.LightSpeed * Physic.LightSpeed; } }
         public int ElectricCharge { get { return 0; } }
 
-        public BasicColor DisplayColor => BasicColor.Black;
+        public Color DisplayColor => Color.Black;
 
         public override double Volume => Physic.SphereVolume(SchwarzschildRadius);
     }

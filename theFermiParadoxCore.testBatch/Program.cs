@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using theFermiParadox.Core;
-using theFermiParadox.Core.Abstracts;
-using theFermiParadox.DAL;
 
 namespace theFermiParadox.ManualTests
 {

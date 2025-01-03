@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using theFermiParadox.Core.Abstracts;
+using theFermiParadox.Core.Interfaces;
+using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core
 {
@@ -29,7 +32,7 @@ namespace theFermiParadox.Core
         //https://en.wikipedia.org/wiki/Two-body_problem#Reduction_to_two_independent,_one-body_problems
         public override double Mass { get => (_bodyA.Mass * _bodyB.Mass) / (_bodyA.Mass + _bodyB.Mass); set => throw new InvalidOperationException(); }
         public double TrueMass { get => _bodyA.Mass + _bodyB.Mass; set => throw new InvalidOperationException(); }
-        public BasicColor DisplayColor => BasicColor.Black;
+        public Color DisplayColor => Color.Black;
 
         public override void Accept(Visitor v) => v.Visit(this);
         public override INode Accept(MutationVisitor v) => v.Visit(this);
