@@ -62,12 +62,7 @@ namespace theFermiParadox.Core
                 return Physic.LatinNumber(SizeCode);
             }
         }
-
-
-
         public override double Volume => Physic.SphereVolume(RadiusInM);
-
-
         public Color DisplayColor { get { return Physic.ColorTemperatureToRGB((int)SurfaceTemperature); } }
         public double Luminosity { get; set; }
     }

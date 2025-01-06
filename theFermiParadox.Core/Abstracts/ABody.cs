@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -8,7 +9,7 @@ using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core.Abstracts
 {
-    public abstract class ABody: APrintable, INode
+    public abstract class ABody: APrintable, IBody
     {
         private string _name;
         private readonly Guid _uuid;

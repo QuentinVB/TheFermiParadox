@@ -2,7 +2,7 @@ using NUnit.Framework;
 using FluentAssertions;
 using theFermiParadox.Core;
 
-namespace Tests
+namespace theFermiParadox.Tests
 {
     public class StarTests
     {
@@ -16,7 +16,7 @@ namespace Tests
         {
             //Arrange
             Star sut = new Star();
-          
+
         }
     }
 }

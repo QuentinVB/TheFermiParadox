@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
+using System.IO;
 using theFermiParadox.Core;
+using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.ManualTests
 {
@@ -11,7 +15,7 @@ namespace theFermiParadox.ManualTests
 
             SystemFactory systemFactory = new SystemFactory();
 
-            StellarSystem stellarSystem = systemFactory.GetStellarSystem(3);
+            StellarSystem stellarSystem = systemFactory.GetStellarSystem(1);
 
             /*
             foreach (ABody body in stellarSystem.Bodies)
@@ -40,6 +44,23 @@ namespace theFermiParadox.ManualTests
             */
             Console.WriteLine("Finished...");
 
+
+            JsonSerializer serializer = new JsonSerializer()
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                //serializer.PreserveReferencesHandling = PreserveReferencesHandling.None;
+                ReferenceResolver = new UniqueReferenceResolver(),
+                Formatting = Formatting.Indented
+
+            };
+            serializer.Converters.Add(new JavaScriptDateTimeConverter());
+
+
+            using (StreamWriter sw = new StreamWriter(@"data.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                serializer.Serialize(writer, stellarSystem);
+            }
             Console.ReadLine();
         }
     }

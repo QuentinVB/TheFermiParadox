@@ -2,7 +2,7 @@ using NUnit.Framework;
 using FluentAssertions;
 using theFermiParadox.Core;
 
-namespace Tests
+namespace theFermiParadox.Tests
 {
     public class BodyTests
     {

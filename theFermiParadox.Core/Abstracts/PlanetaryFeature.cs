@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using theFermiParadox.Core.Interfaces;
 
-namespace theFermiParadox.Core.Abstracts
+namespace theFermiParadox.Abstracts
 {
-    public abstract class PlanetaryFeature : IPlanetaryFeature
+    public abstract class APlanetaryFeature : IPlanetaryFeature
     {
         readonly string _name;
         readonly string _description;
@@ -14,7 +14,7 @@ namespace theFermiParadox.Core.Abstracts
             get { return _name; }
         }
 
-        public PlanetaryFeature(string name, string description)
+        public APlanetaryFeature(string name, string description)
         {
             _name = name;
             _description = description;

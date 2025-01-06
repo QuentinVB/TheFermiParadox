@@ -4,9 +4,8 @@ using theFermiParadox.Core.Utilities;
 
 namespace theFermiParadox.Core.Interfaces
 {
-    public interface IOrbitable : INode
+    public interface IOrbitable : IBody
     {
-        string Name { get; }
         bool IsVirtual { get; }
         double Radius { get; }
         double Mass { get; }

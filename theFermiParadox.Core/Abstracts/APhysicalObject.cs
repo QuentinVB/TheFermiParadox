@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using theFermiParadox.Core.Interfaces;
 using theFermiParadox.Core.Utilities;
 
@@ -6,8 +7,6 @@ namespace theFermiParadox.Core.Abstracts
 {
     public abstract class APhysicalObject : ABody, IOrbitable
     {
-        private double _radius;
-
         private TimeSpan _rotationPeriod;
         private double _angularVelocity;
         public APhysicalObject()
@@ -21,19 +20,26 @@ namespace theFermiParadox.Core.Abstracts
         }
         #region Mass behavior
         //TODO : having a constistent unit system is mandatory to switch from solar mass to earth mass to tons and kg
-        public override double Mass { get; set; } // in Solar Mass...
+        /// <summary>
+        /// Average mass of the body in SolarMass
+        /// </summary>
+        public override double Mass { get; set; } 
+        /// <summary>
+        /// Average mass of the body in Kg
+        /// </summary>
+        public double MassInKg => Mass * Physic.SolarMass;
         /// <summary>
         /// The absolute density (above 1 : sink in water, below 1 : float)
         /// </summary>
-        public double Density { get => Mass / Volume; }
+        public double Density { get => MassInKg / Volume; }
         /// <summary>
         /// surface gravity based on g' acceleration, in m.s-2
         /// </summary>
-        public double SurfaceGravity => (Physic.GravitationalConstant * Mass) / (RadiusInM * RadiusInM); //m.s-2
+        public double SurfaceGravity => (Physic.GravitationalConstant * MassInKg) / (RadiusInM * RadiusInM); //m.s-2
         /// <summary>
         /// Speed to escape the gravity well, in m.s-1 
         /// </summary>
-        public double EscapeVelocity { get => Math.Sqrt((2 * Physic.GravitationalConstant * Mass) / RadiusInM); }
+        public double EscapeVelocity { get => Math.Sqrt((2 * Physic.GravitationalConstant * MassInKg) / RadiusInM); }
         #endregion
         #region Rotation behavior
         //https://fr.wikipedia.org/wiki/Moment_cinétique
@@ -54,7 +60,7 @@ namespace theFermiParadox.Core.Abstracts
             get=> _rotationPeriod;  // in s
             set {
                 _rotationPeriod = value;
-                _angularVelocity = 2 * Math.PI / _rotationPeriod.Seconds;
+                _angularVelocity = (2 * Math.PI) / (_rotationPeriod.Seconds);
             } 
         }
         #endregion
@@ -67,7 +73,7 @@ namespace theFermiParadox.Core.Abstracts
         /// <summary>
         /// average radius of the physical object, in m
         /// </summary>
-        public double RadiusInM { get => _radius * Physic.SolarRadius; set => _radius = value / Physic.SolarRadius; }
+        public double RadiusInM => Radius * Physic.SolarRadius;
         //TODO : again with the conversion unit... should be using meters instead
         public double Radius { get; set; } // in solar Radii
         public abstract double Volume { get; }

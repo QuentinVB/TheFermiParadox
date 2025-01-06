@@ -4,7 +4,7 @@ using theFermiParadox.Core;
 using theFermiParadox.DAL;
 using System.Collections.Generic;
 
-namespace Tests
+namespace theFermiParadox.Tests
 {
     public class CSVLoaderTests
     {
@@ -14,8 +14,8 @@ namespace Tests
         }
 
         [Test]
-        [TestCase("starGeneration.csv",9)]
-        public void Loader_tests_starGeneration(string filename,int itemCount)
+        [TestCase("starGeneration.csv", 9)]
+        public void Loader_tests_starGeneration(string filename, int itemCount)
         {
             //Arrange
 

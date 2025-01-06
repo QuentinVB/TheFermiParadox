@@ -24,6 +24,8 @@ namespace theFermiParadox.Tests.UtilitiesTests
 
             public double Radius => 1;
 
+            public Guid Uuid => Guid.NewGuid();
+
             public void Accept(Visitor v)
             {
                 throw new NotImplementedException();

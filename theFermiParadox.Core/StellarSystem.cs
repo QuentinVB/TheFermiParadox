@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Newtonsoft.Json;
 using theFermiParadox.Core.Abstracts;
 using theFermiParadox.Core.Interfaces;
 using theFermiParadox.Core.Utilities;
 
-
 namespace theFermiParadox.Core
 {
-    public class StellarSystem
+    public class StellarSystem: IUnique
     {
         static FullPrintVisitor _printVisitor;
 
         List<ABody> _bodies;
         List<Orbit> _orbits;
-        INode _objectRoot;
+        IBody _objectRoot;
         double _systemAge;
 
         int starCount = 0;
@@ -63,7 +63,8 @@ namespace theFermiParadox.Core
         /// The first object of the tree
         /// </summary>
         //TODO : add safety on setter (tree root should be in the collection)
-        public INode PhysicalObjectRoot { get => _objectRoot; internal set => _objectRoot = value; }
+        [JsonConverter(typeof(UniqueConverter))]
+        public IBody PhysicalObjectRoot { get => _objectRoot; internal set => _objectRoot = value; }
         /// <summary>
         /// Gets the index of the reals body in the system.
         /// </summary>
@@ -86,6 +87,7 @@ namespace theFermiParadox.Core
         /// <summary>
         /// list of bodies inside the stellar system
         /// </summary>
+        [JsonConverter(typeof(BodiesConverter))]
         public List<ABody> Bodies { get => _bodies; internal set => _bodies = value; }
         /// <summary>
         /// The age of the system, in Gy

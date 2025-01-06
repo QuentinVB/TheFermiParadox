@@ -35,6 +35,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -48,19 +51,24 @@
     <Compile Include="Abstracts\ABody.cs" />
     <Compile Include="Abstracts\APhysicalObject.cs" />
     <Compile Include="Abstracts\AXMLSerializable.cs" />
+    <Compile Include="Interfaces\IBody.cs" />
     <Compile Include="Interfaces\INode.cs" />
     <Compile Include="Interfaces\IOrbitable.cs" />
     <Compile Include="Abstracts\APrintable.cs" />
-    <Compile Include="Interfaces\PlanetaryFeature.cs" />
+    <Compile Include="Abstracts\PlanetaryFeature.cs" />
     <Compile Include="FactoryParts\OrbitalFactoryPart.cs" />
     <Compile Include="Interfaces\IStellar.cs" />
     <Compile Include="Interfaces\IPlanetaryFeature.cs" />
+    <Compile Include="Interfaces\IUnique.cs" />
     <Compile Include="Models\StarName.cs" />
     <Compile Include="Models\BasicStar.cs" />
     <Compile Include="Models\StarGeneration.cs" />
     <Compile Include="StellarObjects\Barycenter.cs" />
     <Compile Include="SystemObjects\Planet.cs" />
     <Compile Include="Utilities\Attributes.cs" />
+    <Compile Include="Utilities\BodiesConverter.cs" />
+    <Compile Include="Utilities\UniqueConverter.cs" />
+    <Compile Include="Utilities\UniqueReferenceResolver.cs" />
     <Compile Include="Utilities\FullPrintVisitor.cs" />
     <Compile Include="Utilities\PlanetaryComponentsContainer.cs" />
     <Compile Include="Utilities\PrintVisitor.cs" />
@@ -76,7 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StellarObjects\Star.cs" />
     <Compile Include="FactoryParts\StellarFactoryPart.cs" />
-    <Compile Include="Models\systemAgeSource.cs" />
+    <Compile Include="Models\StarAge.cs" />
     <Compile Include="FactoryParts\SystemFactory.cs" />
     <Compile Include="Utilities\RandomF.cs" />
     <Compile Include="Utilities\Vector3Extensions.cs" />
@@ -84,7 +92,10 @@
     <Compile Include="Utilities\Visitor.cs" />
     <Compile Include="Utilities\WeightedRandomBag.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\theFermiParadox.DAL\theFermiParadox.DAL.csproj">
       <Project>{0995f4c0-9603-4aee-81df-7f8d7d848813}</Project>
